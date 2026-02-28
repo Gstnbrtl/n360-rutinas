@@ -347,6 +347,203 @@ select option{background:var(--surface3);color:var(--white)}
 .pager-info{font-size:.72rem;color:var(--gray);font-family:var(--font-cond);padding:0 .3rem}
 
 
+
+/* ════════════════════════════════════════════════════════
+   RESPONSIVE MOBILE — max-width: 768px
+   ════════════════════════════════════════════════════════ */
+@media(max-width:768px){
+
+  /* ── Header: logo left, buttons right, pill hidden ── */
+  .hdr{
+    height:auto;
+    padding:.4rem .6rem;
+    flex-wrap:nowrap;
+    gap:.3rem;
+    align-items:center;
+  }
+  .hdr-l{ gap:.4rem; flex-shrink:0; }
+  .hdr-logo{ height:28px; }
+  .hdr-title{ display:none; }
+  .hdr-sep{ display:none; }
+  .hdr-pill{ display:none; }
+
+  /* Header action buttons — icon only on mobile */
+  .hdr > div:last-child{
+    display:flex;
+    gap:.25rem;
+    flex-wrap:nowrap;
+    margin-left:auto;
+  }
+  .hdr > div:last-child button,
+  .hdr > div:last-child label{
+    padding:.3rem .45rem !important;
+    font-size:.6rem !important;
+    white-space:nowrap;
+  }
+
+  /* ── Nav ── */
+  .app-nav{ gap:0; }
+  .anav-btn{
+    flex:1;
+    min-width:0;
+    padding:.55rem .3rem;
+    font-size:.68rem;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  /* ── Editor ── */
+  .editor-wrap{ padding:.4rem; }
+
+  /* ── Day tabs ── */
+  .dtabs{ gap:.25rem; overflow-x:auto; flex-wrap:nowrap; padding-bottom:.3rem; }
+  .dtab{ min-width:72px; font-size:.72rem; padding:.45rem .5rem; }
+
+  /* ── Block header ── */
+  .blk{ margin:.4rem 0; }
+  .blk-hdr{
+    flex-wrap:wrap;
+    gap:.35rem;
+    padding:.5rem .55rem;
+  }
+  .blk-num{ font-size:.7rem; flex-shrink:0; }
+  .blk-muscle{
+    flex:1 1 calc(100% - 120px);
+    min-width:0;
+    font-size:.82rem;
+  }
+  .blk-type-sel{ font-size:.72rem; flex-shrink:0; }
+
+  /* ── Exercise table headers — hidden ── */
+  .ex-col-hdr{ display:none !important; }
+
+  /* ── Exercise rows — 2 row card layout ── */
+  .ex-row{
+    display:grid !important;
+    grid-template-columns:1fr 52px 80px 70px !important;
+    gap:.3rem !important;
+    padding:.5rem .55rem !important;
+    margin:.2rem .3rem !important;
+    background:var(--surface3) !important;
+    border-radius:6px !important;
+    align-items:center !important;
+  }
+
+  /* Exercise name — full width on its own row */
+  .ex-row > input:first-child{
+    grid-column: 1 / -1 !important;
+  }
+
+  .ex-row input{
+    font-size:.82rem !important;
+    padding:.4rem .45rem !important;
+  }
+
+  /* Indicaciones field — full width on 3rd row */
+  .ex-row input.ind-input,
+  .ex-row input[placeholder="Indicaciones..."]{
+    grid-column: 1 / -1 !important;
+    font-size:.75rem !important;
+  }
+
+  /* ── Warmup grid ── */
+  .wu-grid{
+    grid-template-columns:1fr 44px 70px 56px !important;
+    gap:.25rem;
+  }
+  .wu-grid input{ font-size:.78rem; padding:.38rem .4rem; }
+  .wu-hdr{ grid-template-columns:1fr 44px 70px 56px !important; }
+  .wu-hdr span{ font-size:.62rem; }
+
+  /* ── Bottom action bar ── */
+  .sbar{
+    padding:.4rem .5rem;
+    gap:.3rem;
+    flex-wrap:wrap;
+  }
+  .sbar-info{
+    flex:1 1 100%;
+    font-size:.68rem;
+    text-align:center;
+    order:-1;
+  }
+  .sbar .btn{
+    flex:1;
+    min-width:0;
+    font-size:.68rem !important;
+    padding:.45rem .25rem !important;
+    text-align:center;
+  }
+
+  /* ── Client cards ── */
+  .client-card{ padding:.75rem; }
+  .client-card h3{ font-size:1rem; }
+
+  /* ── Modals ── */
+  .ov-box{
+    width:95vw !important;
+    max-width:95vw !important;
+    padding:1rem !important;
+    margin:.5rem auto !important;
+  }
+
+  /* ── Circuit ── */
+  .cir-config{ padding:.5rem; }
+  .cir-stations .station{ padding:.5rem; }
+}
+
+/* ── Extra small: phones < 400px ── */
+@media(max-width:400px){
+  .hdr > div:last-child button,
+  .hdr > div:last-child label{
+    font-size:.55rem !important;
+    padding:.25rem .35rem !important;
+  }
+  .ex-row{
+    grid-template-columns:1fr 46px 72px 60px !important;
+  }
+  .anav-btn{ font-size:.62rem; padding:.5rem .2rem; }
+}
+
+/* ════════════════════════════════════════════════════════
+   EXTRA SMALL — max-width: 400px
+   ════════════════════════════════════════════════════════ */
+@media(max-width:400px){
+
+  .hdr > div:last-child button,
+  .hdr > div:last-child label{
+    font-size:.6rem !important;
+    padding:.25rem .35rem !important;
+  }
+
+  /* Exercise rows go single column on very small screens */
+  .ex-row{
+    grid-template-columns:1fr !important;
+  }
+  .ex-row .ex-input:first-child{
+    grid-column:1 !important;
+  }
+
+  .wu-grid{
+    grid-template-columns:1fr 40px 65px 55px !important;
+  }
+
+  .sbar .btn{ font-size:.65rem !important; }
+
+  .dtab{ min-width:70px; font-size:.7rem; }
+}
+
+
+/* ── Header button text — hide on small screens ── */
+@media(max-width:480px){
+  .btn-txt{ display:none; }
+  .hdr > div:last-child button,
+  .hdr > div:last-child label{
+    padding:.3rem .5rem !important;
+    font-size:.85rem !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -362,10 +559,10 @@ select option{background:var(--surface3);color:var(--white)}
     </div>
   </div>
   <div style="display:flex;align-items:center;gap:.5rem">
-    <button onclick="backupSystem()" title="Descargar backup completo del sistema" style="background:#27AE60;color:#fff;border:none;border-radius:4px;padding:.35rem .75rem;font-size:.75rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.3rem">⬇ Backup</button>
-    <label title="Restaurar backup" style="background:#2980B9;color:#fff;border-radius:4px;padding:.35rem .75rem;font-size:.75rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.3rem;margin:0">⬆ Restaurar<input type="file" accept=".json" onchange="restoreSystem(event)" style="display:none"></label>
-    <button onclick="doLogout()" title="Cerrar sesión" style="background:#c0392b;color:#fff;border:none;border-radius:4px;padding:.35rem .75rem;font-size:.75rem;font-weight:700;cursor:pointer">⏏ Salir</button>
-    <button onclick="emergencyClear()" title="Limpiar caché del navegador (usar si el programa no carga)" style="background:#7f8c8d;color:#fff;border:none;border-radius:4px;padding:.35rem .75rem;font-size:.75rem;font-weight:700;cursor:pointer">⚠ Reset</button>
+    <button onclick="backupSystem()" title="Descargar backup completo del sistema" style="background:#27AE60;color:#fff;border:none;border-radius:4px;padding:.35rem .75rem;font-size:.75rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.3rem">⬇ <span class="btn-txt">Backup</span></button>
+    <label title="Restaurar backup" style="background:#2980B9;color:#fff;border-radius:4px;padding:.35rem .75rem;font-size:.75rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.3rem;margin:0">⬆ <span class="btn-txt">Restaurar</span><input type="file" accept=".json" onchange="restoreSystem(event)" style="display:none"></label>
+    <button onclick="doLogout()" title="Cerrar sesión" style="background:#c0392b;color:#fff;border:none;border-radius:4px;padding:.35rem .75rem;font-size:.75rem;font-weight:700;cursor:pointer">⏏ <span class="btn-txt">Salir</span></button>
+    <button onclick="emergencyClear()" title="Limpiar caché del navegador (usar si el programa no carga)" style="background:#7f8c8d;color:#fff;border:none;border-radius:4px;padding:.35rem .75rem;font-size:.75rem;font-weight:700;cursor:pointer">⚠ <span class="btn-txt">Reset</span></button>
     <div class="hdr-pill">v4.0</div>
   </div>
 </header>
