@@ -3078,13 +3078,12 @@ function restoreSystem(event){
   const file = event.target.files[0];
   if(!file) return;
   const reader = new FileReader();
-  reader.onload = function(e){
+  reader.onload = async function(e){
     try{
       const backup = JSON.parse(e.target.result);
 
-      // Validate it's a real N360 backup
       if(!backup.clients && !backup.customExercises){
-        showToast('\u26a0 Archivo no reconocido como backup de N360');
+        showToast('⚠ Archivo no reconocido como backup de N360');
         return;
       }
 
@@ -3093,23 +3092,45 @@ function restoreSystem(event){
         return;
       }
 
-      // Restore all data
+      showToast('⏳ Restaurando y subiendo a la nube...');
+
+      // Restore all data locally
       if(backup.clients)         { clients = backup.clients; saveToStorage(); }
-      if(backup.customExercises) { customExercises = backup.customExercises; saveCustomExercises(); }
-      if(backup.db_muscles)      { Object.assign(DB.muscles, backup.db_muscles); saveDBOverrides(); }
-      if(backup.db_warmups)      { DB.warmups = backup.db_warmups; saveDBOverrides(); }
-      if(backup.cir_db)          { Object.assign(CIR_DB, backup.cir_db); saveCirDB(); }
-      if(backup.cirCustomEx)     { cirCustomEx = backup.cirCustomEx; saveCirCustomEx(); }
-      if(backup.savedCircuits)   { savedCircuits = backup.savedCircuits; saveSavedCircuits(); }
+      if(backup.customExercises) { customExercises = backup.customExercises; }
+      if(backup.db_muscles)      { Object.assign(DB.muscles, backup.db_muscles); }
+      if(backup.db_warmups)      { DB.warmups = backup.db_warmups; }
+      if(backup.cir_db)          { Object.assign(CIR_DB, backup.cir_db); }
+      if(backup.cirCustomEx)     { cirCustomEx = backup.cirCustomEx; }
+      if(backup.savedCircuits)   { savedCircuits = backup.savedCircuits; }
+
+      // Save everything to Supabase cloud
+      if(currentUser){
+        try{
+          // Save clients and routines
+          await saveToCloud();
+          // Save exercises and db
+          await saveCustomExercisesToCloud();
+          await saveDBOverridesToCloud();
+          await saveSavedCircuitsToCloud();
+          showToast('✓ Backup restaurado y guardado en la nube — ' + (backup.fecha||''));
+        } catch(cloudErr){
+          showToast('⚠ Datos restaurados localmente pero error al subir a la nube: ' + cloudErr.message);
+        }
+      } else {
+        // Not logged in — save to localStorage only
+        saveCustomExercises();
+        saveDBOverrides();
+        saveSavedCircuits();
+        showToast('✓ Backup restaurado localmente — ' + (backup.fecha||''));
+      }
 
       // Refresh UI
       renderClients();
       renderExercises();
       event.target.value = '';
 
-      showToast('\u2713 Backup restaurado correctamente — ' + (backup.fecha||''));
     } catch(err){
-      showToast('\u26a0 Error al leer el archivo: ' + err.message);
+      showToast('⚠ Error al leer el archivo: ' + err.message);
       event.target.value = '';
     }
   };
