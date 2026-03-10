@@ -2238,41 +2238,41 @@ function genPDF(){
     var y = startY;
 
     // Day header — red
-    fillRect(marginL, y, colW, 11, red);
-    setFont('bold', 12, white);
-    drawText('ENTRENAMIENTO '+(di+1)+'  -  '+(day.title||''), marginL+3, y+7.5);
-    y += 11;
+    fillRect(marginL, y, colW, 9, red);
+    setFont('bold', 11, white);
+    drawText('ENTRENAMIENTO '+(di+1)+'  -  '+(day.title||''), marginL+3, y+6.2);
+    y += 9;
 
     // Col headers — blue
-    fillRect(marginL, y, colW, 7.5, blue);
-    setFont('bold', 8, white);
+    fillRect(marginL, y, colW, 6, blue);
+    setFont('bold', 7.5, white);
     var cx = marginL+1.5, cumX = cx;
     var colLabels = ['EJERCICIO','S','REPS/T','DESC','INDICACIONES'];
     var colAligns = ['left','center','center','center','left'];
     colLabels.forEach(function(lbl, ci){
       var x2 = cumX + (colAligns[ci]==='center' ? cols[ci]/2 : 0);
-      drawText(lbl, x2, y+5.2, {align:colAligns[ci]});
+      drawText(lbl, x2, y+4.2, {align:colAligns[ci]});
       cumX += cols[ci];
     });
-    y += 7.5;
+    y += 6;
 
     // Warmup
     if(day.warmup && day.warmup.length){
-      fillRect(marginL, y, colW, 6.5, wuBg);
-      setFont('bolditalic', 8, wuTxt);
-      drawText(BULLET+'  CALENTAMIENTO', marginL+2, y+4.8);
-      y += 6.5;
+      fillRect(marginL, y, colW, 5.5, wuBg);
+      setFont('bolditalic', 7.5, wuTxt);
+      drawText(BULLET+'  CALENTAMIENTO', marginL+2, y+4);
+      y += 5.5;
       day.warmup.forEach(function(w, wi){
-        fillRect(marginL, y, colW, 7, wi%2===0?[235,245,251]:wuBg);
-        setFont('normal', 9, wuTxt);
+        fillRect(marginL, y, colW, 6, wi%2===0?[235,245,251]:wuBg);
+        setFont('normal', 8.5, wuTxt);
         var rx = marginL+1.5, rxc = rx;
         [w.e,w.s,w.r,w.d,''].forEach(function(val,ci){
           var al = colAligns[ci];
           var x2 = rxc + (al==='center'?cols[ci]/2:0);
-          drawText(val||'', x2, y+5, {align:al, maxWidth:cols[ci]-2});
+          drawText(val||'', x2, y+4.2, {align:al, maxWidth:cols[ci]-2});
           rxc += cols[ci];
         });
-        y += 7;
+        y += 6;
       });
     }
 
@@ -2290,24 +2290,24 @@ function genPDF(){
         if(blk.cfg) lbl += '  [TABATA '+blk.cfg.work+'/'+blk.cfg.rest+'x'+blk.cfg.rounds+']';
       }
       // Block label with left accent bar
-      fillRect(marginL, y, 2, 6.5, lTxt);
-      fillRect(marginL+2, y, colW-2, 6.5, lBg);
-      setFont('bolditalic', 8.5, lTxt);
-      drawText(lbl, marginL+4, y+4.8, {maxWidth:colW-6});
-      y += 6.5;
+      fillRect(marginL, y, 2, 5.5, lTxt);
+      fillRect(marginL+2, y, colW-2, 5.5, lBg);
+      setFont('bolditalic', 8, lTxt);
+      drawText(lbl, marginL+4, y+4, {maxWidth:colW-6});
+      y += 5.5;
 
       blk.exs.forEach(function(ex, ei){
-        fillRect(marginL, y, colW, 7.5, ei%2===0?rowA:rowB);
+        fillRect(marginL, y, colW, 7, ei%2===0?rowA:rowB);
         var rxc = marginL+1.5;
         var rowVals=[ex.e,ex.s,ex.r,ex.d,ex.i];
         var cColors=[dark,serC,gray,gray,gray];
         var cBolds=['bold','bold','normal','normal','normal'];
-        var cSizes=[9.5,9,8.5,8.5,8];
+        var cSizes=[9,8.5,8,8,7.5];
         rowVals.forEach(function(val,ci){
           setFont(cBolds[ci], cSizes[ci], cColors[ci]);
           var al=colAligns[ci];
           var x2=rxc+(al==='center'?cols[ci]/2:0);
-          drawText(val||'', x2, y+5.3, {align:al, maxWidth:cols[ci]-2});
+          drawText(val||'', x2, y+4.8, {align:al, maxWidth:cols[ci]-2});
           rxc+=cols[ci];
         });
         y+=6;
@@ -2319,11 +2319,11 @@ function genPDF(){
 
   // ── Measure how tall a day will be (mm) ──
   function measureDay(day) {
-    var h = 11 + 7.5; // header + col headers
-    if(day.warmup && day.warmup.length) h += 6.5 + day.warmup.length * 7;
+    var h = 9 + 6; // header(9) + col headers(6)
+    if(day.warmup && day.warmup.length) h += 5.5 + day.warmup.length * 6;
     day.blocks.forEach(function(blk){
       if(!blk.muscle && !blk.exs.length) return;
-      h += 6.5 + blk.exs.length * 7.5;
+      h += 5.5 + blk.exs.length * 7; // block label(5.5) + rows(7 each)
     });
     return h;
   }
