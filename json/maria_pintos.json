@@ -1,13 +1,13 @@
 {
   "alumno": "María Pintos",
-  "objetivo": "Mejora de marcha y postura – fortalecer cuádriceps, core y espalda. Iniciar con 5 min de bicicleta previo a cada sesión. Artrosis – rango controlado, sin dolor.",
+  "objetivo": "Mejora de marcha y postura – fortalecer cuádriceps, core y espalda. Iniciar con 5 min de bicicleta previo a cada sesión. Artrosis – rango controlado, sin dolor. Sin ejercicios en el suelo.",
   "days": [
     {
       "title": "Día 1 – Cuádriceps + Espalda Postural + Core",
       "warmup": [
-        {"e": "Lumbares con pelota tenis", "s": "2", "r": "10", "d": "60 seg"},
-        {"e": "Perro de caza", "s": "2", "r": "10", "d": "60 seg"},
-        {"e": "Puente de gluteos s/pelota", "s": "2", "r": "8 rep", "d": "60 seg"}
+        {"e": "Sentadilla aerea sobre banco", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Remo TRX", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Press hombros banda", "s": "2", "r": "10", "d": "60 seg"}
       ],
       "blocks": [
         {
@@ -25,9 +25,18 @@
           "muscle": "Espalda",
           "cfg": {},
           "exs": [
-            {"e": "Remo con banda", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "codos atrás, omóplatos juntos al final"},
+            {"e": "Remo con banda", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "sentada o parada, codos atrás"},
             {"e": "Vuelo posterior con banda", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "brazos rectos, movimiento lento"},
             {"e": "Aperturas invertidas con banda", "type": "normal", "s": "2", "r": "10", "d": "90", "i": "retracción escapular"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "Press hombros banda", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "sentada, carga muy liviana"},
+            {"e": "Elevaciones laterales/frontales", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "mancuerna muy liviana, postura erguida"}
           ]
         },
         {
@@ -35,17 +44,8 @@
           "muscle": "Core / Abdomen",
           "cfg": {},
           "exs": [
-            {"e": "Plancha apoyo de rodillas", "type": "normal", "s": "3", "r": "15 seg", "d": "60", "i": "columna neutra, respirar"},
-            {"e": "Bicho muerto", "type": "normal", "s": "3", "r": "8 PL", "d": "60", "i": "lento, lumbar pegada al piso"}
-          ]
-        },
-        {
-          "type": "normal",
-          "muscle": "CI – Core",
-          "cfg": {},
-          "exs": [
-            {"e": "Lumbares tipo cobra", "type": "normal", "s": "3", "r": "8", "d": "60", "i": "subir lento, mantener 2 seg, sin forzar"},
-            {"e": "Perro de caza", "type": "normal", "s": "3", "r": "8 PL", "d": "60", "i": "estabilizar cadera, movimiento controlado"}
+            {"e": "Rotacion con banda", "type": "normal", "s": "3", "r": "12 PL", "d": "60", "i": "de pie o sentada, core activo"},
+            {"e": "Elevación de talones", "type": "normal", "s": "3", "r": "12 PL", "d": "60", "i": "apoyada en barra, bilateral – cierre postural"}
           ]
         }
       ]
@@ -53,9 +53,9 @@
     {
       "title": "Día 2 – Glúteos, Isquiotibiales + Postura + Gemelos",
       "warmup": [
-        {"e": "Lumbares con pelota tenis", "s": "2", "r": "10", "d": "60 seg"},
-        {"e": "Perro de caza", "s": "2", "r": "10", "d": "60 seg"},
-        {"e": "Puente de gluteos s/pelota", "s": "2", "r": "8 rep", "d": "60 seg"}
+        {"e": "Sentadilla aerea sobre banco", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Remo TRX", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Press hombros banda", "s": "2", "r": "10", "d": "60 seg"}
       ],
       "blocks": [
         {
@@ -63,8 +63,8 @@
           "muscle": "Glúteos",
           "cfg": {},
           "exs": [
-            {"e": "Puente de Gluteos corebag", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "sin corebag si no tolera, peso corporal"},
-            {"e": "Patada de gluteo con tobillera", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "en cuadrupedia, lento y controlado"}
+            {"e": "Patada de gluteo con tobillera", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "de pie apoyada en barra, lento"},
+            {"e": "Abducción de cadera", "type": "normal", "s": "3", "r": "12 PL", "d": "90", "i": "de pie apoyada, movimiento controlado"}
           ]
         },
         {
@@ -73,7 +73,7 @@
           "cfg": {},
           "exs": [
             {"e": "Sillon isquios", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "carga mínima, rango sin dolor"},
-            {"e": "Puente isquio corebag", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "sin corebag si es necesario"}
+            {"e": "Peso muerto con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "de pie, espalda neutra, descenso parcial"}
           ]
         },
         {
@@ -82,7 +82,7 @@
           "cfg": {},
           "exs": [
             {"e": "Remo TRX", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "cuerpo inclinado, codos atrás"},
-            {"e": "Vuelo posterior con banda", "type": "normal", "s": "2", "r": "12", "d": "90", "i": "retracción escapular, movimiento lento"}
+            {"e": "Jalon cerrado", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "carga mínima, tirón lento"}
           ]
         },
         {
@@ -90,9 +90,8 @@
           "muscle": "Gemelos",
           "cfg": {},
           "exs": [
-            {"e": "Elevación de talones", "type": "normal", "s": "3", "r": "12 PL", "d": "60", "i": "apoyada en pared o barra, bilateral"},
-            {"e": "Plancha apoyo de rodillas", "type": "normal", "s": "3", "r": "15 seg", "d": "60", "i": "cerrar la sesión con core suave"},
-            {"e": "Lumbares tipo cobra", "type": "normal", "s": "3", "r": "8", "d": "60", "i": "subir lento, mantener 2 seg"}
+            {"e": "Elevación de talones", "type": "normal", "s": "3", "r": "15 PL", "d": "60", "i": "apoyada en pared o barra, bilateral"},
+            {"e": "Rotacion con banda", "type": "normal", "s": "3", "r": "12 PL", "d": "60", "i": "de pie o sentada – cierre postural"}
           ]
         }
       ]
