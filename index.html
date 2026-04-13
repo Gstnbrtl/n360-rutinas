@@ -1440,19 +1440,35 @@ function saveRoutine(){
 // ════════════════════════════════════════════════════════
 function openImportModal(){
   document.getElementById('importModal').style.display='flex';
-  document.getElementById('importJsonArea').value='';
+  document.getElementById('importFileName').textContent='';
+  document.getElementById('importFileInput').value='';
+  const btn=document.getElementById('importConfirmBtn');
+  btn.style.opacity='.4'; btn.style.pointerEvents='none';
+  window._importData=null;
 }
 function closeImportModal(){
   document.getElementById('importModal').style.display='none';
 }
+function handleImportFile(input){
+  const file=input.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      window._importData=JSON.parse(e.target.result);
+      document.getElementById('importFileName').textContent='✓ '+file.name;
+      const btn=document.getElementById('importConfirmBtn');
+      btn.style.opacity='1'; btn.style.pointerEvents='auto';
+    }catch(err){
+      showToast('⚠ Archivo JSON inválido');
+    }
+  };
+  reader.readAsText(file);
+}
 async function confirmImport(){
-  const raw = document.getElementById('importJsonArea').value.trim();
-  if(!raw){ showToast('\u26a0 Peg\u00e1 el JSON primero'); return; }
-  let data;
-  try{ data = JSON.parse(raw); }
-  catch(e){ showToast('\u26a0 JSON inv\u00e1lido \u2014 revis\u00e1 el formato'); return; }
+  if(!window._importData){ showToast('⚠ Seleccioná un archivo primero'); return; }
   closeImportModal();
-  await importRoutine(data);
+  await importRoutine(window._importData);
 }
 
 // ────────────────────────────────────────────────────
@@ -4061,16 +4077,23 @@ async function initAuth(){
 <!-- IMPORT ROUTINE MODAL                                            -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div id="importModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;width:min(560px,95vw);max-height:90vh;overflow-y:auto">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;width:min(480px,95vw)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem">
       <h3 style="font-family:var(--font-display);font-size:1.4rem;color:var(--red);letter-spacing:.05em">IMPORTAR RUTINA</h3>
       <button onclick="closeImportModal()" style="background:none;border:none;color:var(--gray);font-size:1.4rem;cursor:pointer">&#x2715;</button>
     </div>
-    <p style="color:var(--gray);font-size:.85rem;margin-bottom:.75rem">Peg&#225; el contenido del archivo JSON generado por Claude:</p>
-    <textarea id="importJsonArea" style="width:100%;height:220px;background:var(--card2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:monospace;font-size:.78rem;padding:.75rem;resize:vertical;box-sizing:border-box" placeholder='{"alumno":"Nombre","objetivo":"...","days":[...]}'></textarea>
+    <div id="importDropZone" onclick="document.getElementById('importFileInput').click()"
+      style="border:2px dashed var(--border2);border-radius:10px;padding:2.5rem 1rem;text-align:center;cursor:pointer;transition:border-color .2s"
+      onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--border2)'">
+      <div style="font-size:2.5rem;margin-bottom:.5rem">&#128193;</div>
+      <p style="color:var(--text);font-size:.95rem;margin:0 0 .25rem">Seleccion&#225; el archivo JSON</p>
+      <p style="color:var(--gray);font-size:.8rem;margin:0">Archivos de la carpeta <strong>json/</strong></p>
+    </div>
+    <input type="file" id="importFileInput" accept=".json" style="display:none" onchange="handleImportFile(this)">
+    <div id="importFileName" style="margin-top:.75rem;color:var(--gray);font-size:.82rem;text-align:center;min-height:1.2em"></div>
     <div style="display:flex;gap:.75rem;margin-top:1rem;justify-content:flex-end">
       <button class="btn btn-sm" style="background:transparent;border-color:var(--border2);color:var(--gray)" onclick="closeImportModal()">Cancelar</button>
-      <button class="btn btn-sm" style="background:var(--blue);border-color:var(--blue)" onclick="confirmImport()">&#8659; Importar</button>
+      <button id="importConfirmBtn" class="btn btn-sm" style="background:var(--blue);border-color:var(--blue);opacity:.4;pointer-events:none" onclick="confirmImport()">&#8659; Importar</button>
     </div>
   </div>
 </div>
