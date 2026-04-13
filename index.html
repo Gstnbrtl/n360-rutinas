@@ -1741,9 +1741,11 @@ function openClientModal(cid){
     h+=`<div style="color:var(--gray);font-size:.85rem">No hay rutinas guardadas para este cliente.</div>`;
   }else{
     h+=`<div class="routine-list">`;
+    const lastIdx = c.routines.length - 1;
     c.routines.forEach((r,i)=>{
+      const isActive = i === lastIdx;
       h+=`<div class="routine-item" onclick="selectRoutine(${i})" id="ri_${i}">
-        <div class="ri-name">${r.name||r.data.alumno} · ${r.data.days.length} días</div>
+        <div class="ri-name">${r.name||r.data.alumno} · ${r.data.days.length} días${isActive?' <span style="background:#27AE60;color:#fff;font-size:.65rem;padding:.15rem .45rem;border-radius:20px;font-weight:700;vertical-align:middle;margin-left:.3rem">ACTIVA</span>':''}</div>
         <div class="ri-date">${r.date}</div>
         <div style="display:flex;gap:.3rem">
           <button class="btn btn-dark btn-sm" title="Copiar rutina a otro cliente" onclick="event.stopPropagation();openCopyRoutineModal('${cid}',${i})" style="font-size:.65rem;padding:.2rem .5rem">⎘ Copiar</button>
