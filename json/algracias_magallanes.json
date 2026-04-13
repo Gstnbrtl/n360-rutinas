@@ -1,0 +1,104 @@
+{
+  "alumno": "Algracias Magallanes",
+  "objetivo": "Fortalecimiento postural – espalda, core e isquiotibiales",
+  "days": [
+    {
+      "title": "Día 1 – Espalda + Postura + Core",
+      "warmup": [
+        {"e": "Perro de caza", "s": "2", "r": "20", "d": "60 seg"},
+        {"e": "Lumbares con pelota tenis", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Bicho muerto", "s": "2", "r": "20", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Remo TRX", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "codos atrás, omóplatos juntos al final"},
+            {"e": "Vuelo posterior con banda", "type": "normal", "s": "3", "r": "15", "d": "90", "i": "brazos rectos, retracción escapular"},
+            {"e": "Remo con banda", "type": "normal", "s": "3", "r": "15", "d": "90", "i": "carga liviana, foco en postura"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Remo con mancuernas banco", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "apoyada en banco, espalda neutra"},
+            {"e": "Jalón cerrado", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "peso liviano, codos hacia las caderas"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha frontal", "type": "normal", "s": "3", "r": "20 seg", "d": "60", "i": "columna neutra, sin hundir lumbares"},
+            {"e": "Plancha toque de hombro", "type": "normal", "s": "3", "r": "10", "d": "60", "i": "lento y controlado"},
+            {"e": "Plancha Lateral", "type": "normal", "s": "3", "r": "20 seg PL", "d": "60", "i": "rodillas apoyadas si es necesario"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "CI – Core",
+          "cfg": {},
+          "exs": [
+            {"e": "Lumbares tipo cobra", "type": "normal", "s": "3", "r": "10", "d": "60", "i": "subir lento, mantener 2 seg arriba"},
+            {"e": "Plancha remo (perrito)", "type": "normal", "s": "3", "r": "10 PL", "d": "60", "i": "cadera estable, sin rotar"},
+            {"e": "Hollow hold", "type": "normal", "s": "3", "r": "15 seg", "d": "60", "i": "zona lumbar pegada al piso"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Isquiotibiales, Glúteos + Core Postural",
+      "warmup": [
+        {"e": "Perro de caza", "s": "2", "r": "20", "d": "60 seg"},
+        {"e": "Lumbares con pelota tenis", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Bicho muerto", "s": "2", "r": "20", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Peso muerto con mancuernas", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "espalda neutra, descenso controlado"},
+            {"e": "Puente isquio corebag", "type": "normal", "s": "3", "r": "10", "d": "90", "i": ""},
+            {"e": "Sillon isquios", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "rango completo sin dolor"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Hip Thrust", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "mentón al pecho, espalda apoyada en banco"},
+            {"e": "Patada de gluteo con tobillera", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "en cuadrupedia, core activo"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha frontal", "type": "normal", "s": "3", "r": "20 seg", "d": "60", "i": ""},
+            {"e": "Rotacion con banda", "type": "normal", "s": "3", "r": "15 PL", "d": "60", "i": "antirotación, core firme"},
+            {"e": "Elevacion de piernas", "type": "normal", "s": "3", "r": "10", "d": "60", "i": "lumbar pegada al piso"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "CI – Core",
+          "cfg": {},
+          "exs": [
+            {"e": "Lumbares tipo cobra", "type": "normal", "s": "3", "r": "10", "d": "60", "i": "subir lento, mantener 2 seg arriba"},
+            {"e": "Plancha Lateral", "type": "normal", "s": "3", "r": "20 seg PL", "d": "60", "i": "rodillas apoyadas si es necesario"},
+            {"e": "Plancha remo (perrito)", "type": "normal", "s": "3", "r": "10 PL", "d": "60", "i": "cadera estable, sin rotar"}
+          ]
+        }
+      ]
+    }
+  ]
+}
