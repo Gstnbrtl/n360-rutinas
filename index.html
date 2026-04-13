@@ -546,6 +546,7 @@ select option{background:var(--surface2);color:var(--white)}
   <button class="anav-btn" onclick="showView('clientes')">👥 Clientes</button>
   <button class="anav-btn" onclick="showView('ejercicios')">🏋 Ejercicios</button>
   <button class="anav-btn" onclick="showView('circuito')">⚡ Circuito</button>
+  <button class="anav-btn" onclick="openImportModal()" style="background:var(--blue);color:#fff;border-color:var(--blue)">&#8659; Importar Rutina</button>
 </nav>
 
 <!-- ═══════════════ EDITOR VIEW ═══════════════ -->
@@ -617,7 +618,6 @@ select option{background:var(--surface2);color:var(--white)}
   <div class="sbar-info" id="sbarInfo">N360 Sistema de Rutinas</div>
   <button class="btn btn-dark btn-sm" onclick="openPrev()">👁 Vista previa</button>
   <button class="btn btn-dark btn-sm" onclick="saveRoutine()">💾 Guardar</button>
-    <button class="btn btn-sm" style="background:var(--blue);border-color:var(--blue);color:#fff" onclick="openImportModal()">&#8659; Importar JSON</button>
   <button class="btn btn-dark btn-sm" onclick="genPDF()">📄 PDF</button>
   <button class="btn btn-red" onclick="genXL()">⬇ Excel (JSON)</button>
 </div>
