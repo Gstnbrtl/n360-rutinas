@@ -1,0 +1,101 @@
+{
+  "alumno": "María Pintos",
+  "objetivo": "Mejora de marcha y postura – fortalecer cuádriceps, core y espalda. Iniciar con 5 min de bicicleta previo a cada sesión. Artrosis – rango controlado, sin dolor.",
+  "days": [
+    {
+      "title": "Día 1 – Cuádriceps + Espalda Postural + Core",
+      "warmup": [
+        {"e": "Lumbares con pelota tenis", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Perro de caza", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Puente de gluteos s/pelota", "s": "2", "r": "8 rep", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Sentadilla aerea sobre banco", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "apoyarse en banco al bajar, rango cómodo"},
+            {"e": "Sillón cuádriceps", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "carga mínima, sin dolor en rodilla"},
+            {"e": "Step Up bajo", "type": "normal", "s": "3", "r": "8 PL", "d": "120", "i": "escalón bajo, apoyo disponible"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Remo con banda", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "codos atrás, omóplatos juntos al final"},
+            {"e": "Vuelo posterior con banda", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "brazos rectos, movimiento lento"},
+            {"e": "Aperturas invertidas con banda", "type": "normal", "s": "2", "r": "10", "d": "90", "i": "retracción escapular"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha apoyo de rodillas", "type": "normal", "s": "3", "r": "15 seg", "d": "60", "i": "columna neutra, respirar"},
+            {"e": "Bicho muerto", "type": "normal", "s": "3", "r": "8 PL", "d": "60", "i": "lento, lumbar pegada al piso"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "CI – Core",
+          "cfg": {},
+          "exs": [
+            {"e": "Lumbares tipo cobra", "type": "normal", "s": "3", "r": "8", "d": "60", "i": "subir lento, mantener 2 seg, sin forzar"},
+            {"e": "Perro de caza", "type": "normal", "s": "3", "r": "8 PL", "d": "60", "i": "estabilizar cadera, movimiento controlado"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Glúteos, Isquiotibiales + Postura + Gemelos",
+      "warmup": [
+        {"e": "Lumbares con pelota tenis", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Perro de caza", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Puente de gluteos s/pelota", "s": "2", "r": "8 rep", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Puente de Gluteos corebag", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "sin corebag si no tolera, peso corporal"},
+            {"e": "Patada de gluteo con tobillera", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "en cuadrupedia, lento y controlado"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Sillon isquios", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "carga mínima, rango sin dolor"},
+            {"e": "Puente isquio corebag", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "sin corebag si es necesario"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Remo TRX", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "cuerpo inclinado, codos atrás"},
+            {"e": "Vuelo posterior con banda", "type": "normal", "s": "2", "r": "12", "d": "90", "i": "retracción escapular, movimiento lento"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Gemelos",
+          "cfg": {},
+          "exs": [
+            {"e": "Elevación de talones", "type": "normal", "s": "3", "r": "12 PL", "d": "60", "i": "apoyada en pared o barra, bilateral"},
+            {"e": "Plancha apoyo de rodillas", "type": "normal", "s": "3", "r": "15 seg", "d": "60", "i": "cerrar la sesión con core suave"},
+            {"e": "Lumbares tipo cobra", "type": "normal", "s": "3", "r": "8", "d": "60", "i": "subir lento, mantener 2 seg"}
+          ]
+        }
+      ]
+    }
+  ]
+}
