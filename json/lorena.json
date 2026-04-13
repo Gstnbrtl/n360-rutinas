@@ -1,0 +1,139 @@
+{
+  "alumno": "Lorena",
+  "objetivo": "Fortalecimiento y tonificación – complemento al funcional",
+  "days": [
+    {
+      "title": "Día 1 – Piernas + Core",
+      "warmup": [
+        {"e": "Sentadilla aerea sobre banco", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Bicho muerto", "s": "2", "r": "20", "d": "60 seg"},
+        {"e": "Apertura con banda", "s": "2", "r": "15", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Sentadilla con barra", "type": "normal", "s": "4", "r": "10", "d": "150", "i": ""},
+            {"e": "Step up alto con Banda", "type": "normal", "s": "3", "r": "12", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Peso muerto con barra", "type": "normal", "s": "4", "r": "8", "d": "150", "i": ""},
+            {"e": "Sillon isquios", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Hip Thrust", "type": "normal", "s": "4", "r": "10", "d": "120", "i": "progresar carga"},
+            {"e": "Sentadilla búlgara", "type": "normal", "s": "3", "r": "8 PL", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha de arrastre", "type": "normal", "s": "3", "r": "15", "d": "75", "i": ""},
+            {"e": "Abd. cruzados codo rodilla", "type": "normal", "s": "3", "r": "20", "d": "60", "i": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Torso Completo",
+      "warmup": [
+        {"e": "Plancha remo", "s": "2", "r": "20", "d": "60 seg"},
+        {"e": "Rotaciones con banda", "s": "2", "r": "10 por lado", "d": "60 seg"},
+        {"e": "Press hombros banda", "s": "2", "r": "10", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Pecho",
+          "cfg": {},
+          "exs": [
+            {"e": "Press de banca barra", "type": "normal", "s": "4", "r": "10", "d": "150", "i": ""},
+            {"e": "Apertura en polea", "type": "normal", "s": "3", "r": "10 PL", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Remo con barra", "type": "normal", "s": "4", "r": "10", "d": "150", "i": ""},
+            {"e": "Jalon ancho en polea", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "Press militar con barra", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""},
+            {"e": "Vuelos laterales manc", "type": "normal", "s": "3", "r": "12", "d": "90", "i": ""},
+            {"e": "Pull face", "type": "normal", "s": "3", "r": "10", "d": "90", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Bíceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Curl de biceps con barra", "type": "normal", "s": "3", "r": "12", "d": "90", "i": ""},
+            {"e": "Ext. en polea triceps soga", "type": "normal", "s": "3", "r": "12", "d": "90", "i": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 3 – Full Body + Tabata",
+      "warmup": [
+        {"e": "Thrusters con banda", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Plancha dinámica", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Sentadilla aerea sobre banco", "s": "2", "r": "10", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Full Body / Funcional",
+          "cfg": {},
+          "exs": [
+            {"e": "Thrusters con barra o mancuerna", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""},
+            {"e": "Push press con barra", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""},
+            {"e": "Segundo tiempo", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "con mancuerna"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha frontal", "type": "normal", "s": "3", "r": "25 seg", "d": "60", "i": ""},
+            {"e": "Mountain Climbers", "type": "normal", "s": "3", "r": "20", "d": "60", "i": ""}
+          ]
+        },
+        {
+          "type": "tabata",
+          "muscle": "CI – Full Body / Aeróbico",
+          "cfg": {"work": "20 seg", "rest": "10 seg", "rounds": "8", "brk": "1 min"},
+          "exs": [
+            {"e": "Burpees", "type": "tabata", "s": "", "r": "", "d": "", "i": ""},
+            {"e": "Skipping alto", "type": "tabata", "s": "", "r": "", "d": "", "i": ""},
+            {"e": "Saltos al cajón", "type": "tabata", "s": "", "r": "", "d": "", "i": ""},
+            {"e": "Mountain climbers", "type": "tabata", "s": "", "r": "", "d": "", "i": ""}
+          ]
+        }
+      ]
+    }
+  ]
+}
