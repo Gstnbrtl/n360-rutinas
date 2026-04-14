@@ -1302,6 +1302,7 @@ function addBlock(d, type='normal', focus=true){
       <input class="ctr" id="ed_${bid}_${e}" value="${type==='normal'?'120':''}">
       <input class="ph" id="ei_${bid}_${e}" placeholder="Indicaciones...">
       <button class="btn-savedb" title="Guardar en base de ejercicios" onclick="addToExDB('${bid}',${e})">+</button>
+      <button class="btn-videodb" title="Ver video del ejercicio" onclick="openExVideo(document.getElementById('ex_${bid}_${e}').value)" tabindex="-1">&#9654;</button>
     </div>`;
   }
 
@@ -2114,6 +2115,7 @@ function renderExercises(){
         <td class="td-num">${ex.d||'—'}</td>
         <td style="font-size:.78rem;color:var(--gray)">${ex.o||''}</td>
         <td class="td-actions">
+          ${getExVideo(ex.e)?`<button class="btn btn-sm" onclick="openExVideo(this.dataset.n)" data-n="${ex.e.replace(/"/g,'&quot;')}" title="Ver video" style="background:rgba(10,132,255,.12);color:var(--blue);border:1px solid rgba(10,132,255,.3);padding:.25rem .5rem;font-size:.75rem;margin-right:.2rem">&#9654;</button>`:''}
           <button class="btn btn-dark btn-sm" onclick='editExercise(${JSON.stringify(ex.muscle)},${ex.idx},${ex.isCustom},${!!ex.isWarmup})' style="padding:.25rem .55rem;font-size:.7rem;margin-right:.2rem">✏</button>
           <button class="btn btn-sm" onclick='confirmDeleteEx(${JSON.stringify(ex.muscle)},${ex.idx},${!!ex.isCustom},${!!ex.isWarmup})' style="background:var(--red-dim);color:var(--red);border:1px solid var(--red-dim);padding:.25rem .55rem;font-size:.7rem">✕</button>
         </td>
