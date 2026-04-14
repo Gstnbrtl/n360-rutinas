@@ -264,7 +264,7 @@ select option{background:var(--surface2);color:var(--white)}
 .ex-col-hdr span{font-size:.57rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gray2);text-align:center}
 .ex-col-hdr span:first-child{text-align:left}.ex-col-hdr span:last-child{text-align:left}
 .ex-col-hdr.amrap-hdr{background:rgba(255,159,10,.04)}
-.ex-col-hdr.tabata-hdr{background:rgba(191,90,242,.04)}
+.ex-col-hdr.tabata-hdr{background:rgba(191,90,242,.04)}.type-varios{background:rgba(100,100,140,.1);border-left:3px solid #8888bb}.ex-col-hdr.varios-hdr{background:rgba(100,100,140,.06)}
 
 .ex-row{display:grid;grid-template-columns:1.7fr 50px 80px 66px 1fr 26px;gap:.3rem;padding:.3rem .9rem;align-items:center;border-bottom:1px solid var(--border)}
 .ex-row:last-child{border-bottom:none}
@@ -801,6 +801,21 @@ select option{background:var(--surface2);color:var(--white)}
 
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Generador por bloques -->
+  <div class="card" style="margin-bottom:1rem" id="cirBlockBuilderCard">
+    <div class="card-hdr" style="display:flex;align-items:center;justify-content:space-between">
+      <h3 style="margin:0;font-size:.95rem">&#9889; Armar por bloques</h3>
+      <div style="display:flex;gap:.5rem">
+        <button class="btn btn-dark btn-sm" onclick="addCirBlockDef()">+ Bloque</button>
+        <button class="btn btn-sm" onclick="generateFromBlocks()" style="background:rgba(10,132,255,.15);color:var(--blue);border:1px solid rgba(10,132,255,.3)">Generar &#9654;</button>
+      </div>
+    </div>
+    <div class="card-body" style="padding:.75rem">
+      <div id="cirBlockDefs" style="display:flex;flex-direction:column;gap:.5rem"></div>
+      <p id="cirBlockHint" style="color:var(--gray);font-size:.78rem;margin:.5rem 0 0;text-align:center">Definí los bloques: elegí el grupo muscular y la cantidad de ejercicios por bloque.</p>
     </div>
   </div>
 
@@ -1915,6 +1930,7 @@ function showBlockTypeMenu(d){
     <button class="btn btn-dark btn-sm" onclick="addBlock(${d},'normal');document.getElementById('btmenu${d}').remove()">+ Normal</button>
     <button class="btn btn-sm" style="background:var(--amrap-dim);color:var(--amrap);border:1px solid var(--amrap)" onclick="addBlock(${d},'amrap');document.getElementById('btmenu${d}').remove()">+ AMRAP</button>
     <button class="btn btn-sm" style="background:var(--tabata-dim);color:var(--tabata);border:1px solid var(--tabata)" onclick="addBlock(${d},'tabata');document.getElementById('btmenu${d}').remove()">+ Tabata</button>
+    <button class="btn btn-sm" style="background:rgba(100,100,140,.15);color:#aaaacc;border:1px solid rgba(100,100,140,.3)" onclick="addBlock(${d},'varios');document.getElementById('btmenu${d}').remove()">+ Varios</button>
     <button class="btn btn-dark btn-sm" onclick="document.getElementById('btmenu${d}').remove()">✕</button>`;
   const container=document.getElementById('blocks'+d);
   if(container)container.insertAdjacentElement('afterend',menu);
@@ -3003,8 +3019,95 @@ function getCirAllEx(cat){
 }
 
 
+// ── Generador por Bloques ─────────────────────────────────────
+var cirBlockDefs=[];
+
+function getCirBlockMuscleOpts(){
+  const cirCats=getCirAllCats();
+  const dbMuscles=Object.keys(DB.muscles).filter(m=>!m.startsWith('CI \u2013'));
+  const extra=dbMuscles.filter(m=>!cirCats.includes(m));
+  const all=['Varios',...cirCats,...extra];
+  return all.map(c=>`<option value="${c}">${c}</option>`).join('');
+}
+
+function renderCirBlockDefs(){
+  const container=document.getElementById('cirBlockDefs');
+  const hint=document.getElementById('cirBlockHint');
+  if(!container)return;
+  if(!cirBlockDefs.length){
+    container.innerHTML='';
+    if(hint)hint.style.display='block';
+    return;
+  }
+  if(hint)hint.style.display='none';
+  container.innerHTML=cirBlockDefs.map((b,i)=>`
+    <div style="display:grid;grid-template-columns:1fr 100px 34px;gap:.5rem;align-items:center">
+      <select style="background:var(--surface);color:var(--text);border:1px solid var(--border,#2a2a3a);border-radius:6px;padding:.35rem .5rem;font-size:.82rem;width:100%"
+              onchange="cirBlockDefs[${i}].muscle=this.value">
+        ${getCirBlockMuscleOpts().replace(new RegExp('value="'+b.muscle.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'"'),'value="'+b.muscle+'" selected')}
+      </select>
+      <div style="display:flex;align-items:center;gap:.3rem">
+        <input type="number" min="1" max="12" value="${b.count}"
+               style="width:52px;background:var(--surface);color:var(--text);border:1px solid var(--border,#2a2a3a);border-radius:6px;padding:.35rem .4rem;font-size:.82rem;text-align:center"
+               oninput="cirBlockDefs[${i}].count=Math.max(1,parseInt(this.value)||1)">
+        <span style="color:var(--gray);font-size:.72rem;white-space:nowrap">ej.</span>
+      </div>
+      <button onclick="removeCirBlockDef(${i})" style="background:var(--red-dim);color:var(--red);border:1px solid var(--red-dim);border-radius:6px;width:34px;height:34px;cursor:pointer;font-size:.9rem">&#10005;</button>
+    </div>
+  `).join('');
+}
+
+function addCirBlockDef(){
+  const cats=getCirAllCats();
+  cirBlockDefs.push({muscle:cats[0]||'Varios',count:3});
+  renderCirBlockDefs();
+}
+
+function removeCirBlockDef(i){
+  cirBlockDefs.splice(i,1);
+  renderCirBlockDefs();
+}
+
+function mapMuscleToCirCat(muscle){
+  const m=muscle.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  if(['cuadriceps','isquiotibiales','gluteos','aductores','abductores','gemelos'].some(k=>m.includes(k)))return 'Fuerza \u2013 Tren Inferior';
+  if(['pecho','hombros','espalda','biceps','triceps'].some(k=>m.includes(k)))return 'Fuerza \u2013 Tren Superior';
+  if(['core','abdomen'].some(k=>m.includes(k)))return 'Core \u2013 Zona Media';
+  return 'Aer\u00f3bicos / Potencia / H\u00edbridos';
+}
+
+function generateFromBlocks(){
+  if(!cirBlockDefs.length){showToast('\u26a0 Agrega al menos un bloque');return;}
+  const newStations=[];
+  cirBlockDefs.forEach(bd=>{
+    const muscle=bd.muscle;
+    const count=Math.max(1,bd.count||1);
+    let pool=[];
+    if(muscle==='Varios'){
+      getCirAllCats().forEach(cat=>getCirAllEx(cat).forEach(name=>pool.push({name,cat})));
+    } else if(CIR_DB[muscle]||cirCustomEx[muscle]){
+      getCirAllEx(muscle).forEach(name=>pool.push({name,cat:muscle}));
+    } else {
+      const cat=mapMuscleToCirCat(muscle);
+      getMergedMuscle(muscle).forEach(ex=>pool.push({name:ex.e,cat}));
+    }
+    pool.sort(()=>Math.random()-.5);
+    const used=new Set();
+    for(let i=0,added=0;added<count&&i<pool.length*3;i++){
+      const p=pool[i%pool.length];
+      if(!used.has(p.name)){used.add(p.name);newStations.push({id:uid4(),ex:p.name,cat:p.cat,elementos:'',nota:''});added++;}
+    }
+  });
+  cirStations=newStations;
+  const stEl=document.getElementById('cirEstaciones');
+  if(stEl)stEl.value=cirStations.length;
+  renderCirStations();
+  showToast('\u2713 '+cirStations.length+' estaciones generadas');
+  setTimeout(()=>{const sc=document.getElementById('cirStationsContainer');if(sc)sc.scrollIntoView({behavior:'smooth',block:'nearest'});},100);
+}
+
 // ── Station management ──
-var cirStations = [];
+var cirStations=[];
 
 function uid4(){ return Math.random().toString(36).slice(2,8); }
 
