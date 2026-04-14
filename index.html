@@ -3358,10 +3358,10 @@ function generateCircuit(){
     </div>`;
   }
 
-  document.getElementById('cirResultStations').innerHTML = stationsHTML
+  document.getElementById('cirResultStations').innerHTML = stationsHTML + `
     <div style="margin-top:.75rem;padding:.6rem .85rem;background:var(--card2);border-radius:6px;font-size:.8rem;color:var(--gray)">
       <strong style="color:var(--text)">Descanso entre vueltas:</strong> ${descVuelta} &nbsp;|&nbsp;
-<strong style="color:var(--text)">Estimación calórica:</strong> ~${totalCal} kcal
+      <strong style="color:var(--text)">Estimación calórica:</strong> ~${totalCal} kcal
     </div>
   `;
 
