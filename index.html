@@ -2205,56 +2205,83 @@ function saveExercise(){
   if(!nombre){showToast('⚠ Ingresá el nombre del ejercicio');return;}
   if(!muscle){showToast('⚠ Seleccioná el grupo muscular');return;}
 
-  const exObj={
-    e:nombre,
-    s:document.getElementById('efSeries').value.trim(),
-    r:document.getElementById('efReps').value.trim(),
-    d:document.getElementById('efDesc').value.trim(),
-    o:document.getElementById('efObs').value.trim(),
-    custom:true
-  };
+  const vUrl=(document.getElementById('efVideo').value||'').trim();
 
   if(editingExKey&&editingExKey.isWarmup){
-    // update warmup exercise directly in DB
-    DB.warmups[editingExKey.idx]={...DB.warmups[editingExKey.idx],e:nombre,s:document.getElementById('efSeries').value.trim(),r:document.getElementById('efReps').value.trim(),d:document.getElementById('efDesc').value.trim()};
-    showToast('\u2713 Ejercicio de calentamiento actualizado');
-    closeModal('ovExForm');
-    document.getElementById('efMusculo').disabled=false;
-    editingExKey=null;
-    renderExercises();
-    return;
-  }
+    // ── Editar calentamiento ──
+    DB.warmups[editingExKey.idx]={
+      ...DB.warmups[editingExKey.idx],
+      e:nombre,
+      s:document.getElementById('efSeries').value.trim(),
+      r:document.getElementById('efReps').value.trim(),
+      d:document.getElementById('efDesc').value.trim()
+    };
+    if(vUrl) exVideos[nombre]=vUrl; else delete exVideos[nombre];
+    saveExVideos();
+    saveDBOverrides();
+    saveDBOverridesToCloud();
+    showToast('✓ Calentamiento actualizado');
 
-  if(editingExKey&&editingExKey.isCustom){
-    // update existing custom
-    if(!customExercises[editingExKey.muscle])customExercises[editingExKey.muscle]=[];
-    // find index within custom array
+  } else if(editingExKey&&editingExKey.isCustom){
+    // ── Editar ejercicio personalizado ──
     const baseCount=(DB.muscles[editingExKey.muscle]||[]).length;
     const customIdx=editingExKey.idx-baseCount;
+    if(!customExercises[editingExKey.muscle]) customExercises[editingExKey.muscle]=[];
     if(customIdx>=0&&customExercises[editingExKey.muscle][customIdx]){
-      customExercises[editingExKey.muscle][customIdx]=exObj;
+      customExercises[editingExKey.muscle][customIdx]={
+        e:nombre,
+        s:document.getElementById('efSeries').value.trim(),
+        r:document.getElementById('efReps').value.trim(),
+        d:document.getElementById('efDesc').value.trim(),
+        o:document.getElementById('efObs').value.trim(),
+        custom:true
+      };
     }
+    if(vUrl) exVideos[nombre]=vUrl; else delete exVideos[nombre];
+    saveExVideos();
+    saveCustomExercises();
     showToast('✓ Ejercicio actualizado');
+
   } else if(editingExKey&&!editingExKey.isCustom){
-    // editing a base exercise — only save video URL, no duplicate
-    showToast('✓ Video guardado');
+    // ── Editar ejercicio base (modifica DB directamente) ──
+    const baseExs=DB.muscles[editingExKey.muscle]||[];
+    if(baseExs[editingExKey.idx]){
+      DB.muscles[editingExKey.muscle][editingExKey.idx]={
+        ...baseExs[editingExKey.idx],
+        e:nombre,
+        s:document.getElementById('efSeries').value.trim(),
+        r:document.getElementById('efReps').value.trim(),
+        d:document.getElementById('efDesc').value.trim(),
+        o:document.getElementById('efObs').value.trim()
+      };
+    }
+    if(vUrl) exVideos[nombre]=vUrl; else delete exVideos[nombre];
+    saveExVideos();
+    saveDBOverrides();
+    saveDBOverridesToCloud();
+    showToast('✓ Ejercicio actualizado');
+
   } else {
-    // new exercise
-    if(!customExercises[muscle])customExercises[muscle]=[];
-    // check duplicate
+    // ── Nuevo ejercicio ──
+    if(!customExercises[muscle]) customExercises[muscle]=[];
     const merged=getMergedMuscle(muscle);
     if(merged.find(x=>x.e.toLowerCase()===nombre.toLowerCase())){
       showToast('⚠ Ya existe un ejercicio con ese nombre en '+muscle);return;
     }
-    customExercises[muscle].push(exObj);
+    customExercises[muscle].push({
+      e:nombre,
+      s:document.getElementById('efSeries').value.trim(),
+      r:document.getElementById('efReps').value.trim(),
+      d:document.getElementById('efDesc').value.trim(),
+      o:document.getElementById('efObs').value.trim(),
+      custom:true
+    });
+    if(vUrl) exVideos[nombre]=vUrl; else delete exVideos[nombre];
+    saveExVideos();
+    saveCustomExercises();
     showToast(`✓ Ejercicio "${nombre}" agregado`);
   }
 
-  const vUrl=(document.getElementById('efVideo').value||'').trim();
-  if(vUrl) exVideos[nombre]=vUrl;
-  else delete exVideos[nombre];
-  saveExVideos();
-  saveCustomExercises();
   closeModal('ovExForm');
   document.getElementById('efMusculo').disabled=false;
   editingExKey=null;
