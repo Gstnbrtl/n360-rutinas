@@ -3079,9 +3079,10 @@ function mapMuscleToCirCat(muscle){
 function generateFromBlocks(){
   if(!cirBlockDefs.length){showToast('\u26a0 Agrega al menos un bloque');return;}
   const newStations=[];
-  cirBlockDefs.forEach(bd=>{
+  cirBlockDefs.forEach((bd,bi)=>{
     const muscle=bd.muscle;
     const count=Math.max(1,bd.count||1);
+    const blockLabel=`Bloque ${bi+1} \u2013 ${muscle}`;
     let pool=[];
     if(muscle==='Varios'){
       getCirAllCats().forEach(cat=>getCirAllEx(cat).forEach(name=>pool.push({name,cat})));
@@ -3095,7 +3096,7 @@ function generateFromBlocks(){
     const used=new Set();
     for(let i=0,added=0;added<count&&i<pool.length*3;i++){
       const p=pool[i%pool.length];
-      if(!used.has(p.name)){used.add(p.name);newStations.push({id:uid4(),ex:p.name,cat:p.cat,elementos:'',nota:''});added++;}
+      if(!used.has(p.name)){used.add(p.name);newStations.push({id:uid4(),ex:p.name,cat:p.cat,elementos:'',nota:'',blockLabel});added++;}
     }
   });
   cirStations=newStations;
@@ -3146,12 +3147,18 @@ function renderCirStations(){
 
   const allCatOpts = getCirAllCats().map(c=>`<option value="${c}">${c}</option>`).join('');
 
+  let lastBlockLabel = null;
   container.innerHTML = cirStations.map((s,i)=>{
     const cat = s.cat || Object.keys(CIR_DB)[0];
     const dlOpts = getCirAllEx(cat).map(e=>`<option value="${e}">`).join('');
     const catOpts = getCirAllCats().map(c=>`<option value="${c}" ${c===s.cat?'selected':''}>${c}</option>`).join('');
     const catColor = {'Fuerza – Tren Inferior':'#2980B9','Fuerza – Tren Superior':'#8E44AD','Core – Zona Media':'#E74C3C','Aeróbicos / Potencia / Híbridos':'#E67E22','Personalizado':'#27AE60'}[s.cat] || '#555';
-    return `
+    let blockHeader = '';
+    if(s.blockLabel && s.blockLabel !== lastBlockLabel){
+      lastBlockLabel = s.blockLabel;
+      blockHeader = `<div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:${catColor};padding:.5rem .1rem .25rem;margin-top:${i>0?'.6rem':'0'}">${s.blockLabel}</div>`;
+    }
+    return blockHeader + `
     <div class="cir-station" id="cst_${s.id}" style="display:grid;grid-template-columns:28px 1fr 1fr 1fr 32px;gap:.5rem;align-items:start;padding:.6rem .75rem;background:var(--card2);border-radius:6px;margin-bottom:.4rem;border-left:3px solid ${catColor}">
       <div style="font-weight:700;color:var(--gray);font-size:.85rem;padding-top:.45rem">${i+1}</div>
       <div>
@@ -3303,8 +3310,39 @@ function generateCircuit(){
   const catColor = {'Fuerza – Tren Inferior':'#2980B9','Fuerza – Tren Superior':'#8E44AD','Core – Zona Media':'#E74C3C','Aeróbicos / Potencia / Híbridos':'#E67E22'};
   const catIcon  = {'Fuerza – Tren Inferior':'🏋','Fuerza – Tren Superior':'💪','Core – Zona Media':'🔥','Aeróbicos / Potencia / Híbridos':'⚡'};
 
-  document.getElementById('cirResultStations').innerHTML = `
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.6rem">
+  // Group stations by blockLabel if present
+  const hasBlocks = cirStations.some(s=>s.blockLabel);
+  let stationsHTML = '';
+  if(hasBlocks){
+    const groups = [];
+    cirStations.forEach((s,i)=>{
+      const lbl = s.blockLabel || 'Sin bloque';
+      const last = groups[groups.length-1];
+      if(!last || last.label !== lbl) groups.push({label:lbl, stations:[], startIdx:i});
+      groups[groups.length-1].stations.push({...s, globalIdx:i});
+    });
+    stationsHTML = groups.map(g=>{
+      const col = catColor[g.stations[0].cat]||'#555';
+      return `<div style="margin-bottom:1rem">
+        <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:${col};padding:.3rem 0 .5rem;border-bottom:1px solid ${col}33;margin-bottom:.5rem">${g.label}</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem">
+          ${g.stations.map(s=>{
+            const col2 = catColor[s.cat]||'#555';
+            const ico = catIcon[s.cat]||'•';
+            return `<div style="background:var(--card2);border-radius:6px;padding:.65rem .85rem;border-left:3px solid ${col2}">
+              <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.35rem">
+                <span style="background:${col2};color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0">${s.globalIdx+1}</span>
+                <span style="font-size:.65rem;color:${col2};font-weight:600;text-transform:uppercase">${ico} ${(s.cat||'').replace('Fuerza – ','').replace('Aeróbicos / Potencia / Híbridos','Aeróbico')}</span>
+              </div>
+              <div style="font-weight:700;font-size:.88rem;margin-bottom:.25rem;line-height:1.3">${s.ex||'—'}</div>
+              ${s.elementos?`<div style="font-size:.72rem;color:var(--gray)">🔧 ${s.elementos}</div>`:''}
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`;
+    }).join('');
+  } else {
+    stationsHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.6rem">
       ${cirStations.map((s,i)=>{
         const col = catColor[s.cat]||'#555';
         const ico = catIcon[s.cat]||'•';
@@ -3317,7 +3355,10 @@ function generateCircuit(){
           ${s.elementos ? `<div style="font-size:.72rem;color:var(--gray)">🔧 ${s.elementos}</div>` : ''}
         </div>`;
       }).join('')}
-    </div>
+    </div>`;
+  }
+
+  document.getElementById('cirResultStations').innerHTML = stationsHTML
     <div style="margin-top:.75rem;padding:.6rem .85rem;background:var(--card2);border-radius:6px;font-size:.8rem;color:var(--gray)">
       <strong style="color:var(--text)">Descanso entre vueltas:</strong> ${descVuelta} &nbsp;|&nbsp;
 <strong style="color:var(--text)">Estimación calórica:</strong> ~${totalCal} kcal
