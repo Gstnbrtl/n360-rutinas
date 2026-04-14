@@ -78,7 +78,8 @@
           "muscle": "Core / Abdomen",
           "cfg": {},
           "exs": [
-            {"e": "Bicho muerto", "type": "normal", "s": "2", "r": "6 PL", "d": "60", "i": "ADAPTADO EN BANCO: acostada en banco, extensión suave de brazo y pierna opuesta – sin presión abdominal, muy suave"}
+            {"e": "Rotación con banda", "type": "normal", "s": "3", "r": "10 PL", "d": "60", "i": "DE PIE: antirotación suave con banda a media altura, torso erguido, sin flexión de columna"},
+            {"e": "Pallof press con polea", "type": "normal", "s": "2", "r": "10 PL", "d": "60", "i": "DE PIE: brazos extendidos al frente, resistir la rotación, sin empujar con columna"}
           ]
         }
       ]
@@ -150,7 +151,8 @@
           "muscle": "Core / Abdomen",
           "cfg": {},
           "exs": [
-            {"e": "Bicho muerto", "type": "normal", "s": "2", "r": "6 PL", "d": "60", "i": "ADAPTADO EN BANCO: respiración controlada, extensión suave, sin presión abdominal ni retención de aire"}
+            {"e": "Rotación con banda", "type": "normal", "s": "3", "r": "10 PL", "d": "60", "i": "DE PIE: banda a altura de pecho, rotación controlada del tronco, sin compensar con columna lumbar"},
+            {"e": "Elevación de talones", "type": "normal", "s": "2", "r": "12", "d": "60", "i": "DE PIE: activa core suave al elevar, mantener postura erguida – cierre postural"}
           ]
         }
       ]
