@@ -1,0 +1,189 @@
+{
+  "alumno": "Amalia",
+  "objetivo": "Fortalecimiento general adaptado – 62 años, actividad previa: caminata. Buena movilidad articular. Cifosis dorsal y hombros antepulsados: priorizar retracción escapular, espalda alta y postura. Cargas livianas al inicio, progresión gradual.",
+  "days": [
+    {
+      "title": "Día 1 – Cuádriceps + Glúteos + Gemelos",
+      "warmup": [
+        {"e": "Sentadilla aérea sobre banco", "s": "2", "r": "8", "d": "60 seg"},
+        {"e": "Perro de caza", "s": "2", "r": "10 PL", "d": "60 seg"},
+        {"e": "Elevación de talones", "s": "2", "r": "12", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Prensa", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "carga liviana, pies al centro, rango sin dolor"},
+            {"e": "Sillón cuádriceps", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "extensión controlada, sin hiperextensión de rodilla"},
+            {"e": "Sentadilla sobre banco", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "apoyarse al bajar, tronco erguido"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Hip Thrust", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "mentón al pecho, espalda apoyada en banco, no hiperextender lumbar"},
+            {"e": "Patada de glúteo con tobillera", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "en cuadrupedia, core activo, movimiento lento"},
+            {"e": "Puente de glúteos con mancuerna", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "peso liviano, apoya espalda en banco"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Abductores",
+          "cfg": {},
+          "exs": [
+            {"e": "Abducciones con banda", "type": "normal", "s": "3", "r": "12 PL", "d": "60", "i": "de pie o sentada, banda en rodillas"},
+            {"e": "Abducción de cadera", "type": "normal", "s": "3", "r": "15", "d": "60", "i": "de pie, apoyo en barra, movimiento controlado"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Gemelos",
+          "cfg": {},
+          "exs": [
+            {"e": "Elevación de talones", "type": "normal", "s": "3", "r": "15 PL", "d": "60", "i": "bilateral, movimiento lento, apoya en barra"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Espalda + Hombros Postural + Core",
+      "warmup": [
+        {"e": "Vuelo posterior con banda", "s": "2", "r": "12", "d": "60 seg"},
+        {"e": "Lumbares con pelota tenis", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Bicho muerto", "s": "2", "r": "10", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Jalón cerrado", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "carga liviana, tirón a pecho, codos hacia caderas – muy beneficioso para cifosis"},
+            {"e": "Remo con polea", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "espalda erguida, retracción escapular al final"},
+            {"e": "Vuelo posterior con banda", "type": "normal", "s": "3", "r": "15", "d": "90", "i": "brazos rectos, lento y controlado – foco postural"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "Pull face", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "codos arriba, deltoides posterior – corrige antepulsión"},
+            {"e": "Elevaciones laterales", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "mancuerna liviana, no superar 80°, codo ligeramente flexionado"},
+            {"e": "Press Arnold", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "sentada, mancuernas livianas, movimiento completo controlado"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha frontal", "type": "normal", "s": "3", "r": "20 seg", "d": "60", "i": "columna neutra, sin hundir lumbares"},
+            {"e": "Plancha toque de hombro", "type": "normal", "s": "3", "r": "10", "d": "60", "i": "lento y controlado, cadera estable"},
+            {"e": "Rotación con banda", "type": "normal", "s": "3", "r": "10 PL", "d": "60", "i": "antirotación, tronco erguido"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "CI – Core",
+          "cfg": {},
+          "exs": [
+            {"e": "Lumbares tipo cobra", "type": "normal", "s": "3", "r": "10", "d": "60", "i": "subir lento, mantener 2 seg arriba – foco en extensión torácica"},
+            {"e": "Plancha remo (perrito)", "type": "normal", "s": "3", "r": "10 PL", "d": "60", "i": "cadera estable, sin rotar"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 3 – Isquiotibiales + Glúteos + Core",
+      "warmup": [
+        {"e": "Perro de caza", "s": "2", "r": "10 PL", "d": "60 seg"},
+        {"e": "Bicho muerto", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Rotaciones con disco liviano", "s": "2", "r": "10", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Peso muerto con mancuernas", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "espalda neutra, descenso hasta rodillas, carga liviana"},
+            {"e": "Sillón de isquios", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "rango completo, carga liviana"},
+            {"e": "Puente de isquios", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "talones sobre banco, subir lento"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Hip Thrust", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "progresar carga respecto al día 1"},
+            {"e": "Patada de glúteo en banco", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "apoyo en banco, core activo, movimiento controlado"},
+            {"e": "Patada de glúteo en polea", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "de pie, apoyo en barra, sin compensar con columna"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Bicho muerto", "type": "normal", "s": "3", "r": "10", "d": "60", "i": "lumbar pegada al piso, movimiento lento y alternado"},
+            {"e": "Plancha de arrastre", "type": "normal", "s": "3", "r": "15", "d": "60", "i": "mancuerna liviana, core firme"},
+            {"e": "Plancha lateral", "type": "normal", "s": "3", "r": "15 seg PL", "d": "60", "i": "rodillas apoyadas si es necesario"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 4 – Hombros + Pecho + Bíceps + Tríceps",
+      "warmup": [
+        {"e": "Press hombros con banda", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Apertura con banda", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Rotaciones con banda", "s": "2", "r": "10 PL", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "Press militar con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "sentada, carga liviana, sin arquear lumbar"},
+            {"e": "Elevaciones laterales", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "mancuerna liviana, codo semiflexionado"},
+            {"e": "Pull face", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "foco en deltoides posterior y retracción escapular"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Pecho",
+          "cfg": {},
+          "exs": [
+            {"e": "Apertura en polea", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "de pie, carga liviana, codos semiflexionados"},
+            {"e": "Press de banca con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "banco plano, mancuernas livianas, no arquear"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Bíceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Curl de bíceps con barra", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "sin balanceo de tronco, carga liviana"},
+            {"e": "Curl de bíceps inclinado", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "estiramiento completo, movimiento lento"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Tríceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Extensión en polea con soga", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "codos pegados al cuerpo, carga liviana"},
+            {"e": "Tríceps en cajón", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "manos detrás en banco, rodillas a 90°, sin bajar demasiado"}
+          ]
+        }
+      ]
+    }
+  ]
+}
