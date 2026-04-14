@@ -2236,10 +2236,8 @@ function saveExercise(){
     }
     showToast('✓ Ejercicio actualizado');
   } else if(editingExKey&&!editingExKey.isCustom){
-    // editing a base exercise: save as custom override? No — just add new custom
-    if(!customExercises[muscle])customExercises[muscle]=[];
-    customExercises[muscle].push(exObj);
-    showToast('✓ Versión personalizada guardada');
+    // editing a base exercise — only save video URL, no duplicate
+    showToast('✓ Video guardado');
   } else {
     // new exercise
     if(!customExercises[muscle])customExercises[muscle]=[];
