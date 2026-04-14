@@ -2252,6 +2252,10 @@ function saveExercise(){
     showToast(`✓ Ejercicio "${nombre}" agregado`);
   }
 
+  const vUrl=(document.getElementById('efVideo').value||'').trim();
+  if(vUrl) exVideos[nombre]=vUrl;
+  else delete exVideos[nombre];
+  saveExVideos();
   saveCustomExercises();
   closeModal('ovExForm');
   document.getElementById('efMusculo').disabled=false;
