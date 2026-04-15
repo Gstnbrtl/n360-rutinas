@@ -878,6 +878,75 @@ select option{background:var(--surface2);color:var(--white)}
 
 </div><!-- /view-circuito -->
 
+<!-- ═══════════════ PORTAL CLIENTE VIEW ═══════════════ -->
+<div class="app-view" id="view-portal">
+<div class="wrap" style="max-width:720px;padding-top:1.5rem">
+
+  <!-- Saludo -->
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+    <div>
+      <h2 style="margin:0;font-family:var(--font-display);font-size:2rem;color:var(--white)">Hola, <span id="portalNombre"></span></h2>
+      <p style="margin:.25rem 0 0;color:var(--gray);font-size:.9rem">Tu rutina de entrenamiento — N360</p>
+    </div>
+    <button class="btn btn-dark btn-sm" onclick="doLogout()">Cerrar sesión</button>
+  </div>
+
+  <!-- Sin rutina -->
+  <div id="portalNoRoutine" style="display:none">
+    <div class="card">
+      <div class="card-body" style="text-align:center;padding:2.5rem;color:var(--gray)">
+        Tu entrenador todavía no cargó tu rutina. ¡Pronto estará disponible!
+      </div>
+    </div>
+  </div>
+
+  <!-- Rutina -->
+  <div id="portalRoutineCard" style="display:none">
+    <div class="card" style="margin-bottom:1rem">
+      <div class="card-hdr" style="display:flex;justify-content:space-between;align-items:center">
+        <h3 id="portalRoutineName" style="margin:0;font-size:1rem"></h3>
+        <button class="btn btn-dark btn-sm" onclick="portalExportPDF()">📄 Descargar PDF</button>
+      </div>
+      <div class="card-body" id="portalRoutineBody" style="overflow-x:auto;padding:.75rem"></div>
+    </div>
+  </div>
+
+  <!-- Mis datos -->
+  <div class="card">
+    <div class="card-hdr"><h3 style="margin:0;font-size:1rem">Mis datos</h3></div>
+    <div class="card-body" style="display:flex;flex-direction:column;gap:.85rem;padding:1rem">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div>
+          <label class="field-label">Nombre</label>
+          <input class="inp" id="portalFieldNombre" type="text">
+        </div>
+        <div>
+          <label class="field-label">Teléfono</label>
+          <input class="inp" id="portalFieldTelefono" type="tel">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div>
+          <label class="field-label">Email de contacto</label>
+          <input class="inp" id="portalFieldEmail" type="email">
+        </div>
+        <div>
+          <label class="field-label">Objetivo</label>
+          <input class="inp" id="portalFieldObjetivo" type="text">
+        </div>
+      </div>
+      <div>
+        <label class="field-label">Notas / observaciones</label>
+        <textarea class="inp" id="portalFieldNotas" rows="3" style="resize:vertical"></textarea>
+      </div>
+      <button class="btn btn-red" onclick="portalSaveData()">Guardar cambios</button>
+    </div>
+  </div>
+
+</div>
+</div><!-- /view-portal -->
+
+
 
 <!-- ═══════════════ MODALS ═══════════════ -->
 
@@ -961,6 +1030,23 @@ select option{background:var(--surface2);color:var(--white)}
           <label class="field-label">Monto</label>
           <input class="inp" id="ecMonto" type="number" placeholder="0">
         </div>
+      </div>
+    </div>
+    <div class="card-body" style="padding:.75rem 1.1rem 0">
+      <div class="form-sec-title">Portal del cliente</div>
+      <div id="ecPortalStatus" style="font-size:.85rem;margin-bottom:.6rem;min-height:1.4rem;color:var(--gray)">Sin cuenta de portal</div>
+      <div id="ecPortalCreateSection" style="display:flex;flex-direction:column;gap:.6rem">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+          <div>
+            <label class="field-label">Email de acceso</label>
+            <input class="inp" id="ecPortalEmail" type="email" placeholder="email@ejemplo.com">
+          </div>
+          <div>
+            <label class="field-label">Contraseña</label>
+            <input class="inp" id="ecPortalPass" type="password" placeholder="Mínimo 6 caracteres">
+          </div>
+        </div>
+        <button class="btn btn-dark btn-sm" onclick="createClientAccount()" style="align-self:flex-start">➕ Crear cuenta de portal</button>
       </div>
     </div>
     <div class="modal-foot">
@@ -2544,8 +2630,8 @@ function fillEx(bid){
 // ════════════════════════════════════
 // INIT
 // ════════════════════════════════════
-function genPDF(){
-  var data = collect();
+function genPDF(preloadedData){
+  var data = preloadedData || collect();
   var doc = new jspdf.jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
   var pageW = 210, pageH = 297;
   var marginL = 10, marginR = 10, marginT = 12, marginB = 12;
@@ -2864,6 +2950,19 @@ var PRELOADED_CUSTOM_EX = {"Abductores": [{"e": "Cangrejo con banda y tobilleras
 
 function openEditClient(){
   const cid = selectedClientId;
+  // Portal status
+  const c2 = clients[cid]||{};
+  const statusEl = document.getElementById('ecPortalStatus');
+  const createSec = document.getElementById('ecPortalCreateSection');
+  if(c2.auth_user_id){
+    statusEl.innerHTML = '<span style="color:var(--green)">✓ Portal activo — '+c2.portal_email+'</span>';
+    createSec.style.display = 'none';
+  } else {
+    statusEl.textContent = 'Sin cuenta de portal';
+    createSec.style.display = 'flex';
+    document.getElementById('ecPortalEmail').value = '';
+    document.getElementById('ecPortalPass').value = '';
+  }
   if(!cid || !clients[cid]) return;
   const c = clients[cid];
   const ext = extraData[cid]||{};
@@ -2886,6 +2985,7 @@ function saveEditClient(){
   clients[cid].name     = nombre;
   clients[cid].objetivo = document.getElementById('ecObjetivo').value.trim();
   clients[cid].notas    = document.getElementById('ecNotas').value.trim();
+  clients[cid].telefono = document.getElementById('ecTelefono').value.trim();
   extraData[cid] = {
     ...(extraData[cid]||{}),
     telefono:    document.getElementById('ecTelefono').value.trim(),
@@ -3937,6 +4037,108 @@ async function doLogin(){
   await onLogin(data.user);
 }
 
+// ════════════════════════════════════════════════════════
+// PORTAL DE CLIENTES
+// ════════════════════════════════════════════════════════
+
+async function createClientAccount(){
+  const cid = selectedClientId;
+  if(!cid || !clients[cid]) return;
+  const email = document.getElementById('ecPortalEmail').value.trim();
+  const pass  = document.getElementById('ecPortalPass').value.trim();
+  if(!email || !pass){ showToast('⚠ Completá email y contraseña'); return; }
+  if(pass.length < 6){ showToast('⚠ Contraseña mínimo 6 caracteres'); return; }
+  // Crear usuario via REST (no afecta la sesión actual del trainer)
+  const res = await fetch(SUPA_URL+'/auth/v1/signup', {
+    method:'POST',
+    headers:{'Content-Type':'application/json','apikey':SUPA_KEY},
+    body:JSON.stringify({email, password:pass})
+  });
+  const d = await res.json();
+  if(!res.ok || d.error || d.error_description){
+    showToast('⚠ '+(d.error_description||d.msg||d.error||'Error al crear cuenta')); return;
+  }
+  const newUserId = d.id || (d.user && d.user.id);
+  if(!newUserId){ showToast('⚠ No se pudo obtener el ID del usuario'); return; }
+  // Insertar perfil con role client
+  await supa.from('profiles').upsert({id:newUserId, email, nombre:clients[cid].name||'', role:'client'});
+  // Vincular al registro del cliente
+  await supa.from('clients').update({auth_user_id:newUserId, portal_email:email}).eq('id',cid).eq('user_id',currentUser.id);
+  clients[cid].auth_user_id = newUserId;
+  clients[cid].portal_email = email;
+  document.getElementById('ecPortalStatus').innerHTML = '<span style="color:var(--green)">✓ Portal activo — '+email+'</span>';
+  document.getElementById('ecPortalCreateSection').style.display = 'none';
+  showToast('✓ Cuenta de portal creada');
+}
+
+var _portalClientId = null;
+var _portalRoutineData = null;
+
+async function loadClientPortal(user){
+  // Ocultar nav del trainer
+  const nav = document.querySelector('.app-nav');
+  if(nav) nav.style.display='none';
+  // Buscar el registro de cliente vinculado
+  const {data:clientRow} = await supa.from('clients')
+    .select('id,name,objetivo,notas,telefono,portal_email')
+    .eq('auth_user_id', user.id)
+    .single();
+  if(!clientRow){
+    document.getElementById('view-portal').innerHTML = '<div class="wrap" style="text-align:center;padding:3rem;color:var(--gray)">Tu cuenta no está vinculada a ningún cliente aún.<br>Contactá a tu entrenador.</div>';
+    showView('portal'); return;
+  }
+  _portalClientId = clientRow.id;
+  // Cargar ultima rutina
+  const {data:ruts} = await supa.from('routines')
+    .select('*')
+    .eq('client_id', clientRow.id)
+    .order('id',{ascending:false})
+    .limit(1);
+  const latestRut = ruts && ruts[0];
+  // Poblar saludo y formulario de datos
+  document.getElementById('portalNombre').textContent = clientRow.name;
+  document.getElementById('portalFieldNombre').value   = clientRow.name    || '';
+  document.getElementById('portalFieldTelefono').value = clientRow.telefono || '';
+  document.getElementById('portalFieldEmail').value    = clientRow.portal_email || user.email || '';
+  document.getElementById('portalFieldObjetivo').value = clientRow.objetivo || '';
+  document.getElementById('portalFieldNotas').value    = clientRow.notas    || '';
+  if(latestRut){
+    let rObj = latestRut.data || {};
+    if(!rObj.data && (rObj.alumno||rObj.days)) rObj = {data:rObj};
+    const rutData = rObj.data || rObj;
+    _portalRoutineData = rutData;
+    document.getElementById('portalRoutineName').textContent = latestRut.name || rutData.alumno || 'Mi rutina';
+    document.getElementById('portalRoutineBody').innerHTML = buildPreviewHTML(rutData);
+    document.getElementById('portalRoutineCard').style.display = '';
+    document.getElementById('portalNoRoutine').style.display = 'none';
+  } else {
+    document.getElementById('portalRoutineCard').style.display = 'none';
+    document.getElementById('portalNoRoutine').style.display = '';
+  }
+  showView('portal');
+  showToast('✓ Bienvenido/a, '+clientRow.name);
+}
+
+async function portalSaveData(){
+  if(!_portalClientId){ showToast('⚠ Error: cliente no identificado'); return; }
+  const updates = {
+    name:     document.getElementById('portalFieldNombre').value.trim(),
+    telefono: document.getElementById('portalFieldTelefono').value.trim(),
+    objetivo: document.getElementById('portalFieldObjetivo').value.trim(),
+    notas:    document.getElementById('portalFieldNotas').value.trim(),
+    portal_email: document.getElementById('portalFieldEmail').value.trim()
+  };
+  const {error} = await supa.from('clients').update(updates).eq('id',_portalClientId);
+  if(error){ showToast('⚠ Error al guardar: '+error.message); return; }
+  document.getElementById('portalNombre').textContent = updates.name;
+  showToast('✓ Datos actualizados');
+}
+
+function portalExportPDF(){
+  if(!_portalRoutineData){ showToast('⚠ No hay rutina para exportar'); return; }
+  genPDF(_portalRoutineData);
+}
+
 async function doRegister(){
   const nombre = document.getElementById('regNombre').value.trim();
   const email  = document.getElementById('regEmail').value.trim();
@@ -3965,11 +4167,17 @@ async function doLogout(){
 async function onLogin(user){
   currentUser = user;
   document.getElementById('loginOverlay').style.display='none';
-  showToast('✓ Bienvenido');
-  await loadAllFromCloud();
-  loadExtra(); renderClients();
-  renderDays();
-  setTimeout(patchAddButtons,100);
+  const {data:prof} = await supa.from('profiles').select('role').eq('id', user.id).single();
+  const isTrainer = !prof || prof.role !== 'client';
+  if(isTrainer){
+    showToast('✓ Bienvenido');
+    await loadAllFromCloud();
+    loadExtra(); renderClients();
+    renderDays();
+    setTimeout(patchAddButtons,100);
+  } else {
+    await loadClientPortal(user);
+  }
 }
 
 // ════════════════════════════════════════════════════════
@@ -3991,6 +4199,9 @@ async function loadAllFromCloud(){
           name: c.name,
           objetivo: c.objetivo||'',
           notas: c.notas||'',
+          telefono: c.telefono||'',
+          auth_user_id: c.auth_user_id||null,
+          portal_email: c.portal_email||'',
           routines: []
         };
       });
@@ -4096,7 +4307,10 @@ async function saveToCloud(){
   try{
     // Upsert all clients
     const clientRows = Object.values(clients).map(function(c){
-      return { id:c.id, user_id:currentUser.id, name:c.name, objetivo:c.objetivo||'', notas:c.notas||'' };
+      const row = { id:c.id, user_id:currentUser.id, name:c.name, objetivo:c.objetivo||'', notas:c.notas||'', telefono:c.telefono||'' };
+      if(c.auth_user_id) row.auth_user_id = c.auth_user_id;
+      if(c.portal_email) row.portal_email = c.portal_email;
+      return row;
     });
     if(clientRows.length) await supa.from('clients').upsert(clientRows);
 
