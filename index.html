@@ -3656,40 +3656,68 @@ function genCircuitPDF(){
   sf('bold',7.5,gray);
   tx('ESTACIONES DEL CIRCUITO',mL,y); y+=4;
 
-  cirStations.forEach((s,i)=>{
-    if(i>0 && i%cols===0) y+=cellH+2;
-    if(i>0 && i%cols===0 && y+cellH+2 > pH-mB){
-      doc.addPage();
-      y=mT+8;
-      fr(mL,4,cW,3,navy);
-      sf('italic',6,gray);
-      tx('N360  ·  Circuito Intermitente  ·  '+nombre,mL,9);
-    }
-    const col2=i%cols;
+  function drawStation(s, idx, col2){
     const x=mL+col2*(cellW+2);
-    const yy=y;
     const cc=catCol[s.cat]||[85,85,85];
-
-    fr(x,yy,cellW,cellH,[245,246,250]);
-    // left accent
-    fr(x,yy,2,cellH,cc);
-    // number badge
+    fr(x,y,cellW,cellH,[245,246,250]);
+    fr(x,y,2,cellH,cc);
     doc.setFillColor(cc[0],cc[1],cc[2]);
-    doc.circle(x+7,yy+5.5,4,'F');
-    sf('bold',7.5,white); tx(String(i+1),x+7,yy+7.5,{align:'center'});
-    // category
-    sf('bold',5.5,cc); tx((s.cat||'').replace('Fuerza – ','').replace('Aeróbicos / Potencia / Híbridos','Aeróbico').toUpperCase(),x+13,yy+5);
-    // exercise
-    sf('bold',8.5,dark); 
-    const exLines = doc.splitTextToSize(s.ex||'—', cellW-15);
-    tx(exLines[0],x+13,yy+10.5);
-    // elementos
-    if(s.elementos){ sf('normal',6.5,gray); tx('🔧 '+s.elementos,x+13,yy+15); }
-  });
+    doc.circle(x+7,y+5.5,4,'F');
+    sf('bold',7.5,white); tx(String(idx+1),x+7,y+7.5,{align:'center'});
+    sf('bold',5.5,cc); tx((s.cat||'').replace('Fuerza – ','').replace('Aeróbicos / Potencia / Híbridos','Aeróbico').toUpperCase(),x+13,y+5);
+    sf('bold',8.5,dark);
+    const exLines=doc.splitTextToSize(s.ex||'—',cellW-15);
+    tx(exLines[0],x+13,y+10.5);
+    if(s.elementos){sf('normal',6.5,gray); tx(s.elementos,x+13,y+15);}
+  }
+  function addPageHeader(){
+    doc.addPage(); y=mT+8;
+    fr(mL,4,cW,3,navy); sf('italic',6,gray);
+    tx('N360  ·  Circuito Intermitente  ·  '+nombre,mL,9);
+  }
 
-  // move y past last row
-  const lastRow = Math.floor((cirStations.length-1)/cols);
-  y += (lastRow+1)*(cellH+2);
+  const hasBlocks=cirStations.some(s=>s.blockLabel);
+  if(hasBlocks){
+    // Agrupar por blockLabel manteniendo el orden
+    const groups=[];
+    cirStations.forEach(s=>{
+      const lbl=s.blockLabel||'Sin bloque';
+      const last=groups[groups.length-1];
+      if(!last||last.label!==lbl) groups.push({label:lbl,stations:[]});
+      groups[groups.length-1].stations.push(s);
+    });
+    let globalIdx=0;
+    groups.forEach((g,gi)=>{
+      const cc=catCol[g.stations[0].cat]||[85,85,85];
+      // Verificar espacio para header de bloque + al menos una fila
+      if(y+10+cellH>pH-mB){ addPageHeader(); }
+      // Header de bloque
+      fr(mL,y,cW,6.5,[237,242,250]);
+      fr(mL,y,3,6.5,cc);
+      sf('bold',7,cc); tx(g.label.toUpperCase(),mL+6,y+4.4);
+      y+=9;
+      // Estaciones del bloque en 2 columnas
+      g.stations.forEach((s,si)=>{
+        const col2=si%cols;
+        if(si>0&&col2===0){
+          y+=cellH+2;
+          if(y+cellH+2>pH-mB){ addPageHeader(); }
+        }
+        drawStation(s,globalIdx,col2);
+        globalIdx++;
+      });
+      y+=cellH+6; // cerrar ultima fila + separacion entre bloques
+    });
+  } else {
+    cirStations.forEach((s,i)=>{
+      if(i>0&&i%cols===0){
+        y+=cellH+2;
+        if(y+cellH+2>pH-mB){ addPageHeader(); }
+      }
+      drawStation(s,i,i%cols);
+    });
+    y+=cellH+6;
+  }
   y+=4;
 
   // Footer
