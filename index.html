@@ -519,6 +519,9 @@ select option{background:var(--surface2);color:var(--white)}
   .ex-row{grid-template-columns:1fr 46px 72px 60px!important}
   .anav-btn{font-size:.62rem;padding:.5rem .2rem}
 }
+.cir-tab-btn{font-family:var(--font-cond);font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.4rem 1rem;border-radius:20px;border:1px solid var(--border);background:none;color:var(--gray);cursor:pointer;transition:all .2s}
+.cir-tab-btn:hover{color:var(--white);border-color:var(--border2)}
+.cir-tab-btn.on{background:rgba(191,90,242,.15);border-color:rgba(191,90,242,.4);color:var(--tabata)}
 </style>
 </head>
 <body>
@@ -735,13 +738,16 @@ select option{background:var(--surface2);color:var(--white)}
 <div class="app-view" id="view-circuito">
 <div class="wrap">
 
-  <!-- Header -->
+  <!-- Header con tabs -->
   <div class="card" style="margin-bottom:1rem">
-    <div class="card-hdr" style="display:flex;justify-content:space-between;align-items:center">
-      <h2 style="margin:0">⚡ Generador de Circuito Intermitente</h2>
+    <div class="card-hdr" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+      <div style="display:flex;gap:.5rem">
+        <button class="cir-tab-btn on" id="cirTabInter" onclick="switchCirTab('inter')">⚡ Intermitente</button>
+        <button class="cir-tab-btn" id="cirTabBloques" onclick="switchCirTab('bloques')">⊞ Por Bloques</button>
+      </div>
       <div style="display:flex;gap:.5rem">
         <button class="btn btn-dark btn-sm" onclick="showCirlibModal()">📚 Biblioteca</button>
-        <button class="btn btn-red btn-sm" onclick="generateCircuit()">▶ Generar circuito</button>
+        <button class="btn btn-red btn-sm" id="cirGenBtn" onclick="generateCircuit()">▶ Generar</button>
       </div>
     </div>
   </div>
@@ -810,7 +816,7 @@ select option{background:var(--surface2);color:var(--white)}
   </div>
 
   <!-- Generador por bloques -->
-  <div class="card" style="margin-bottom:1rem" id="cirBlockBuilderCard">
+  <div class="card" style="margin-bottom:1rem;display:none" id="cirBlockBuilderCard">
     <div class="card-hdr" style="display:flex;align-items:center;justify-content:space-between">
       <h3 style="margin:0;font-size:.95rem">&#9889; Armar por bloques</h3>
       <div style="display:flex;gap:.5rem">
@@ -3141,8 +3147,18 @@ function generateFromBlocks(){
   const stEl=document.getElementById('cirEstaciones');
   if(stEl)stEl.value=cirStations.length;
   renderCirStations();
-  showToast('\u2713 '+cirStations.length+' estaciones generadas');
-  setTimeout(()=>{const sc=document.getElementById('cirStationsContainer');if(sc)sc.scrollIntoView({behavior:'smooth',block:'nearest'});},100);
+  generateCircuit();
+  setTimeout(()=>{const rp=document.getElementById('cirResultPanel');if(rp)rp.scrollIntoView({behavior:'smooth',block:'nearest'});},100);
+}
+
+function switchCirTab(tab){
+  const isInter=tab==='inter';
+  document.getElementById('cirTabInter').classList.toggle('on',isInter);
+  document.getElementById('cirTabBloques').classList.toggle('on',!isInter);
+  document.getElementById('cirBlockBuilderCard').style.display=isInter?'none':'';
+  const genBtn=document.getElementById('cirGenBtn');
+  if(isInter){genBtn.textContent='\u25b6 Generar';genBtn.onclick=generateCircuit;}
+  else{genBtn.textContent='\u229e Generar';genBtn.onclick=generateFromBlocks;}
 }
 
 // ── Station management ──
