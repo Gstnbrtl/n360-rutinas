@@ -901,14 +901,34 @@ select option{background:var(--surface2);color:var(--white)}
   </div>
 
   <!-- Rutina -->
-  <div id="portalRoutineCard" style="display:none">
-    <div class="card" style="margin-bottom:1rem">
-      <div class="card-hdr" style="display:flex;justify-content:space-between;align-items:center">
-        <h3 id="portalRoutineName" style="margin:0;font-size:1rem"></h3>
-        <button class="btn btn-dark btn-sm" onclick="portalExportPDF()">📄 Descargar PDF</button>
-      </div>
-      <div class="card-body" id="portalRoutineBody" style="overflow-x:auto;padding:.75rem"></div>
+  <div id="portalRoutineCard" style="display:none;padding-bottom:5rem">
+
+    <!-- Nombre de rutina -->
+    <div style="text-align:center;margin-bottom:1.25rem">
+      <div id="portalRoutineName" style="font-family:var(--font-display);font-size:1.6rem;color:var(--white);letter-spacing:.04em"></div>
     </div>
+
+    <!-- Navegacion de dias -->
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:1rem">
+      <button id="portalBtnPrev" onclick="portalPrevDay()" style="width:48px;height:48px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--white);font-size:1.3rem;cursor:pointer;flex-shrink:0">←</button>
+      <div style="text-align:center;flex:1">
+        <div id="portalDayIndicator" style="font-size:.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.2rem"></div>
+        <div id="portalDayTitle" style="font-family:var(--font-cond);font-size:1.15rem;font-weight:700;color:var(--white)"></div>
+      </div>
+      <button id="portalBtnNext" onclick="portalNextDay()" style="width:48px;height:48px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--white);font-size:1.3rem;cursor:pointer;flex-shrink:0">→</button>
+    </div>
+
+    <!-- Contenido del dia -->
+    <div id="portalDayContent"></div>
+
+    <!-- Puntos indicadores -->
+    <div id="portalDayDots" style="display:flex;justify-content:center;gap:.5rem;margin-top:1rem"></div>
+
+  </div>
+
+  <!-- Boton PDF flotante -->
+  <div id="portalPdfBtn" style="display:none;position:fixed;bottom:1.5rem;right:1.5rem;z-index:200">
+    <button onclick="portalExportPDF()" style="background:var(--red);color:#fff;border:none;border-radius:50px;padding:.85rem 1.5rem;font-family:var(--font-cond);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;box-shadow:0 4px 20px rgba(255,59,48,.4);display:flex;align-items:center;gap:.5rem">📄 Descargar PDF</button>
   </div>
 
   <!-- Mis datos -->
@@ -1049,8 +1069,9 @@ select option{background:var(--surface2);color:var(--white)}
         <button class="btn btn-dark btn-sm" onclick="createClientAccount()" style="align-self:flex-start">➕ Crear cuenta de portal</button>
       </div>
     </div>
-    <div class="modal-foot">
+    <div class="modal-foot" style="flex-wrap:wrap;gap:.5rem">
       <button class="btn btn-dark" onclick="closeModal('ovEditClient')">Cancelar</button>
+      <button class="btn btn-dark" onclick="assignRoutineToClient()" title="Asignar la rutina actual del editor a este cliente">📋 Asignar rutina del editor</button>
       <button class="btn btn-red" onclick="saveEditClient()">💾 Guardar cambios</button>
     </div>
   </div>
@@ -2560,6 +2581,7 @@ function createClient(){
     showToast(`✓ Cliente ${name} creado`);
   }
   saveToStorage();
+  saveToCloud();
   closeModal('ovNewClient');
   renderClients();
 }
@@ -4062,7 +4084,7 @@ async function createClientAccount(){
   const res = await fetch(SUPA_URL+'/auth/v1/signup', {
     method:'POST',
     headers:{'Content-Type':'application/json','apikey':SUPA_KEY},
-    body:JSON.stringify({email, password:pass, data:{role:'client'}})
+    body:JSON.stringify({email, password:pass, data:{role:'client', client_id:cid, trainer_id:currentUser.id}})
   });
   // Restaurar sesion del trainer inmediatamente (Supabase puede haber pisado la sesion)
   if(trainerSession) await supa.auth.setSession({access_token:trainerSession.access_token, refresh_token:trainerSession.refresh_token});
@@ -4074,8 +4096,19 @@ async function createClientAccount(){
   if(!newUserId){ showToast('\u26a0 No se pudo obtener el ID del usuario'); return; }
   // Insertar perfil con role client
   await supa.from('profiles').upsert({id:newUserId, email, nombre:clients[cid].name||'', role:'client'});
-  // Vincular al registro del cliente
-  await supa.from('clients').update({auth_user_id:newUserId, portal_email:email}).eq('id',cid).eq('user_id',currentUser.id);
+  // Asegurar que el cliente existe en Supabase y vincular la cuenta
+  const cd = clients[cid];
+  const {error:upErr} = await supa.from('clients').upsert({
+    id: cid,
+    user_id: currentUser.id,
+    name: cd.name||'',
+    objetivo: cd.objetivo||'',
+    notas: cd.notas||'',
+    telefono: cd.telefono||'',
+    auth_user_id: newUserId,
+    portal_email: email
+  });
+  if(upErr){ showToast('⚠ Error al vincular: '+upErr.message); return; }
   clients[cid].auth_user_id = newUserId;
   clients[cid].portal_email = email;
   document.getElementById('ecPortalStatus').innerHTML = '<span style="color:var(--green)">✓ Portal activo — '+email+'</span>';
@@ -4085,6 +4118,7 @@ async function createClientAccount(){
 
 var _portalClientId = null;
 var _portalRoutineData = null;
+var _portalCurrentDay = 0;
 
 async function loadClientPortal(user){
   // Ocultar elementos del trainer
@@ -4093,13 +4127,40 @@ async function loadClientPortal(user){
   const hdrBtns = document.getElementById('trainerHeaderBtns');
   if(hdrBtns) hdrBtns.style.display='none';
   // Buscar el registro de cliente vinculado
-  const {data:clientRow} = await supa.from('clients')
-    .select('id,name,objetivo,notas,telefono,portal_email')
-    .eq('auth_user_id', user.id)
-    .single();
+  // Intento 1: usar client_id guardado en los metadatos del usuario (cuentas nuevas)
+  let clientRow = null;
+  const metaClientId = user.user_metadata && user.user_metadata.client_id;
+  if(metaClientId){
+    const {data:r1} = await supa.from('clients')
+      .select('id,name,objetivo,notas,telefono,portal_email')
+      .eq('id', metaClientId)
+      .maybeSingle();
+    clientRow = r1 || null;
+  }
+  // Intento 2 (fallback): buscar por auth_user_id (cuentas antiguas o si fallo el intento 1)
   if(!clientRow){
-    document.getElementById('view-portal').innerHTML = '<div class="wrap" style="text-align:center;padding:3rem;color:var(--gray)">Tu cuenta no está vinculada a ningún cliente aún.<br>Contactá a tu entrenador.</div>';
-    showView('portal'); return;
+    const {data:r2} = await supa.from('clients')
+      .select('id,name,objetivo,notas,telefono,portal_email')
+      .eq('auth_user_id', user.id)
+      .maybeSingle();
+    clientRow = r2 || null;
+  }
+  if(!clientRow){
+    // Cerrar sesion y mostrar overlay con mensaje de error
+    await supa.auth.signOut();
+    currentUser = null;
+    const overlay = document.getElementById('loginOverlay');
+    // Mostrar mensaje de error arriba del formulario de login
+    let errDiv = document.getElementById('portalLinkError');
+    if(!errDiv){
+      errDiv = document.createElement('div');
+      errDiv.id = 'portalLinkError';
+      errDiv.style.cssText = 'background:rgba(255,59,48,.12);border:1px solid rgba(255,59,48,.3);border-radius:10px;padding:.85rem 1rem;margin-bottom:1rem;color:#FF3B30;font-size:.9rem;text-align:center;';
+      overlay.querySelector('form, div > div').prepend(errDiv);
+    }
+    errDiv.textContent = 'Tu cuenta no esta vinculada a ningun cliente. Contacta a tu entrenador o inicia sesion como admin.';
+    overlay.style.display = 'flex';
+    return;
   }
   _portalClientId = clientRow.id;
   // Cargar ultima rutina
@@ -4121,12 +4182,15 @@ async function loadClientPortal(user){
     if(!rObj.data && (rObj.alumno||rObj.days)) rObj = {data:rObj};
     const rutData = rObj.data || rObj;
     _portalRoutineData = rutData;
+    _portalCurrentDay = 0;
     document.getElementById('portalRoutineName').textContent = latestRut.name || rutData.alumno || 'Mi rutina';
-    document.getElementById('portalRoutineBody').innerHTML = buildPreviewHTML(rutData);
+    portalRenderDay(0);
     document.getElementById('portalRoutineCard').style.display = '';
+    document.getElementById('portalPdfBtn').style.display = '';
     document.getElementById('portalNoRoutine').style.display = 'none';
   } else {
     document.getElementById('portalRoutineCard').style.display = 'none';
+    document.getElementById('portalPdfBtn').style.display = 'none';
     document.getElementById('portalNoRoutine').style.display = '';
   }
   showView('portal');
@@ -4151,6 +4215,99 @@ async function portalSaveData(){
 function portalExportPDF(){
   if(!_portalRoutineData){ showToast('⚠ No hay rutina para exportar'); return; }
   genPDF(_portalRoutineData);
+}
+
+function portalRenderDay(idx){
+  const days = (_portalRoutineData && _portalRoutineData.days) || [];
+  if(!days.length) return;
+  idx = Math.max(0, Math.min(idx, days.length - 1));
+  _portalCurrentDay = idx;
+  const day = days[idx];
+
+  // Indicador y titulo
+  document.getElementById('portalDayIndicator').textContent = 'Día ' + (idx + 1) + ' de ' + days.length;
+  document.getElementById('portalDayTitle').textContent = day.title || ('Día ' + (idx + 1));
+
+  // Flechas
+  document.getElementById('portalBtnPrev').style.opacity = idx === 0 ? '0.3' : '1';
+  document.getElementById('portalBtnNext').style.opacity = idx === days.length - 1 ? '0.3' : '1';
+
+  // Dots
+  const dotsEl = document.getElementById('portalDayDots');
+  dotsEl.innerHTML = '';
+  days.forEach(function(_,i){
+    const d = document.createElement('div');
+    d.style.cssText = 'width:8px;height:8px;border-radius:50%;background:' + (i===idx ? 'var(--red)' : 'var(--border)') + ';transition:background .2s;cursor:pointer';
+    d.onclick = function(){ portalRenderDay(i); };
+    dotsEl.appendChild(d);
+  });
+
+  // Contenido del dia
+  let html = '';
+
+  // Entrada en calor
+  if(day.warmup && day.warmup.length){
+    html += '<div style="margin-bottom:1rem">';
+    html += '<div style="font-family:var(--font-cond);font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gray);margin-bottom:.5rem">Entrada en calor</div>';
+    day.warmup.forEach(function(w){
+      html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.7rem 1rem;margin-bottom:.5rem;display:flex;justify-content:space-between;align-items:center">';
+      html += '<span style="font-family:var(--font-cond);font-size:1rem;color:var(--white)">' + (w.e||'') + '</span>';
+      html += '<span style="font-size:.8rem;color:var(--gray)">' + (w.s||'-') + 'x' + (w.r||'-') + '</span>';
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  // Bloques
+  if(day.blocks && day.blocks.length){
+    day.blocks.forEach(function(bl){
+      const typeColors = {amrap:'var(--amrap)',tabata:'var(--tabata)',varios:'var(--blue)',normal:'var(--red)'};
+      const accent = typeColors[bl.type] || 'var(--red)';
+      html += '<div style="margin-bottom:1rem">';
+      html += '<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">';
+      html += '<div style="width:3px;height:1.1rem;background:' + accent + ';border-radius:2px"></div>';
+      html += '<span style="font-family:var(--font-cond);font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:' + accent + '">' + (bl.muscle||bl.type||'') + '</span>';
+      if(bl.type==='amrap' && bl.cfg && bl.cfg.time) html += '<span style="font-size:.75rem;color:var(--gray);margin-left:.25rem">' + bl.cfg.time + ' min AMRAP</span>';
+      if(bl.type==='tabata' && bl.cfg) html += '<span style="font-size:.75rem;color:var(--gray);margin-left:.25rem">' + (bl.cfg.rounds||8) + ' rondas · ' + (bl.cfg.work||20) + '/' + (bl.cfg.rest||10) + 's</span>';
+      html += '</div>';
+      (bl.exs||[]).forEach(function(ex){
+        html += '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid ' + accent + ';border-radius:10px;padding:.85rem 1rem;margin-bottom:.5rem">';
+        html += '<div style="font-family:var(--font-cond);font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:.35rem">' + (ex.e||'') + '</div>';
+        html += '<div style="display:flex;gap:1rem;flex-wrap:wrap">';
+        if(ex.s) html += '<span style="font-size:.8rem;color:var(--gray)">Series: <b style="color:var(--white)">' + ex.s + '</b></span>';
+        if(ex.r) html += '<span style="font-size:.8rem;color:var(--gray)">Reps: <b style="color:var(--white)">' + ex.r + '</b></span>';
+        if(ex.d) html += '<span style="font-size:.8rem;color:var(--gray)">Desc: <b style="color:var(--white)">' + ex.d + 's</b></span>';
+        if(ex.i) html += '<span style="font-size:.8rem;color:var(--gray);font-style:italic">' + ex.i + '</span>';
+        html += '</div>';
+        html += '</div>';
+      });
+      html += '</div>';
+    });
+  }
+
+  document.getElementById('portalDayContent').innerHTML = html || '<p style="color:var(--gray);text-align:center">Sin ejercicios para este día.</p>';
+}
+
+function portalPrevDay(){
+  if(_portalCurrentDay > 0) portalRenderDay(_portalCurrentDay - 1);
+}
+
+function portalNextDay(){
+  const days = (_portalRoutineData && _portalRoutineData.days) || [];
+  if(_portalCurrentDay < days.length - 1) portalRenderDay(_portalCurrentDay + 1);
+}
+
+function assignRoutineToClient(){
+  const cid = selectedClientId;
+  if(!cid || !clients[cid]){ showToast('⚠ Seleccioná un cliente primero'); return; }
+  const data = collect();
+  if(!data || !data.days || !data.days.length){ showToast('⚠ No hay rutina cargada en el editor'); return; }
+  // Usa importRoutine para asignar la rutina actual del editor al cliente seleccionado
+  // Forzamos el alumno al nombre del cliente
+  data.alumno = clients[cid].name;
+  importRoutine(data);
+  closeModal('ovEditClient');
+  showToast('✓ Rutina asignada a ' + clients[cid].name);
 }
 
 async function doRegister(){
