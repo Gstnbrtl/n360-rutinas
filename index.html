@@ -536,7 +536,7 @@ select option{background:var(--surface2);color:var(--white)}
       <small>Sistema de Rutinas · Centro de Entrenamiento y Salud</small>
     </div>
   </div>
-  <div style="display:flex;align-items:center;gap:.5rem">
+  <div id="trainerHeaderBtns" style="display:flex;align-items:center;gap:.5rem">
     <button onclick="backupSystem()" title="Descargar backup completo del sistema" style="background:#27AE60;color:#fff;border:none;border-radius:4px;padding:.35rem .75rem;font-size:.75rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.3rem">⬇ <span class="btn-txt">Backup</span></button>
     <label title="Restaurar backup" style="background:#2980B9;color:#fff;border-radius:4px;padding:.35rem .75rem;font-size:.75rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.3rem;margin:0">⬆ <span class="btn-txt">Restaurar</span><input type="file" accept=".json" onchange="restoreSystem(event)" style="display:none"></label>
     <button onclick="doLogout()" title="Cerrar sesión" style="background:#c0392b;color:#fff;border:none;border-radius:4px;padding:.35rem .75rem;font-size:.75rem;font-weight:700;cursor:pointer">⏏ <span class="btn-txt">Salir</span></button>
@@ -4075,9 +4075,11 @@ var _portalClientId = null;
 var _portalRoutineData = null;
 
 async function loadClientPortal(user){
-  // Ocultar nav del trainer
+  // Ocultar elementos del trainer
   const nav = document.querySelector('.app-nav');
   if(nav) nav.style.display='none';
+  const hdrBtns = document.getElementById('trainerHeaderBtns');
+  if(hdrBtns) hdrBtns.style.display='none';
   // Buscar el registro de cliente vinculado
   const {data:clientRow} = await supa.from('clients')
     .select('id,name,objetivo,notas,telefono,portal_email')
