@@ -10,7 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture
 
-Everything lives in `index.html` (~3900 lines): all CSS, HTML, and JavaScript in one file.
+Everything lives in `index.html` (~4300 lines): all CSS, HTML, and JavaScript in one file.
 
 ### Views (single-page routing)
 Four views toggled via `showView(id)` using `.app-view` / `.app-view.on`:
@@ -25,7 +25,7 @@ All data flows through **two persistence layers**:
 | Layer | What it holds | Key(s) |
 |---|---|---|
 | **Supabase** | clients, routines, custom_exercises, db_overrides, saved_circuits | tables with `user_id` column |
-| **localStorage** | local cache + extra client data | `n360_clients`, `n360_clientes_extra`, `n360_custom_ex`, `n360_db_muscles`, `n360_db_warmups`, `n360_cir_ex`, `n360_saved_circuits` |
+| **localStorage** | local cache + extra client data | `n360_clients`, `n360_clientes_extra`, `n360_custom_ex`, `n360_db_muscles`, `n360_db_warmups`, `n360_cir_ex`, `n360_saved_circuits`, `n360_ex_videos` |
 
 On login → `loadAllFromCloud()` fetches everything from Supabase and populates the in-memory objects + localStorage. Writes go to localStorage immediately via `saveToStorage()`, then sync to Supabase via the `saveToCloud()` family of functions.
 
@@ -33,13 +33,16 @@ On login → `loadAllFromCloud()` fetches everything from Supabase and populates
 
 ### In-memory state (global variables)
 ```
-clients       — {[cid]: {name, objetivo, notas, routines[]}}
-extraData     — {[cid]: {telefono, email, estado, vencimiento, monto}}
+clients         — {[cid]: {name, objetivo, notas, routines[]}}
+extraData       — {[cid]: {telefono, email, estado, vencimiento, monto}}
 customExercises — {[muscle]: [...]}
-DB            — built-in exercise database
-CIR_DB        — circuit exercise database
-savedCircuits — []
-currentUser   — Supabase auth user object (null before login)
+exVideos        — {[exerciseName]: videoUrl}  (localStorage-only; managed via loadExVideos/saveExVideos)
+DB              — built-in exercise database
+CIR_DB          — circuit exercise database
+savedCircuits   — []
+cirStations     — [{id, ex, cat, elementos, nota, blockLabel?}]  (current circuit stations)
+cirBlockDefs    — [{muscle, count}]  (block builder definitions; not persisted)
+currentUser     — Supabase auth user object (null before login)
 ```
 
 ### Auth flow
@@ -88,6 +91,11 @@ The file path (`C:\Users\Gastón Bertola\Desktop\N360\index.html`) contains a no
 | `rebuildWuDatalist()` | Refresh the `<datalist id="dl_wu">` from `DB.warmups` |
 | `addToExDB(bid, e)` | Save an exercise from a block row to `customExercises[muscle]`, then calls `saveCustomExercisesToCloud()` + `fillEx(bid)` |
 | `addToCirDB(sid)` | Save a circuit exercise text input value to `cirCustomEx[cat]`, then calls `saveCirCustomEx()` + `renderCirStations()` |
+| `generateFromBlocks()` | Build `cirStations` from `cirBlockDefs` (block builder), then calls `generateCircuit()` to render the result |
+| `renderCirBlockDefs()` | Re-render the block builder UI from `cirBlockDefs` |
+| `generateCircuit()` | Render the circuit result view from current `cirStations` |
+| `loadExVideos()` / `saveExVideos()` | Read/write `n360_ex_videos` localStorage key |
+| `getExVideo(name)` / `openExVideo(name)` | Lookup or open the video URL for an exercise by name |
 | `cleanupRoutines()` | Keep only the most-recent routine per client; deletes older ones from Supabase in batches of 50. Button auto-removes after success. |
 | `importRoutine(data)` | Receives a routine JSON object (same shape as `collect()`), finds/creates the client, replaces their routines with this one, loads it in the editor, saves to storage + cloud. |
 
@@ -109,7 +117,7 @@ When the user provides client data (name, goal, level, available days, and any p
   }]
 }
 ```
-`type` per block: `"normal"` | `"amrap"` (cfg: `time`, `rest`) | `"tabata"` (cfg: `work`, `rest`, `rounds`, `brk`).  
+`type` per block: `"normal"` | `"amrap"` (cfg: `time`, `rest`) | `"tabata"` (cfg: `work`, `rest`, `rounds`, `brk`) | `"varios"` (cfg: `{}`).  
 Each block supports up to 4 exercises (`exs` array). Fields: `e`=exercise, `s`=series, `r`=reps, `d`=rest in seconds, `i`=notes.
 
 ### Exercise input pattern

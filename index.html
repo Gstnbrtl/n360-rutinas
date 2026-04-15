@@ -582,6 +582,10 @@ select option{background:var(--surface2);color:var(--white)}
           </select>
         </div>
       </div>
+      <div style="margin-bottom:.75rem">
+        <label>Nombre de rutina</label>
+        <input type="text" id="routineName" placeholder="Ej: Hipertrofia Semana 1" style="width:100%">
+      </div>
       <!-- TOGGLE CALENTAMIENTO -->
       <label>Calentamiento</label>
       <div class="toggle on" id="wuToggle" onclick="toggleWu()" style="margin-top:.3rem">
@@ -620,6 +624,7 @@ select option{background:var(--surface2);color:var(--white)}
   <div class="sbar-info" id="sbarInfo">N360 Sistema de Rutinas</div>
   <button class="btn btn-dark btn-sm" onclick="openPrev()">👁 Vista previa</button>
   <button class="btn btn-dark btn-sm" onclick="saveRoutine()">💾 Guardar</button>
+  <button class="btn btn-dark btn-sm" onclick="saveAsNew()" title="Guardar como rutina nueva sin reemplazar la actual" style="font-size:.78rem">✚ Nueva</button>
   <button class="btn btn-dark btn-sm" onclick="genPDF()">📄 PDF</button>
   <button class="btn btn-red" onclick="genXL()">⬇ Excel (JSON)</button>
 </div>
@@ -1426,6 +1431,7 @@ function collectBlocks(d){
 function collect(){
   const alumno=document.getElementById('aNombre').value.trim()||'Alumno/a';
   const objetivo=document.getElementById('aObjetivo').value||'';
+  const routineName=(document.getElementById('routineName')||{}).value||'';
   const shWu=sharedWu?readWu('sh_'):null;
   const days=[];
   for(let d=0;d<nDays;d++){
@@ -1434,7 +1440,7 @@ function collect(){
     const blocks=collectBlocks(d);
     days.push({title,warmup,blocks});
   }
-  return{alumno,objetivo,days};
+  return{alumno,objetivo,routineName,days};
 }
 
 // ════════════════════════════════════
@@ -1445,21 +1451,42 @@ function saveRoutine(){
   if(!data.alumno||data.alumno==='Alumno/a'){
     showToast('⚠ Ingresá el nombre del alumno/a primero');return;
   }
-  // find or create client
+  if(editorCid && editorRid){
+    // UPDATE existing routine in-place
+    const c=clients[editorCid];
+    if(!c){showToast('⚠ Cliente no encontrado');return;}
+    const rIdx=c.routines.findIndex(r=>r.id===editorRid);
+    if(rIdx<0){showToast('⚠ Rutina no encontrada');return;}
+    if(c.name.toLowerCase()!==data.alumno.toLowerCase()) c.name=data.alumno;
+    c.routines[rIdx]={...c.routines[rIdx], name:data.routineName||c.routines[rIdx].name||data.alumno, date:new Date().toLocaleDateString('es-AR'), data};
+    saveToStorage();
+    document.getElementById('clientBadge').textContent='Guardado ✓';
+    document.getElementById('clientBadge').className='chip chip-red';
+    showToast(`✓ Rutina actualizada — ${data.alumno}`);
+    setTimeout(()=>{document.getElementById('clientBadge').textContent=data.alumno;},2000);
+  } else {
+    saveAsNew(data);
+  }
+}
+
+function saveAsNew(data){
+  if(!data) data=collect();
+  if(!data.alumno||data.alumno==='Alumno/a'){
+    showToast('⚠ Ingresá el nombre del alumno/a primero');return;
+  }
   let cid=Object.keys(clients).find(k=>clients[k].name.toLowerCase()===data.alumno.toLowerCase());
   if(!cid){
     cid=uid();
     clients[cid]={id:cid,name:data.alumno,objetivo:data.objetivo,notas:'',routines:[]};
   }
-  const routine={id:uid(),date:new Date().toLocaleDateString('es-AR'),data};
+  const routine={id:uid(), name:data.routineName||data.alumno, date:new Date().toLocaleDateString('es-AR'), data};
   clients[cid].routines.push(routine);
+  editorCid=cid; editorRid=routine.id;
   saveToStorage();
   document.getElementById('clientBadge').textContent='Guardado ✓';
   document.getElementById('clientBadge').className='chip chip-red';
-  showToast(`✓ Rutina guardada para ${data.alumno}`);
-  setTimeout(()=>{
-    document.getElementById('clientBadge').textContent=data.alumno;
-  },2000);
+  showToast(`✓ Rutina nueva guardada — ${data.alumno}`);
+  setTimeout(()=>{document.getElementById('clientBadge').textContent=data.alumno;},2000);
 }
 
 
@@ -1517,8 +1544,9 @@ async function importRoutine(data){
     // replace existing routines with this new one
     clients[cid].routines = [];
   }
-  const routine = {id:uid(), date:new Date().toLocaleDateString('es-AR'), data};
+  const routine = {id:uid(), name:data.routineName||data.alumno, date:new Date().toLocaleDateString('es-AR'), data};
   clients[cid].routines.push(routine);
+  editorCid=cid; editorRid=routine.id;
   // load into editor and navigate
   loadRoutineData(data);
   showView('view-editor');
@@ -1531,10 +1559,12 @@ async function importRoutine(data){
   }
 }
 
-function loadRoutineData(data){
+function loadRoutineData(data, nameHint=''){
   // Set alumno fields
   document.getElementById('aNombre').value=data.alumno||'';
   document.getElementById('aObjetivo').value=data.objetivo||'';
+  const rnEl=document.getElementById('routineName');
+  if(rnEl) rnEl.value=data.routineName||nameHint||'';
   // Set days
   const n=data.days.length;
   document.getElementById('dCount').value=n;
@@ -1627,6 +1657,7 @@ function loadRoutineData(data){
   }
   curDay=0;
   document.getElementById('clientBadge').textContent=data.alumno;
+  document.getElementById('clientBadge').className='chip chip-red';
   showView('editor');
   showToast(`✓ Rutina cargada: ${data.alumno}`);
 }
@@ -1788,7 +1819,9 @@ function openClientModal(cid){
   document.getElementById('loadRoutineBtn').onclick=()=>{
     if(selectedRoutineIdx===null&&c.routines.length){selectedRoutineIdx=0;}
     if(selectedRoutineIdx!==null){
-      loadRoutineData(c.routines[selectedRoutineIdx].data);
+      const selR=c.routines[selectedRoutineIdx];
+      editorCid=cid; editorRid=selR.id;
+      loadRoutineData(selR.data||selR, selR.name);
       closeModal('ovClient');
     }else{showToast('Seleccioná una rutina primero');}
   };
@@ -2914,7 +2947,12 @@ function init(){
   setTimeout(patchAddButtons,100);
   setInterval(()=>{
     const n=document.getElementById('aNombre');
-    if(n&&n.value)document.getElementById('sbarInfo').textContent=n.value+' · N360';
+    const rn=document.getElementById('routineName');
+    if(n&&n.value){
+      const mode=editorCid&&editorRid?' · ✎ editando':' · nueva rutina';
+      const label=rn&&rn.value ? n.value+' — '+rn.value+mode : n.value+mode;
+      document.getElementById('sbarInfo').textContent=label;
+    }
   },800);
 }
 // Start app
@@ -3913,7 +3951,16 @@ async function loadAllFromCloud(){
         };
       });
       if(rts) rts.forEach(function(r){
-        if(clients[r.client_id]) clients[r.client_id].routines.push(r.data);
+        if(!clients[r.client_id]) return;
+        let rObj = r.data || {};
+        // Handle old format: data was {alumno,objetivo,days} without id wrapper
+        if(!rObj.id && !rObj.data && (rObj.alumno || rObj.days)){
+          rObj = {id: r.id, name: r.name||rObj.alumno||'', date:'', data: rObj};
+        } else {
+          if(!rObj.id) rObj.id = r.id;
+          if(!rObj.name && r.name) rObj.name = r.name;
+        }
+        clients[r.client_id].routines.push(rObj);
       });
     }
 
