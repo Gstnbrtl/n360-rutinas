@@ -1873,6 +1873,10 @@ function deleteClient(cid){
   saveToStorage();
   renderClients();
   showToast('Cliente eliminado');
+  if(currentUser){
+    supa.from('routines').delete().eq('client_id',cid).eq('user_id',currentUser.id).then(()=>{});
+    supa.from('clients').delete().eq('id',cid).eq('user_id',currentUser.id).then(()=>{});
+  }
 }
 
 function openClientModal(cid){
@@ -1928,9 +1932,11 @@ function selectRoutine(i){
 }
 
 function deleteRoutine(cid,i){
+  const rid = clients[cid].routines[i]?.id;
   clients[cid].routines.splice(i,1);
   saveToStorage();
   openClientModal(cid);
+  if(rid && currentUser) supa.from('routines').delete().eq('id',rid).eq('user_id',currentUser.id).then(()=>{});
 }
 
 function renameRoutine(cid, i){
@@ -1952,6 +1958,7 @@ function saveRenameRoutine(){
   closeModal('ovRenameRoutine');
   openClientModal(cid);
   showToast('\u2713 Rutina renombrada');
+  saveToCloud();
 }
 
 function showNewClientModal(){
@@ -2996,6 +3003,7 @@ function saveEditClient(){
   };
   saveExtra();
   saveToStorage();
+  saveToCloud();
   document.getElementById('clientModalTitle').textContent = nombre;
   closeModal('ovEditClient');
   openClientModal(cid);
