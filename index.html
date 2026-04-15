@@ -4340,6 +4340,13 @@ async function onLogin(user){
   document.getElementById('loginOverlay').style.display='none';
   // El rol viene en los metadatos del JWT — sin query extra
   const isClient = user.user_metadata && user.user_metadata.role === 'client';
+  // Restaurar nav y header por si quedaron ocultos de una sesion de cliente anterior
+  if(!isClient){
+    const nav = document.querySelector('.app-nav');
+    if(nav) nav.style.display='';
+    const hdrBtns = document.getElementById('trainerHeaderBtns');
+    if(hdrBtns) hdrBtns.style.display='';
+  }
   if(isClient){
     await loadClientPortal(user);
   } else {
