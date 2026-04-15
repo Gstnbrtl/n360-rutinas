@@ -4048,18 +4048,22 @@ async function createClientAccount(){
   const pass  = document.getElementById('ecPortalPass').value.trim();
   if(!email || !pass){ showToast('⚠ Completá email y contraseña'); return; }
   if(pass.length < 6){ showToast('⚠ Contraseña mínimo 6 caracteres'); return; }
-  // Crear usuario via REST (no afecta la sesión actual del trainer)
+  // Guardar sesion del trainer antes de crear la cuenta
+  const {data:{session:trainerSession}} = await supa.auth.getSession();
+  // Crear usuario via REST
   const res = await fetch(SUPA_URL+'/auth/v1/signup', {
     method:'POST',
     headers:{'Content-Type':'application/json','apikey':SUPA_KEY},
     body:JSON.stringify({email, password:pass, data:{role:'client'}})
   });
+  // Restaurar sesion del trainer inmediatamente (Supabase puede haber pisado la sesion)
+  if(trainerSession) await supa.auth.setSession({access_token:trainerSession.access_token, refresh_token:trainerSession.refresh_token});
   const d = await res.json();
   if(!res.ok || d.error || d.error_description){
-    showToast('⚠ '+(d.error_description||d.msg||d.error||'Error al crear cuenta')); return;
+    showToast('\u26a0 '+(d.error_description||d.msg||d.error||'Error al crear cuenta')); return;
   }
   const newUserId = d.id || (d.user && d.user.id);
-  if(!newUserId){ showToast('⚠ No se pudo obtener el ID del usuario'); return; }
+  if(!newUserId){ showToast('\u26a0 No se pudo obtener el ID del usuario'); return; }
   // Insertar perfil con role client
   await supa.from('profiles').upsert({id:newUserId, email, nombre:clients[cid].name||'', role:'client'});
   // Vincular al registro del cliente
