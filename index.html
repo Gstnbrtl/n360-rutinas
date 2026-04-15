@@ -4052,7 +4052,7 @@ async function createClientAccount(){
   const res = await fetch(SUPA_URL+'/auth/v1/signup', {
     method:'POST',
     headers:{'Content-Type':'application/json','apikey':SUPA_KEY},
-    body:JSON.stringify({email, password:pass})
+    body:JSON.stringify({email, password:pass, data:{role:'client'}})
   });
   const d = await res.json();
   if(!res.ok || d.error || d.error_description){
@@ -4167,16 +4167,16 @@ async function doLogout(){
 async function onLogin(user){
   currentUser = user;
   document.getElementById('loginOverlay').style.display='none';
-  const {data:prof} = await supa.from('profiles').select('role').eq('id', user.id).single();
-  const isTrainer = !prof || prof.role !== 'client';
-  if(isTrainer){
+  // El rol viene en los metadatos del JWT — sin query extra
+  const isClient = user.user_metadata && user.user_metadata.role === 'client';
+  if(isClient){
+    await loadClientPortal(user);
+  } else {
     showToast('✓ Bienvenido');
     await loadAllFromCloud();
     loadExtra(); renderClients();
     renderDays();
     setTimeout(patchAddButtons,100);
-  } else {
-    await loadClientPortal(user);
   }
 }
 
