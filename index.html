@@ -4119,6 +4119,21 @@ async function createClientAccount(){
 var _portalClientId = null;
 var _portalRoutineData = null;
 var _portalCurrentDay = 0;
+var _portalPesos = {};
+
+function _pesosKey(){ return 'n360_pesos_' + (_portalClientId||'x'); }
+function loadPortalPesos(){
+  try{ _portalPesos = JSON.parse(localStorage.getItem(_pesosKey())||'{}'); }catch(e){ _portalPesos={}; }
+}
+function savePortalPeso(nombre, valor){
+  const key = nombre.trim().toLowerCase();
+  if(!valor.trim()){ delete _portalPesos[key]; }
+  else { _portalPesos[key] = { valor: valor.trim(), fecha: new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit'}) }; }
+  localStorage.setItem(_pesosKey(), JSON.stringify(_portalPesos));
+}
+function getPortalPeso(nombre){
+  return _portalPesos[nombre.trim().toLowerCase()] || null;
+}
 
 async function loadClientPortal(user){
   // Ocultar elementos del trainer
@@ -4163,6 +4178,7 @@ async function loadClientPortal(user){
     return;
   }
   _portalClientId = clientRow.id;
+  loadPortalPesos();
   // Cargar ultima rutina
   const {data:ruts} = await supa.from('routines')
     .select('*')
@@ -4273,14 +4289,25 @@ function portalRenderDay(idx){
       html += '</div>';
       // Ejercicios
       (bl.exs||[]).forEach(function(ex){
+        const exNombre = ex.e||'';
+        const pesoGuardado = getPortalPeso(exNombre);
+        const pesoValor = pesoGuardado ? pesoGuardado.valor : '';
+        const pesoFecha = pesoGuardado ? pesoGuardado.fecha : '';
+        const exId = 'peso_' + exNombre.replace(/[^a-z0-9]/gi,'_');
         html += '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid ' + accent + ';border-radius:10px;padding:1rem 1.1rem;margin-bottom:.5rem">';
-        html += '<div style="font-family:var(--font-cond);font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:.55rem;line-height:1.2">' + (ex.e||'') + '</div>';
-        html += '<div style="display:flex;gap:.75rem 1.5rem;flex-wrap:wrap">';
+        html += '<div style="font-family:var(--font-cond);font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:.55rem;line-height:1.2">' + exNombre + '</div>';
+        html += '<div style="display:flex;gap:.75rem 1.5rem;flex-wrap:wrap;margin-bottom:.85rem">';
         if(ex.s) html += '<div style="display:flex;flex-direction:column;gap:.1rem"><span style="font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray)">Series</span><span style="font-family:var(--font-cond);font-size:1.1rem;font-weight:700;color:var(--white)">' + ex.s + '</span></div>';
         if(ex.r) html += '<div style="display:flex;flex-direction:column;gap:.1rem"><span style="font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray)">Reps</span><span style="font-family:var(--font-cond);font-size:1.1rem;font-weight:700;color:var(--white)">' + ex.r + '</span></div>';
         if(ex.d) html += '<div style="display:flex;flex-direction:column;gap:.1rem"><span style="font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray)">Descanso</span><span style="font-family:var(--font-cond);font-size:1.1rem;font-weight:700;color:var(--white)">' + ex.d + 's</span></div>';
         html += '</div>';
-        if(ex.i) html += '<div style="margin-top:.5rem;font-size:.82rem;color:var(--gray);font-style:italic;padding-top:.5rem;border-top:1px solid var(--border)">' + ex.i + '</div>';
+        if(ex.i) html += '<div style="margin-bottom:.75rem;font-size:.82rem;color:var(--gray);font-style:italic;padding-bottom:.6rem;border-bottom:1px solid var(--border)">' + ex.i + '</div>';
+        // Input de peso / IRM
+        html += '<div style="display:flex;align-items:center;gap:.6rem;padding-top:.1rem">';
+        html += '<label style="font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);white-space:nowrap">Peso / IRM</label>';
+        html += '<input id="' + exId + '" type="text" value="' + pesoValor + '" placeholder="ej: 60 kg" onchange="savePortalPeso(\'' + exNombre.replace(/'/g,"\\'") + '\',this.value)" style="flex:1;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:7px;padding:.4rem .7rem;color:var(--white);font-family:var(--font-cond);font-size:.95rem;outline:none;min-width:0">';
+        if(pesoFecha) html += '<span style="font-size:.72rem;color:var(--gray);white-space:nowrap">' + pesoFecha + '</span>';
+        html += '</div>';
         html += '</div>';
       });
       html += '</div>';
