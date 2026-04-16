@@ -536,12 +536,18 @@ select option{background:var(--surface2);color:var(--white)}
       <small>Sistema de Rutinas · Centro de Entrenamiento y Salud</small>
     </div>
   </div>
-  <div id="trainerHeaderBtns" style="display:flex;align-items:center;gap:.5rem">
-    <button onclick="backupSystem()" title="Descargar backup completo del sistema" style="background:#27AE60;color:#fff;border:none;border-radius:4px;padding:.35rem .75rem;font-size:.75rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.3rem">⬇ <span class="btn-txt">Backup</span></button>
-    <label title="Restaurar backup" style="background:#2980B9;color:#fff;border-radius:4px;padding:.35rem .75rem;font-size:.75rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.3rem;margin:0">⬆ <span class="btn-txt">Restaurar</span><input type="file" accept=".json" onchange="restoreSystem(event)" style="display:none"></label>
-    <button onclick="doLogout()" title="Cerrar sesión" style="background:#c0392b;color:#fff;border:none;border-radius:4px;padding:.35rem .75rem;font-size:.75rem;font-weight:700;cursor:pointer">⏏ <span class="btn-txt">Salir</span></button>
-    <button onclick="emergencyClear()" title="Limpiar caché del navegador (usar si el programa no carga)" style="background:#7f8c8d;color:#fff;border:none;border-radius:4px;padding:.35rem .75rem;font-size:.75rem;font-weight:700;cursor:pointer">⚠ <span class="btn-txt">Reset</span></button>
+  <div id="trainerHeaderBtns" style="position:relative;display:flex;align-items:center;gap:.5rem">
     <div class="hdr-pill">v4.0</div>
+    <button onclick="toggleAdminMenu()" id="adminMenuBtn" style="background:var(--surface);color:var(--white);border:1px solid var(--border);border-radius:8px;padding:.4rem .85rem;font-size:.8rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.4rem;font-family:var(--font-cond);letter-spacing:.04em">⚙ ADMIN <span style="font-size:.6rem;opacity:.6">▾</span></button>
+    <div id="adminMenu" style="display:none;position:absolute;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.4rem;min-width:190px;z-index:600;box-shadow:0 12px 32px rgba(0,0,0,.5)">
+      <button onclick="backupSystem();closeAdminMenu()" style="width:100%;text-align:left;background:none;border:none;color:var(--white);padding:.55rem .85rem;font-size:.9rem;font-family:var(--font-cond);cursor:pointer;border-radius:7px;display:flex;align-items:center;gap:.6rem" onmouseover="this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.background='none'">⬇ Descargar backup</button>
+      <label style="width:100%;text-align:left;color:var(--white);padding:.55rem .85rem;font-size:.9rem;font-family:var(--font-cond);cursor:pointer;border-radius:7px;display:flex;align-items:center;gap:.6rem;margin:0;box-sizing:border-box" onmouseover="this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.background='none'">⬆ Restaurar backup<input type="file" accept=".json" onchange="restoreSystem(event);closeAdminMenu()" style="display:none"></label>
+      <div style="height:1px;background:var(--border);margin:.3rem .5rem"></div>
+      <button onclick="cleanupRoutines();closeAdminMenu()" style="width:100%;text-align:left;background:none;border:none;color:var(--white);padding:.55rem .85rem;font-size:.9rem;font-family:var(--font-cond);cursor:pointer;border-radius:7px;display:flex;align-items:center;gap:.6rem" onmouseover="this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.background='none'">♻ Limpiar rutinas</button>
+      <div style="height:1px;background:var(--border);margin:.3rem .5rem"></div>
+      <button onclick="emergencyClear();closeAdminMenu()" style="width:100%;text-align:left;background:none;border:none;color:var(--gray);padding:.55rem .85rem;font-size:.9rem;font-family:var(--font-cond);cursor:pointer;border-radius:7px;display:flex;align-items:center;gap:.6rem" onmouseover="this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.background='none'">⚠ Reset caché</button>
+      <button onclick="doLogout();closeAdminMenu()" style="width:100%;text-align:left;background:none;border:none;color:var(--red);padding:.55rem .85rem;font-size:.9rem;font-family:var(--font-cond);cursor:pointer;border-radius:7px;display:flex;align-items:center;gap:.6rem" onmouseover="this.style.background='rgba(255,59,48,.08)'" onmouseout="this.style.background='none'">⏏ Cerrar sesión</button>
+    </div>
   </div>
 </header>
 
@@ -4355,6 +4361,19 @@ async function doRegister(){
     await onLogin(data.user);
   }
 }
+
+function toggleAdminMenu(){
+  const m = document.getElementById('adminMenu');
+  m.style.display = m.style.display === 'none' ? 'block' : 'none';
+}
+function closeAdminMenu(){
+  const m = document.getElementById('adminMenu');
+  if(m) m.style.display = 'none';
+}
+document.addEventListener('click', function(e){
+  const w = document.getElementById('trainerHeaderBtns');
+  if(w && !w.contains(e.target)) closeAdminMenu();
+});
 
 async function doLogout(){
   await supa.auth.signOut();
