@@ -912,6 +912,7 @@ select option{background:var(--surface2);color:var(--white)}
     <!-- Nombre de rutina -->
     <div style="text-align:center;margin-bottom:1.25rem">
       <div id="portalRoutineName" style="font-family:var(--font-display);font-size:1.6rem;color:var(--white);letter-spacing:.04em"></div>
+      <div id="portalRoutineDate" style="font-family:var(--font-cond);font-size:1rem;font-weight:700;color:var(--red);letter-spacing:.08em;text-transform:uppercase;margin-top:.2rem"></div>
     </div>
 
     <!-- Indicador grande de entrenamiento -->
@@ -1999,7 +2000,7 @@ function showNewClientModal(){
 // ════════════════════════════════════
 // PREVIEW HTML
 // ════════════════════════════════════
-function buildPreviewHTML(data){
+function buildPreviewHTML(data, fecha){
   const typeLabel={normal:'',amrap:'AMRAP',tabata:'TABATA'};
   const typeCls={normal:'',amrap:'amrap-r',tabata:'tabata-r'};
   const blkLblCls={normal:'',amrap:'amrap',tabata:'tabata'};
@@ -2011,7 +2012,7 @@ function buildPreviewHTML(data){
       <div class="pr-gym">N360 Centro de Entrenamiento y Salud${data.objetivo?' · '+data.objetivo:''}</div>
     </div>
   </div>
-  <div class="pr-sub">Sistema de Rutinas N360 · ${data.days.length} entrenamientos</div>`;
+  <div class="pr-sub">Sistema de Rutinas N360 · ${data.days.length} entrenamientos${fecha ? '&ensp;—&ensp;<strong style="color:#aaa">' + fecha + '</strong>' : ''}</div>`;
 
   data.days.forEach((day,di)=>{
     h+=`<div class="pr-day">
@@ -2044,7 +2045,8 @@ function buildPreviewHTML(data){
 }
 
 function openPrev(){
-  document.getElementById('pArea').innerHTML=buildPreviewHTML(collect());
+  const _previewFecha = (editorCid && editorRid && clients[editorCid]) ? (clients[editorCid].routines.find(r=>r.id===editorRid)||{}).date||'' : '';
+  document.getElementById('pArea').innerHTML=buildPreviewHTML(collect(), _previewFecha);
   openModal('ovPreview');
 }
 
@@ -2665,8 +2667,13 @@ function fillEx(bid){
 // ════════════════════════════════════
 // INIT
 // ════════════════════════════════════
-function genPDF(preloadedData){
+function genPDF(preloadedData, fecha){
   var data = preloadedData || collect();
+  if(!fecha && editorCid && editorRid && clients[editorCid]){
+    var _er = clients[editorCid].routines.find(function(r){return r.id===editorRid;});
+    if(_er) fecha = _er.date||''
+  }
+  if(!fecha) fecha = new Date().toLocaleDateString('es-AR');
   var doc = new jspdf.jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
   var pageW = 210, pageH = 297;
   var marginL = 10, marginR = 10, marginT = 12, marginB = 12;
@@ -2820,12 +2827,14 @@ function genPDF(preloadedData){
   fillRect(marginL, y, colW, 15, navy);
   setFont('bold', 16, white);
   drawText(data.alumno + '  -  RUTINA DE GYM', marginL+3, y+10.5);
+  if(fecha){ setFont('normal', 9, [200,200,200]); drawText(fecha, pageW-marginR-3, y+10.5, {align:'right'}); }
   y += 15;
 
   fillRect(marginL, y, colW, 7, [26,37,47]);
   setFont('italic', 7.5, gray);
   drawText('N360 Centro de Entrenamiento y Salud' + (data.objetivo ? '  -  '+data.objetivo : ''), marginL+3, y+4.2);
   y += 7.5;
+  if(fecha){ fillRect(marginL, y, colW, 6, [20,25,40]); setFont('bold', 10, [255,220,80]); drawText('Fecha: ' + fecha, marginL+3, y+4.2); y += 6; }
 
   fillRect(marginL, y, colW, 1.5, red);
   y += 4;
@@ -4124,6 +4133,7 @@ async function createClientAccount(){
 
 var _portalClientId = null;
 var _portalRoutineData = null;
+var _portalRoutineDate = null;
 var _portalCurrentDay = 0;
 var _portalPesos = {};
 
@@ -4204,8 +4214,10 @@ async function loadClientPortal(user){
     if(!rObj.data && (rObj.alumno||rObj.days)) rObj = {data:rObj};
     const rutData = rObj.data || rObj;
     _portalRoutineData = rutData;
+    _portalRoutineDate = latestRut.date || '';
     _portalCurrentDay = 0;
     document.getElementById('portalRoutineName').textContent = latestRut.name || rutData.alumno || 'Mi rutina';
+    document.getElementById('portalRoutineDate').textContent = latestRut.date ? 'Rutina del ' + latestRut.date : '';
     portalRenderDay(0);
     document.getElementById('portalRoutineCard').style.display = '';
     document.getElementById('portalPdfBtn').style.display = '';
@@ -4236,7 +4248,7 @@ async function portalSaveData(){
 
 function portalExportPDF(){
   if(!_portalRoutineData){ showToast('⚠ No hay rutina para exportar'); return; }
-  genPDF(_portalRoutineData);
+  genPDF(_portalRoutineData, _portalRoutineDate);
 }
 
 function portalRenderDay(idx){
