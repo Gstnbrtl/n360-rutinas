@@ -1,0 +1,389 @@
+{
+  "alumno": "María Magallanes",
+  "objetivo": "",
+  "days": [
+    {
+      "title": "Día 1 – Cuádriceps + Abductores + Core",
+      "warmup": [
+        {
+          "e": "Arrodillarse y pararse con banda",
+          "s": "2",
+          "r": "8",
+          "d": "60 seg"
+        },
+        {
+          "e": "Perro de caza",
+          "s": "2",
+          "r": "5 PL",
+          "d": "60 seg"
+        },
+        {
+          "e": "Plancha rotacion de tronco arrodillada",
+          "s": "2",
+          "r": "10",
+          "d": "60 seg"
+        }
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {
+              "e": "Prensa",
+              "type": "normal",
+              "s": "3",
+              "r": "12",
+              "d": "120",
+              "i": "pies al centro, rango seguro, sin hiperextensión de rodilla"
+            },
+            {
+              "e": "Sillón cuádriceps",
+              "type": "normal",
+              "s": "3",
+              "r": "12",
+              "d": "90",
+              "i": "extensión controlada, rango parcial si hay molestia"
+            },
+            {
+              "e": "Step up bajo",
+              "type": "normal",
+              "s": "3",
+              "r": "10 PL",
+              "d": "90",
+              "i": "apoyo de mano, subir y bajar lento"
+            }
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Abductores",
+          "cfg": {},
+          "exs": [
+            {
+              "e": "Abducciones con banda sentada",
+              "type": "normal",
+              "s": "3",
+              "r": "15",
+              "d": "60",
+              "i": "banda en rodillas, movimiento lento"
+            },
+            {
+              "e": "Cangrejo con banda",
+              "type": "normal",
+              "s": "3",
+              "r": "20",
+              "d": "90",
+              "i": ""
+            }
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {
+              "e": "Plancha frontal",
+              "type": "normal",
+              "s": "3",
+              "r": "25 seg",
+              "d": "60",
+              "i": "en antebrazos, columna neutra, puede apoyar rodillas"
+            },
+            {
+              "e": "Lumbares tipo cobra o superman",
+              "type": "normal",
+              "s": "3",
+              "r": "30\" trabajo",
+              "d": "60",
+              "i": "subir lento, mantener 2 seg – extensión torácica"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Isquiotibiales + Glúteos + Core",
+      "warmup": [
+        {
+          "e": "Arrodillarse y pararse con banda",
+          "s": "2",
+          "r": "8",
+          "d": "60 seg"
+        },
+        {
+          "e": "Perro de caza",
+          "s": "2",
+          "r": "5 PL",
+          "d": "60 seg"
+        },
+        {
+          "e": "Plancha rotacion de tronco arrodillada",
+          "s": "2",
+          "r": "10",
+          "d": "60 seg"
+        }
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {
+              "e": "Sillón de isquios",
+              "type": "normal",
+              "s": "3",
+              "r": "12",
+              "d": "120",
+              "i": "carga liviana, rango completo"
+            },
+            {
+              "e": "Peso muerto con mancuernas apoyo pared",
+              "type": "normal",
+              "s": "3 / 4",
+              "r": "10 / 12//6",
+              "d": "120 / 150",
+              "i": "descenso hasta rodillas, espalda neutra, mancuernas livianas"
+            }
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {
+              "e": "Puente de glúteos con mancuerna",
+              "type": "normal",
+              "s": "3",
+              "r": "12",
+              "d": "120",
+              "i": "espalda en banco, peso liviano, mentón al pecho"
+            },
+            {
+              "e": "Patada de glúteo con tobillera",
+              "type": "normal",
+              "s": "3",
+              "r": "10 PL",
+              "d": "90",
+              "i": "en cuadrupedia, core activo"
+            }
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {
+              "e": "Abdominales cruzados",
+              "type": "normal",
+              "s": "3",
+              "r": "30\" trabajo",
+              "d": "60",
+              "i": "codo a rodilla, movimiento lento"
+            },
+            {
+              "e": "Elevación de fitball",
+              "type": "normal",
+              "s": "3",
+              "r": "12",
+              "d": "60",
+              "i": "pelota entre pies, elevar lento – sin despegar lumbar"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 3 – Espalda + Core",
+      "warmup": [
+        {
+          "e": "Arrodillarse y pararse con banda",
+          "s": "2",
+          "r": "8",
+          "d": "60 seg"
+        },
+        {
+          "e": "Perro de caza",
+          "s": "2",
+          "r": "5 PL",
+          "d": "60 seg"
+        },
+        {
+          "e": "Plancha rotacion de tronco arrodillada",
+          "s": "2",
+          "r": "10",
+          "d": "60 seg"
+        }
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {
+              "e": "Jalón ancho",
+              "type": "normal",
+              "s": "3 / 4",
+              "r": "10 / 12//8",
+              "d": "120",
+              "i": "carga liviana, codos hacia caderas – no forzar hombro derecho"
+            },
+            {
+              "e": "Remo con polea",
+              "type": "normal",
+              "s": "3",
+              "r": "12",
+              "d": "90",
+              "i": "espalda erguida, retracción escapular al final"
+            },
+            {
+              "e": "Vuelo posterior con banda",
+              "type": "normal",
+              "s": "3",
+              "r": "15",
+              "d": "90",
+              "i": "brazos semi-flexionados, rango cómodo – sin dolor en hombro derecho"
+            }
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {
+              "e": "Bicicleta con disco extendido",
+              "type": "normal",
+              "s": "3",
+              "r": "12 PL",
+              "d": "60",
+              "i": "disco liviano, simular bici acostada"
+            }
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Tríceps",
+          "cfg": {},
+          "exs": [
+            {
+              "e": "Extension triceps polea",
+              "type": "normal",
+              "s": "3",
+              "r": "10",
+              "d": "120",
+              "i": ""
+            }
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Otro",
+          "cfg": {},
+          "exs": [
+            {
+              "e": "caminata cinta inclinada",
+              "type": "normal",
+              "s": "1",
+              "r": "10 min",
+              "d": "120",
+              "i": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 4 – Pecho + Bíceps + Core",
+      "warmup": [
+        {
+          "e": "Arrodillarse y pararse con banda",
+          "s": "2",
+          "r": "8",
+          "d": "60 seg"
+        },
+        {
+          "e": "Perro de caza",
+          "s": "2",
+          "r": "5 PL",
+          "d": "60 seg"
+        },
+        {
+          "e": "Plancha rotacion de tronco arrodillada",
+          "s": "2",
+          "r": "10",
+          "d": "60 seg"
+        }
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Pecho",
+          "cfg": {},
+          "exs": [
+            {
+              "e": "Apertura con mancuernas",
+              "type": "normal",
+              "s": "3",
+              "r": "10",
+              "d": "120",
+              "i": ""
+            },
+            {
+              "e": "Press de banca con mancuernas",
+              "type": "normal",
+              "s": "3",
+              "r": "10",
+              "d": "90",
+              "i": "mancuernas muy livianas, banco plano – no forzar hombro derecho"
+            }
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Bíceps",
+          "cfg": {},
+          "exs": [
+            {
+              "e": "Curl de bíceps con barra",
+              "type": "normal",
+              "s": "3",
+              "r": "12",
+              "d": "90",
+              "i": "barra liviana, sin balanceo de tronco"
+            }
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {
+              "e": "Mountain climbers en pared",
+              "type": "normal",
+              "s": "3",
+              "r": "30\" trabajo",
+              "d": "60",
+              "i": "pace lento y controlado, core firme"
+            },
+            {
+              "e": "Rotación con banda invertida",
+              "type": "normal",
+              "s": "3",
+              "r": "20",
+              "d": "120",
+              "i": "disco liviano, rotación controlada"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

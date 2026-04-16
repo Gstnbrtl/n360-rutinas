@@ -1,0 +1,119 @@
+{
+  "alumno": "Patricia Díaz",
+  "objetivo": "Fortalecimiento general – 62 años, delgada, historial de trabajo de limpieza. Tendinitis crónica hombro derecho: pesos muy livianos en todo ejercicio de hombro, espalda y pecho; evitar overhead. Precaución lumbar: sin carga excesiva en columna, peso muerto solo con mancuernas muy livianas y apoyo de pared. 3 días semanales.",
+  "days": [
+    {
+      "title": "Día 1 – Cuádriceps + Abductores + Core",
+      "warmup": [
+        {"e": "Arrodillarse y pararse con banda", "s": "2", "r": "8", "d": "60 seg"},
+        {"e": "Perro de caza", "s": "2", "r": "5 PL", "d": "60 seg"},
+        {"e": "Plancha rotacion de tronco arrodillada", "s": "2", "r": "10", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Prensa", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "pies al centro, rango seguro, sin hiperextensión de rodilla"},
+            {"e": "Sillón cuádriceps", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "extensión controlada, rango parcial si hay molestia"},
+            {"e": "Step up bajo", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "apoyo de mano, subir y bajar lento"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Abductores",
+          "cfg": {},
+          "exs": [
+            {"e": "Abducciones con banda sentada", "type": "normal", "s": "3", "r": "15", "d": "60", "i": "banda en rodillas, movimiento lento"},
+            {"e": "Cangrejo con banda", "type": "normal", "s": "3", "r": "20", "d": "90", "i": "pasos laterales controlados, banda en rodillas"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha frontal", "type": "normal", "s": "3", "r": "25 seg", "d": "60", "i": "en antebrazos, columna neutra – sin comprometer lumbar"},
+            {"e": "Bicho muerto", "type": "normal", "s": "3", "r": "10", "d": "60", "i": "lumbar pegada al piso, movimiento lento y controlado – excelente para estabilización lumbar"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Espalda + Bíceps + Core",
+      "warmup": [
+        {"e": "Arrodillarse y pararse con banda", "s": "2", "r": "8", "d": "60 seg"},
+        {"e": "Perro de caza", "s": "2", "r": "5 PL", "d": "60 seg"},
+        {"e": "Plancha rotacion de tronco arrodillada", "s": "2", "r": "10", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Jalón ancho", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "carga muy liviana – no forzar hombro derecho, codos hacia caderas"},
+            {"e": "Remo con polea", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "espalda erguida, retracción escapular al final – peso liviano"},
+            {"e": "Vuelo posterior con banda", "type": "normal", "s": "3", "r": "15", "d": "90", "i": "brazos semi-flexionados, rango cómodo – sin dolor en hombro derecho"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Bíceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Curl de bíceps con barra", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "barra liviana, sin balanceo de tronco"},
+            {"e": "Curl en polea", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "movimiento controlado, codo fijo – carga liviana"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Abdominales cruzados", "type": "normal", "s": "3", "r": "30\" trabajo", "d": "60", "i": "codo a rodilla, movimiento lento"},
+            {"e": "Elevación de fitball", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "pelota entre pies, elevar lento – sin despegar lumbar"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 3 – Isquiotibiales + Glúteos + Core",
+      "warmup": [
+        {"e": "Arrodillarse y pararse con banda", "s": "2", "r": "8", "d": "60 seg"},
+        {"e": "Perro de caza", "s": "2", "r": "5 PL", "d": "60 seg"},
+        {"e": "Plancha rotacion de tronco arrodillada", "s": "2", "r": "10", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Sillón de isquios", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "carga liviana, rango completo"},
+            {"e": "Peso muerto con mancuernas apoyo pared", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "mancuernas muy livianas (2-3 kg), espalda neutra, descenso solo hasta rodillas – no cargar lumbar"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Puente de glúteos con mancuerna", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "espalda en banco, peso liviano, mentón al pecho – lumbar sin forzar"},
+            {"e": "Patada de glúteo con tobillera", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "en cuadrupedia, core activo, columna neutra"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha lateral", "type": "normal", "s": "3", "r": "20 seg PL", "d": "60", "i": "en antebrazo, rodillas apoyadas si es necesario"},
+            {"e": "Bicicleta con disco extendido", "type": "normal", "s": "3", "r": "12 PL", "d": "60", "i": "disco liviano, rotación controlada – sin tensión en lumbar"}
+          ]
+        }
+      ]
+    }
+  ]
+}

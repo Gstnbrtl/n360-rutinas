@@ -894,81 +894,59 @@ select option{background:var(--surface2);color:var(--white)}
       <h2 style="margin:0;font-family:var(--font-display);font-size:2rem;color:var(--white)">Hola, <span id="portalNombre"></span></h2>
       <p style="margin:.25rem 0 0;color:var(--gray);font-size:.9rem">Tu rutina de entrenamiento — N360</p>
     </div>
-    <button class="btn btn-dark btn-sm" onclick="doLogout()">Cerrar sesión</button>
+    <div style="display:flex;gap:.5rem;align-items:center">
+      <button class="btn btn-dark btn-sm" onclick="portalRefresh()" title="Actualizar rutina">↻ Actualizar</button>
+      <button class="btn btn-dark btn-sm" onclick="openModal('ovPortalDatos')">Mis datos</button>
+      <button class="btn btn-dark btn-sm" onclick="doLogout()">Cerrar sesión</button>
+    </div>
   </div>
 
-  <!-- Sin rutina -->
-  <div id="portalNoRoutine" style="display:none">
-    <div class="card">
-      <div class="card-body" style="text-align:center;padding:2.5rem;color:var(--gray)">
-        Tu entrenador todavía no cargó tu rutina. ¡Pronto estará disponible!
+  <!-- Rutina principal -->
+  <div id="portalTabRutina">
+
+    <!-- Sin rutina -->
+    <div id="portalNoRoutine" style="display:none">
+      <div class="card">
+        <div class="card-body" style="text-align:center;padding:2.5rem;color:var(--gray)">
+          Tu entrenador todavía no cargó tu rutina. ¡Pronto estará disponible!
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Rutina -->
-  <div id="portalRoutineCard" style="display:none;padding-bottom:5rem">
+    <!-- Rutina -->
+    <div id="portalRoutineCard" style="display:none;padding-bottom:5rem">
 
-    <!-- Nombre de rutina -->
-    <div style="text-align:center;margin-bottom:1.25rem">
-      <div id="portalRoutineName" style="font-family:var(--font-display);font-size:1.6rem;color:var(--white);letter-spacing:.04em"></div>
-      <div id="portalRoutineDate" style="font-family:var(--font-cond);font-size:1rem;font-weight:700;color:var(--red);letter-spacing:.08em;text-transform:uppercase;margin-top:.2rem"></div>
+      <!-- Nombre de rutina -->
+      <div style="text-align:center;margin-bottom:1.25rem">
+        <div id="portalRoutineName" style="font-family:var(--font-display);font-size:1.6rem;color:var(--white);letter-spacing:.04em"></div>
+        <div id="portalRoutineDate" style="font-family:var(--font-cond);font-size:1rem;font-weight:700;color:var(--red);letter-spacing:.08em;text-transform:uppercase;margin-top:.2rem"></div>
+      </div>
+
+      <!-- Indicador grande de entrenamiento -->
+      <div style="text-align:center;padding:1.25rem 0 1rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem">
+        <div id="portalDayIndicator" style="font-family:var(--font-display);font-size:3rem;color:var(--white);letter-spacing:.06em;line-height:1.1"></div>
+        <div id="portalDayTitle" style="font-family:var(--font-cond);font-size:1rem;font-weight:600;color:var(--gray);margin-top:.4rem;text-transform:uppercase;letter-spacing:.12em"></div>
+      </div>
+
+      <!-- Flechas + dots -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:1.5rem;margin-bottom:1.5rem">
+        <button id="portalBtnPrev" onclick="portalPrevDay()" style="width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--white);font-size:1.2rem;cursor:pointer;flex-shrink:0">←</button>
+        <div id="portalDayDots" style="display:flex;gap:.6rem;align-items:center"></div>
+        <button id="portalBtnNext" onclick="portalNextDay()" style="width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--white);font-size:1.2rem;cursor:pointer;flex-shrink:0">→</button>
+      </div>
+
+      <!-- Contenido del dia -->
+      <div id="portalDayContent"></div>
+
     </div>
 
-    <!-- Indicador grande de entrenamiento -->
-    <div style="text-align:center;padding:1.25rem 0 1rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem">
-      <div id="portalDayIndicator" style="font-family:var(--font-display);font-size:3rem;color:var(--white);letter-spacing:.06em;line-height:1.1"></div>
-      <div id="portalDayTitle" style="font-family:var(--font-cond);font-size:1rem;font-weight:600;color:var(--gray);margin-top:.4rem;text-transform:uppercase;letter-spacing:.12em"></div>
-    </div>
-
-    <!-- Flechas + dots -->
-    <div style="display:flex;align-items:center;justify-content:center;gap:1.5rem;margin-bottom:1.5rem">
-      <button id="portalBtnPrev" onclick="portalPrevDay()" style="width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--white);font-size:1.2rem;cursor:pointer;flex-shrink:0">←</button>
-      <div id="portalDayDots" style="display:flex;gap:.6rem;align-items:center"></div>
-      <button id="portalBtnNext" onclick="portalNextDay()" style="width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--white);font-size:1.2rem;cursor:pointer;flex-shrink:0">→</button>
-    </div>
-
-    <!-- Contenido del dia -->
-    <div id="portalDayContent"></div>
-
-  </div>
+  </div><!-- /portalTabRutina -->
 
   <!-- Boton PDF flotante -->
   <div id="portalPdfBtn" style="display:none;position:fixed;bottom:1.5rem;right:1.5rem;z-index:200">
     <button onclick="portalExportPDF()" style="background:var(--red);color:#fff;border:none;border-radius:50px;padding:.85rem 1.5rem;font-family:var(--font-cond);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;box-shadow:0 4px 20px rgba(255,59,48,.4);display:flex;align-items:center;gap:.5rem">📄 Descargar PDF</button>
   </div>
 
-  <!-- Mis datos -->
-  <div class="card">
-    <div class="card-hdr"><h3 style="margin:0;font-size:1rem">Mis datos</h3></div>
-    <div class="card-body" style="display:flex;flex-direction:column;gap:.85rem;padding:1rem">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
-        <div>
-          <label class="field-label">Nombre</label>
-          <input class="inp" id="portalFieldNombre" type="text">
-        </div>
-        <div>
-          <label class="field-label">Teléfono</label>
-          <input class="inp" id="portalFieldTelefono" type="tel">
-        </div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
-        <div>
-          <label class="field-label">Email de contacto</label>
-          <input class="inp" id="portalFieldEmail" type="email">
-        </div>
-        <div>
-          <label class="field-label">Objetivo</label>
-          <input class="inp" id="portalFieldObjetivo" type="text">
-        </div>
-      </div>
-      <div>
-        <label class="field-label">Notas / observaciones</label>
-        <textarea class="inp" id="portalFieldNotas" rows="3" style="resize:vertical"></textarea>
-      </div>
-      <button class="btn btn-red" onclick="portalSaveData()">Guardar cambios</button>
-    </div>
-  </div>
 
 </div>
 </div><!-- /view-portal -->
@@ -988,6 +966,46 @@ select option{background:var(--surface2);color:var(--white)}
     <div class="modal-foot">
       <button class="btn btn-dark" onclick="printRoutine()">🖨 Imprimir</button>
       <button class="btn btn-red" onclick="genXL()">⬇ Excel (JSON)</button>
+    </div>
+  </div>
+</div>
+
+<!-- PORTAL DATOS MODAL -->
+<div class="ov" id="ovPortalDatos">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-hdr">
+      <h3>Mis datos</h3>
+      <button class="modal-close" onclick="closeModal('ovPortalDatos')">&#x2715;</button>
+    </div>
+    <div class="card-body" style="display:flex;flex-direction:column;gap:.85rem;padding:1.25rem">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div>
+          <label class="field-label">Nombre</label>
+          <input class="inp" id="portalFieldNombre" type="text">
+        </div>
+        <div>
+          <label class="field-label">Telefono</label>
+          <input class="inp" id="portalFieldTelefono" type="tel">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div>
+          <label class="field-label">Email de contacto</label>
+          <input class="inp" id="portalFieldEmail" type="email">
+        </div>
+        <div>
+          <label class="field-label">Objetivo</label>
+          <input class="inp" id="portalFieldObjetivo" type="text">
+        </div>
+      </div>
+      <div>
+        <label class="field-label">Notas / observaciones</label>
+        <textarea class="inp" id="portalFieldNotas" rows="3" style="resize:vertical"></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-dark" onclick="closeModal('ovPortalDatos')">Cancelar</button>
+      <button class="btn btn-red" onclick="portalSaveData()">Guardar cambios</button>
     </div>
   </div>
 </div>
@@ -4143,8 +4161,25 @@ function loadPortalPesos(){
 }
 function savePortalPeso(nombre, valor){
   const key = nombre.trim().toLowerCase();
-  if(!valor.trim()){ delete _portalPesos[key]; }
-  else { _portalPesos[key] = { valor: valor.trim(), fecha: new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit'}) }; }
+  const existing = _portalPesos[key] || {};
+  if(!valor.trim() && !existing.anotacion){ delete _portalPesos[key]; }
+  else {
+    _portalPesos[key] = Object.assign({}, existing, {
+      valor: valor.trim(),
+      fecha: new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit'})
+    });
+    if(!valor.trim()) delete _portalPesos[key].valor;
+  }
+  localStorage.setItem(_pesosKey(), JSON.stringify(_portalPesos));
+}
+function savePortalAnotacion(nombre, texto){
+  const key = nombre.trim().toLowerCase();
+  const existing = _portalPesos[key] || {};
+  if(!texto.trim() && !existing.valor){ delete _portalPesos[key]; }
+  else {
+    _portalPesos[key] = Object.assign({}, existing, { anotacion: texto.trim() });
+    if(!texto.trim()) delete _portalPesos[key].anotacion;
+  }
   localStorage.setItem(_pesosKey(), JSON.stringify(_portalPesos));
 }
 function getPortalPeso(nombre){
@@ -4243,7 +4278,14 @@ async function portalSaveData(){
   const {error} = await supa.from('clients').update(updates).eq('id',_portalClientId);
   if(error){ showToast('⚠ Error al guardar: '+error.message); return; }
   document.getElementById('portalNombre').textContent = updates.name;
+  closeModal('ovPortalDatos');
   showToast('✓ Datos actualizados');
+}
+
+async function portalRefresh(){
+  if(!currentUser){ showToast('⚠ No hay sesion activa'); return; }
+  showToast('Actualizando...');
+  await loadClientPortal(currentUser);
 }
 
 function portalExportPDF(){
@@ -4320,11 +4362,19 @@ function portalRenderDay(idx){
         if(ex.d) html += '<div style="display:flex;flex-direction:column;gap:.1rem"><span style="font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray)">Descanso</span><span style="font-family:var(--font-cond);font-size:1.1rem;font-weight:700;color:var(--white)">' + ex.d + 's</span></div>';
         html += '</div>';
         if(ex.i) html += '<div style="margin-bottom:.75rem;font-size:.82rem;color:var(--gray);font-style:italic;padding-bottom:.6rem;border-bottom:1px solid var(--border)">' + ex.i + '</div>';
-        // Input de peso / IRM
-        html += '<div style="display:flex;align-items:center;gap:.6rem;padding-top:.1rem">';
+        // Input de peso / IRM + Anotacion
+        const anotValor = pesoGuardado ? (pesoGuardado.anotacion||'') : '';
+        const anotId = 'anot_' + exNombre.replace(/[^a-z0-9]/gi,'_');
+        html += '<div style="display:flex;flex-direction:column;gap:.55rem;padding-top:.1rem">';
+        html += '<div style="display:flex;align-items:center;gap:.6rem">';
         html += '<label style="font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);white-space:nowrap">Peso / IRM</label>';
         html += '<input id="' + exId + '" type="text" value="' + pesoValor + '" placeholder="ej: 60 kg" onchange="savePortalPeso(\'' + exNombre.replace(/'/g,"\\'") + '\',this.value)" style="flex:1;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:7px;padding:.4rem .7rem;color:var(--white);font-family:var(--font-cond);font-size:.95rem;outline:none;min-width:0">';
         if(pesoFecha) html += '<span style="font-size:.72rem;color:var(--gray);white-space:nowrap">' + pesoFecha + '</span>';
+        html += '</div>';
+        html += '<div style="display:flex;align-items:flex-start;gap:.6rem">';
+        html += '<label style="font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);white-space:nowrap;padding-top:.35rem">Anotación</label>';
+        html += '<textarea id="' + anotId + '" rows="2" placeholder="Notas, sensaciones, progreso..." onchange="savePortalAnotacion(\'' + exNombre.replace(/'/g,"\\'") + '\',this.value)" style="flex:1;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:7px;padding:.4rem .7rem;color:var(--white);font-family:var(--font-cond);font-size:.9rem;outline:none;resize:vertical;min-width:0">' + anotValor.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</textarea>';
+        html += '</div>';
         html += '</div>';
         html += '</div>';
       });
@@ -4335,6 +4385,18 @@ function portalRenderDay(idx){
   document.getElementById('portalDayContent').innerHTML = html || '<p style="color:var(--gray);text-align:center">Sin ejercicios para este día.</p>';
 }
 
+function portalShowTab(tab){
+  const isRutina = tab === 'rutina';
+  document.getElementById('portalTabRutina').style.display = isRutina ? '' : 'none';
+  document.getElementById('portalTabDatos').style.display  = isRutina ? 'none' : '';
+  document.getElementById('portalPdfBtn').style.display    = isRutina && _portalRoutineData ? '' : 'none';
+  const btnR = document.getElementById('portalTabBtnRutina');
+  const btnD = document.getElementById('portalTabBtnDatos');
+  btnR.style.background = isRutina ? 'var(--red)' : 'transparent';
+  btnR.style.color      = isRutina ? '#fff' : 'var(--gray)';
+  btnD.style.background = isRutina ? 'transparent' : 'var(--red)';
+  btnD.style.color      = isRutina ? 'var(--gray)' : '#fff';
+}
 function portalPrevDay(){
   if(_portalCurrentDay > 0) portalRenderDay(_portalCurrentDay - 1);
 }

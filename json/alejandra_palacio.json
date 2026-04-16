@@ -1,0 +1,128 @@
+{
+  "alumno": "Alejandra Palacio",
+  "objetivo": "Fortalecimiento general con descenso de peso – 54 años, técnica deficiente: cargas muy livianas, énfasis en la ejecución en cada ejercicio, movimientos lentos y controlados. Cifosis dorsal y hombros antepulsados: priorizar retracción escapular, fortalecer espalda alta y deltoides posterior. Ejercicios simples y en máquinas donde sea posible.",
+  "days": [
+    {
+      "title": "Día 1 – Cuádriceps + Glúteos + Core",
+      "warmup": [
+        {"e": "Arrodillarse y pararse con banda", "s": "2", "r": "8", "d": "60 seg"},
+        {"e": "Perro de caza", "s": "2", "r": "5 PL", "d": "60 seg"},
+        {"e": "Plancha rotacion de tronco arrodillada", "s": "2", "r": "10", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Prensa", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "carga liviana, pies al centro, bajar lento contando 3 seg"},
+            {"e": "Sillón cuádriceps", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "extensión controlada, sin hiperextensión final, rango parcial al inicio"},
+            {"e": "Step up bajo", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "apoyo obligatorio de mano, subir y bajar muy lento – foco en técnica"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Puente de glúteos con mancuerna", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "espalda en banco, mancuerna muy liviana, mentón al pecho – enseñar activación glútea"},
+            {"e": "Patada de glúteo con tobillera", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "en cuadrupedia, columna neutra – no arquear lumbar, core activo"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha frontal", "type": "normal", "s": "3", "r": "20 seg", "d": "60", "i": "en antebrazos, rodillas apoyadas si es necesario – columna neutra"},
+            {"e": "Bicho muerto", "type": "normal", "s": "3", "r": "8", "d": "60", "i": "lumbar pegada al piso, movimiento muy lento – estabilización lumbar"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Espalda + Hombros + Core",
+      "warmup": [
+        {"e": "Arrodillarse y pararse con banda", "s": "2", "r": "8", "d": "60 seg"},
+        {"e": "Perro de caza", "s": "2", "r": "5 PL", "d": "60 seg"},
+        {"e": "Plancha rotacion de tronco arrodillada", "s": "2", "r": "10", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Jalón ancho", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "carga muy liviana, codos hacia caderas, pecho hacia arriba – corrige cifosis"},
+            {"e": "Remo con polea", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "espalda erguida, retracción escapular al final – mantener 1 seg"},
+            {"e": "Vuelo posterior con banda", "type": "normal", "s": "3", "r": "15", "d": "90", "i": "brazos semi-flexionados, movimiento lento – deltoides posterior, foco postural"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "Pull face", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "codos arriba, carga liviana – corrige antepulsión de hombros"},
+            {"e": "Elevaciones laterales", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "mancuernas muy livianas, no superar 80°, codos ligeramente flexionados"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Lumbares tipo cobra o superman", "type": "normal", "s": "3", "r": "10", "d": "60", "i": "subir lento, mantener 2 seg – extensión torácica, corrige cifosis"},
+            {"e": "Abdominales cruzados", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "codo a rodilla, movimiento lento y controlado"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 3 – Isquiotibiales + Abductores + Pecho + Core",
+      "warmup": [
+        {"e": "Arrodillarse y pararse con banda", "s": "2", "r": "8", "d": "60 seg"},
+        {"e": "Perro de caza", "s": "2", "r": "5 PL", "d": "60 seg"},
+        {"e": "Plancha rotacion de tronco arrodillada", "s": "2", "r": "10", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Sillón de isquios", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "carga liviana, rango completo, sin bloquear rodilla"},
+            {"e": "Peso muerto con mancuernas apoyo pared", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "mancuernas livianas, espalda neutra, descenso hasta rodillas – pared como guía de postura"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Abductores",
+          "cfg": {},
+          "exs": [
+            {"e": "Abducciones con banda sentada", "type": "normal", "s": "3", "r": "15", "d": "60", "i": "banda en rodillas, movimiento lento"},
+            {"e": "Cangrejo con banda", "type": "normal", "s": "3", "r": "20", "d": "90", "i": "pasos laterales controlados, banda en rodillas"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Pecho",
+          "cfg": {},
+          "exs": [
+            {"e": "Press de banca con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "mancuernas muy livianas – ANTES de bajar: retraer escápulas y abrir pecho"},
+            {"e": "Apertura en polea", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "de pie, carga liviana, codos semiflexionados – mantener postura erguida"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha lateral", "type": "normal", "s": "3", "r": "20 seg PL", "d": "60", "i": "en antebrazo, rodillas apoyadas si es necesario"},
+            {"e": "Elevación de fitball", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "pelota entre pies, elevar lento – sin despegar lumbar"}
+          ]
+        }
+      ]
+    }
+  ]
+}
