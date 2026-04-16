@@ -4150,14 +4150,44 @@ async function createClientAccount(){
 }
 
 var _portalClientId = null;
+var _portalRoutineId = null;
 var _portalRoutineData = null;
 var _portalRoutineDate = null;
 var _portalCurrentDay = 0;
 var _portalPesos = {};
 
-function _pesosKey(){ return 'n360_pesos_' + (_portalClientId||'x'); }
+function _pesosKey(){ return 'n360_pesos_' + (_portalClientId||'x') + '_' + (_portalRoutineId||'0'); }
 function loadPortalPesos(){
   try{ _portalPesos = JSON.parse(localStorage.getItem(_pesosKey())||'{}'); }catch(e){ _portalPesos={}; }
+}
+async function loadPortalPesosFromCloud(){
+  if(!_portalClientId || !_portalRoutineId) return;
+  const {data} = await supa.from('client_logs')
+    .select('exercise_name,peso,anotacion')
+    .eq('client_id', _portalClientId)
+    .eq('routine_id', _portalRoutineId);
+  if(!data) return;
+  data.forEach(function(row){
+    const key = row.exercise_name.trim().toLowerCase();
+    const existing = _portalPesos[key] || {};
+    if(row.peso)     existing.valor    = row.peso;
+    if(row.anotacion) existing.anotacion = row.anotacion;
+    if(row.peso || row.anotacion) _portalPesos[key] = existing;
+  });
+  localStorage.setItem(_pesosKey(), JSON.stringify(_portalPesos));
+}
+async function savePortalLogToCloud(nombre){
+  if(!_portalClientId || !_portalRoutineId) return;
+  const key = nombre.trim().toLowerCase();
+  const entry = _portalPesos[key] || {};
+  await supa.from('client_logs').upsert({
+    client_id:     _portalClientId,
+    routine_id:    _portalRoutineId,
+    exercise_name: nombre.trim(),
+    peso:          entry.valor     || '',
+    anotacion:     entry.anotacion || '',
+    updated_at:    new Date().toISOString()
+  }, { onConflict: 'client_id,routine_id,exercise_name' });
 }
 function savePortalPeso(nombre, valor){
   const key = nombre.trim().toLowerCase();
@@ -4171,6 +4201,7 @@ function savePortalPeso(nombre, valor){
     if(!valor.trim()) delete _portalPesos[key].valor;
   }
   localStorage.setItem(_pesosKey(), JSON.stringify(_portalPesos));
+  savePortalLogToCloud(nombre);
 }
 function savePortalAnotacion(nombre, texto){
   const key = nombre.trim().toLowerCase();
@@ -4181,6 +4212,7 @@ function savePortalAnotacion(nombre, texto){
     if(!texto.trim()) delete _portalPesos[key].anotacion;
   }
   localStorage.setItem(_pesosKey(), JSON.stringify(_portalPesos));
+  savePortalLogToCloud(nombre);
 }
 function getPortalPeso(nombre){
   return _portalPesos[nombre.trim().toLowerCase()] || null;
@@ -4229,7 +4261,6 @@ async function loadClientPortal(user){
     return;
   }
   _portalClientId = clientRow.id;
-  loadPortalPesos();
   // Cargar ultima rutina
   const {data:ruts} = await supa.from('routines')
     .select('*')
@@ -4237,6 +4268,9 @@ async function loadClientPortal(user){
     .order('id',{ascending:false})
     .limit(1);
   const latestRut = ruts && ruts[0];
+  _portalRoutineId = latestRut ? latestRut.id : null;
+  loadPortalPesos();
+  await loadPortalPesosFromCloud();
   // Poblar saludo y formulario de datos
   document.getElementById('portalNombre').textContent = clientRow.name;
   document.getElementById('portalFieldNombre').value   = clientRow.name    || '';
