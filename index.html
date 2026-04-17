@@ -1224,9 +1224,10 @@ select option{background:var(--surface);color:var(--text)}
         <div><label>Descanso (seg)</label><input type="text" id="efDesc" placeholder="Ej: 120"></div>
         <div><label>Observaciones</label><input type="text" id="efObs" placeholder="Ej: Alternado"></div>
       </div>
-      <div><label>&#9654; GIF del ejercicio <span style="font-weight:400;color:var(--gray);font-size:.78rem">Nombre de archivo en "Videos de ejercicios/" (ej: Sentadilla con barra.gif)</span></label>
-        <input type="text" id="efVideo" list="dl_gifnames" placeholder="Ej: Prensa.gif" autocomplete="off">
-        <datalist id="dl_gifnames"></datalist></div>
+      <div><label>&#9654; GIF del ejercicio</label>
+        <select id="efVideo" style="width:100%;padding:.6rem .75rem;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-family:var(--font-body);font-size:.95rem;cursor:pointer">
+          <option value="">— Sin video —</option>
+        </select></div>
     </div>
     <div class="modal-foot">
       <button class="btn btn-dark" onclick="closeModal('ovExForm')">Cancelar</button>
@@ -1272,14 +1273,33 @@ const MO=['Cuádriceps','Cuádriceps / Glúteos','Isquiotibiales','Glúteos','Ad
 
 let exVideos={};
 function loadExVideos(){try{exVideos=JSON.parse(localStorage.getItem('n360_ex_videos')||'{}')}catch(e){exVideos={}}
-  rebuildGifDatalist();}
-function rebuildGifDatalist(){
-  var dl=document.getElementById('dl_gifnames');if(!dl)return;
-  // Known GIFs in the repo folder
-  var known=['Sentadilla con barra.gif','Prensa.gif'];
-  // Also add any filenames already stored in exVideos
-  Object.values(exVideos).forEach(function(v){if(v&&!v.startsWith('http')&&!known.includes(v))known.push(v);});
-  dl.innerHTML=known.map(function(n){return'<option value="'+n+'">';}).join('');
+  loadGifList();}
+function rebuildGifDatalist(){} // kept for compat
+var _gifList = []; // cached list of GIF filenames from GitHub
+async function loadGifList(){
+  try{
+    const res = await fetch('https://api.github.com/repos/Gstnbrtl/n360-rutinas/contents/Videos%20de%20ejercicios');
+    const files = await res.json();
+    _gifList = files.filter(function(f){ return f.type==='file' && f.name.toLowerCase().endsWith('.gif'); }).map(function(f){ return f.name; });
+  }catch(e){ console.warn('loadGifList error', e); }
+}
+function populateGifSelect(currentVal){
+  var sel = document.getElementById('efVideo');
+  if(!sel) return;
+  sel.innerHTML = '<option value="">— Sin video —</option>';
+  _gifList.forEach(function(name){
+    var opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name.replace('.gif','');
+    if(name === currentVal) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  // If currentVal not in list but is set, add it anyway
+  if(currentVal && !_gifList.includes(currentVal)){
+    var opt = document.createElement('option');
+    opt.value = currentVal; opt.textContent = currentVal; opt.selected = true;
+    sel.appendChild(opt);
+  }
 }
 function saveExVideos(){
   localStorage.setItem('n360_ex_videos',JSON.stringify(exVideos));
@@ -2391,7 +2411,7 @@ function openAddExModal(){
   document.getElementById('efReps').value='';
   document.getElementById('efDesc').value='';
   document.getElementById('efObs').value='';
-  document.getElementById('efVideo').value='';
+  populateGifSelect('');
   document.getElementById('efSaveBtn').textContent='✓ Guardar';
   openModal('ovExForm');
   setTimeout(()=>document.getElementById('efNombre').focus(),100);
@@ -2418,7 +2438,7 @@ function editExercise(muscle, idx, isCustom, isWarmup){
   document.getElementById('efReps').value=ex.r||'';
   document.getElementById('efDesc').value=ex.d||'';
   document.getElementById('efObs').value=ex.o||'';
-  document.getElementById('efVideo').value=getExVideo(ex.e||'');
+  populateGifSelect(getExVideo(ex.e||''));
   document.getElementById('efSaveBtn').textContent='✓ Actualizar';
   openModal('ovExForm');
   setTimeout(()=>document.getElementById('efNombre').focus(),100);
