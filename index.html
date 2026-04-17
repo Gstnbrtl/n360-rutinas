@@ -1007,7 +1007,8 @@ select option{background:var(--surface);color:var(--text)}
     <button onclick="closePortalVideo()" style="position:absolute;top:.6rem;right:.6rem;z-index:2;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.4);border:none;color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1">&#x2715;</button>
     <!-- GIF -->
     <div style="background:#000;width:100%;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;overflow:hidden">
-      <img id="pvGif" src="" alt="" style="width:100%;height:100%;object-fit:contain">
+      <img id="pvGif" src="" alt="" style="width:100%;height:100%;object-fit:contain" onerror="this.style.display='none';document.getElementById('pvGifErr').style.display=''" onload="this.style.display='';document.getElementById('pvGifErr').style.display='none'">
+      <div id="pvGifErr" style="display:none;color:#aaa;font-size:.85rem;text-align:center;padding:1rem">No se pudo cargar el video</div>
     </div>
     <!-- Info -->
     <div style="padding:1.1rem 1.2rem 1.4rem">
@@ -1280,7 +1281,10 @@ function rebuildGifDatalist(){
   Object.values(exVideos).forEach(function(v){if(v&&!v.startsWith('http')&&!known.includes(v))known.push(v);});
   dl.innerHTML=known.map(function(n){return'<option value="'+n+'">';}).join('');
 }
-function saveExVideos(){localStorage.setItem('n360_ex_videos',JSON.stringify(exVideos))}
+function saveExVideos(){
+  localStorage.setItem('n360_ex_videos',JSON.stringify(exVideos));
+  saveDBOverridesToCloud();
+}
 function getExVideo(name){return(name&&exVideos[name.trim()])||'';}
 var VIDEOS_BASE='https://raw.githubusercontent.com/Gstnbrtl/n360-rutinas/main/Videos%20de%20ejercicios/';
 function getExVideoUrl(name){var f=getExVideo(name);if(!f)return '';return f.startsWith('http')?f:VIDEOS_BASE+encodeURIComponent(f);}
@@ -4289,6 +4293,17 @@ async function loadClientPortal(user){
     return;
   }
   _portalClientId = clientRow.id;
+  // Cargar ex_videos del trainer para mostrar GIFs en el portal
+  try {
+    const trainerId = user.user_metadata && user.user_metadata.trainer_id;
+    if(trainerId){
+      const {data:tvid} = await supa.from('db_overrides')
+        .select('ex_videos')
+        .eq('user_id', trainerId)
+        .maybeSingle();
+      if(tvid && tvid.ex_videos) { exVideos = tvid.ex_videos; }
+    }
+  } catch(e){ console.warn('Could not load trainer exVideos:', e); }
   // Cargar ultima rutina
   const {data:ruts} = await supa.from('routines')
     .select('*')
@@ -4646,6 +4661,7 @@ async function loadAllFromCloud(){
       if(dbo.warmups) DB.warmups = dbo.warmups;
       if(dbo.cir_db) Object.keys(dbo.cir_db).forEach(k=>CIR_DB[k]=dbo.cir_db[k]);
       if(dbo.cir_custom) cirCustomEx = dbo.cir_custom;
+      if(dbo.ex_videos){ exVideos = dbo.ex_videos; saveExVideos(); }
     }
 
     // Load saved circuits
@@ -4757,6 +4773,7 @@ async function saveDBOverridesToCloud(){
       warmups:DB.warmups,
       cir_db:CIR_DB,
       cir_custom:cirCustomEx,
+      ex_videos:exVideos,
       updated_at:new Date().toISOString()
     });
   }catch(e){}
