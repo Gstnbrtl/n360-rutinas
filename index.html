@@ -4296,13 +4296,25 @@ async function loadClientPortal(user){
   // Cargar ex_videos del trainer para mostrar GIFs en el portal
   try {
     const trainerId = user.user_metadata && user.user_metadata.trainer_id;
+    let tvid = null;
     if(trainerId){
-      const {data:tvid} = await supa.from('db_overrides')
+      const {data:r} = await supa.from('db_overrides')
         .select('ex_videos')
         .eq('user_id', trainerId)
         .maybeSingle();
-      if(tvid && tvid.ex_videos) { exVideos = tvid.ex_videos; }
+      tvid = r;
     }
+    // Fallback: solo hay un trainer, traer cualquier fila con ex_videos
+    if(!tvid || !tvid.ex_videos){
+      const {data:r2} = await supa.from('db_overrides')
+        .select('ex_videos')
+        .not('ex_videos', 'is', null)
+        .limit(1)
+        .maybeSingle();
+      tvid = r2;
+    }
+    if(tvid && tvid.ex_videos) { exVideos = tvid.ex_videos; }
+    console.log('[portal] exVideos loaded:', Object.keys(exVideos||{}).length, 'entries');
   } catch(e){ console.warn('Could not load trainer exVideos:', e); }
   // Cargar ultima rutina
   const {data:ruts} = await supa.from('routines')
