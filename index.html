@@ -1324,7 +1324,16 @@ async function populateGifSelect(currentVal){
 }
 function saveExVideos(){
   localStorage.setItem('n360_ex_videos',JSON.stringify(exVideos));
-  saveDBOverridesToCloud();
+  saveExVideosToCloud();
+}
+async function saveExVideosToCloud(){
+  if(!currentUser || !Object.keys(exVideos).length) return;
+  try{
+    // .update() solo modifica ex_videos — nunca toca el resto de la fila
+    await supa.from('db_overrides')
+      .update({ ex_videos: exVideos, updated_at: new Date().toISOString() })
+      .eq('user_id', currentUser.id);
+  }catch(e){ console.warn('saveExVideosToCloud error:', e); }
 }
 function getExVideo(name){return(name&&exVideos[name.trim()])||'';}
 var VIDEOS_BASE='https://raw.githubusercontent.com/Gstnbrtl/n360-rutinas/main/Videos%20de%20ejercicios/';
@@ -5031,13 +5040,14 @@ async function loadAllFromCloud(){
       if(dbo.cir_custom) cirCustomEx = dbo.cir_custom;
       // Solo cargamos ex_videos de la nube si tiene datos (objeto no vacío)
       if(dbo.ex_videos && Object.keys(dbo.ex_videos).length > 0){
-        exVideos = dbo.ex_videos; saveExVideos();
+        exVideos = dbo.ex_videos;
+        localStorage.setItem('n360_ex_videos', JSON.stringify(exVideos));
       } else if(Object.keys(exVideos).length > 0){
-        // La nube no tenía datos pero local sí — subir
-        saveDBOverridesToCloud();
+        // La nube no tenía datos pero local sí — subir de forma aislada
+        saveExVideosToCloud();
       }
     } else if(Object.keys(exVideos).length > 0){
-      saveDBOverridesToCloud();
+      saveExVideosToCloud();
     }
 
     // Load saved circuits
@@ -5143,17 +5153,15 @@ async function saveDBOverridesToCloud(){
     const ciKeys = ['CI – Tren Inferior','CI – Tren Superior','CI – Core','CI – Full Body / Aeróbico'];
     const musclesToSave = {};
     Object.keys(DB.muscles).forEach(function(k){ if(!ciKeys.includes(k)) musclesToSave[k]=DB.muscles[k]; });
-    const overrideRow = {
+    // ex_videos se guarda por separado vía saveExVideosToCloud() para no pisarlo
+    await supa.from('db_overrides').upsert({
       user_id:currentUser.id,
       muscles:musclesToSave,
       warmups:DB.warmups,
       cir_db:CIR_DB,
       cir_custom:cirCustomEx,
       updated_at:new Date().toISOString()
-    };
-    // Solo incluir ex_videos si tiene datos para no pisar valores válidos con vacío
-    if(Object.keys(exVideos).length > 0) overrideRow.ex_videos = exVideos;
-    await supa.from('db_overrides').upsert(overrideRow);
+    });
   }catch(e){}
 }
 
