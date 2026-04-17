@@ -5024,7 +5024,11 @@ async function loadAllFromCloud(){
       if(dbo.cir_db) Object.keys(dbo.cir_db).forEach(k=>CIR_DB[k]=dbo.cir_db[k]);
       if(dbo.cir_custom) cirCustomEx = dbo.cir_custom;
       if(dbo.ex_videos){ exVideos = dbo.ex_videos; saveExVideos(); }
+      // Si la nube no tenía ex_videos pero el local sí, subir ahora
+      else if(Object.keys(exVideos).length > 0){ saveDBOverridesToCloud(); }
     }
+    // Si no había fila en cloud pero hay exVideos local, subir
+    else if(Object.keys(exVideos).length > 0){ saveDBOverridesToCloud(); }
 
     // Load saved circuits
     const {data:sc} = await supa.from('saved_circuits').select('*').eq('user_id', currentUser.id).single();
