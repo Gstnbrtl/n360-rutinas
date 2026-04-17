@@ -881,7 +881,7 @@ select option{background:var(--surface);color:var(--text)}
   <!-- Saludo -->
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
     <div>
-      <h2 style="margin:0;font-family:var(--font-display);font-size:2rem;color:var(--white)">Hola, <span id="portalNombre"></span></h2>
+      <h2 style="margin:0;font-family:var(--font-display);font-size:2rem;color:var(--text)">Hola, <span id="portalNombre"></span></h2>
       <p style="margin:.25rem 0 0;color:var(--gray);font-size:.9rem">Tu rutina de entrenamiento — N360</p>
     </div>
     <div style="display:flex;gap:.5rem;align-items:center">
@@ -908,21 +908,21 @@ select option{background:var(--surface);color:var(--text)}
 
       <!-- Nombre de rutina -->
       <div style="text-align:center;margin-bottom:1.25rem">
-        <div id="portalRoutineName" style="font-family:var(--font-display);font-size:1.6rem;color:var(--white);letter-spacing:.04em"></div>
+        <div id="portalRoutineName" style="font-family:var(--font-display);font-size:1.6rem;color:var(--text);letter-spacing:.04em"></div>
         <div id="portalRoutineDate" style="font-family:var(--font-cond);font-size:1rem;font-weight:700;color:var(--red);letter-spacing:.08em;text-transform:uppercase;margin-top:.2rem"></div>
       </div>
 
       <!-- Indicador grande de entrenamiento -->
       <div style="text-align:center;padding:1.25rem 0 1rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem">
-        <div id="portalDayIndicator" style="font-family:var(--font-display);font-size:3rem;color:var(--white);letter-spacing:.06em;line-height:1.1"></div>
+        <div id="portalDayIndicator" style="font-family:var(--font-display);font-size:3rem;color:var(--text);letter-spacing:.06em;line-height:1.1"></div>
         <div id="portalDayTitle" style="font-family:var(--font-cond);font-size:1rem;font-weight:600;color:var(--gray);margin-top:.4rem;text-transform:uppercase;letter-spacing:.12em"></div>
       </div>
 
       <!-- Flechas + dots -->
       <div style="display:flex;align-items:center;justify-content:center;gap:1.5rem;margin-bottom:1.5rem">
-        <button id="portalBtnPrev" onclick="portalPrevDay()" style="width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--white);font-size:1.2rem;cursor:pointer;flex-shrink:0">←</button>
+        <button id="portalBtnPrev" onclick="portalPrevDay()" style="width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.2rem;cursor:pointer;flex-shrink:0">←</button>
         <div id="portalDayDots" style="display:flex;gap:.6rem;align-items:center"></div>
-        <button id="portalBtnNext" onclick="portalNextDay()" style="width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--white);font-size:1.2rem;cursor:pointer;flex-shrink:0">→</button>
+        <button id="portalBtnNext" onclick="portalNextDay()" style="width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.2rem;cursor:pointer;flex-shrink:0">→</button>
       </div>
 
       <!-- Contenido del dia -->
