@@ -1275,26 +1275,42 @@ let exVideos={};
 function loadExVideos(){try{exVideos=JSON.parse(localStorage.getItem('n360_ex_videos')||'{}')}catch(e){exVideos={}}
   loadGifList();}
 function rebuildGifDatalist(){} // kept for compat
-var _gifList = []; // cached list of GIF filenames from GitHub
+var _gifList = [];
+var _gifListLoaded = false;
 async function loadGifList(){
   try{
-    const res = await fetch('https://api.github.com/repos/Gstnbrtl/n360-rutinas/contents/Videos%20de%20ejercicios');
+    const CACHE_KEY = 'n360_gif_list';
+    const CACHE_TTL = 3600000; // 1 hora
+    const cached = JSON.parse(localStorage.getItem(CACHE_KEY)||'null');
+    if(cached && cached.ts && Date.now()-cached.ts < CACHE_TTL){
+      _gifList = cached.list; _gifListLoaded = true; return;
+    }
+    const res = await fetch('https://api.github.com/repos/Gstnbrtl/n360-rutinas/contents/Videos%20de%20ejercicios',
+      {headers:{'Accept':'application/vnd.github.v3+json'}});
+    if(!res.ok) throw new Error('GitHub API ' + res.status);
     const files = await res.json();
     _gifList = files.filter(function(f){ return f.type==='file' && f.name.toLowerCase().endsWith('.gif'); }).map(function(f){ return f.name; });
-  }catch(e){ console.warn('loadGifList error', e); }
+    _gifListLoaded = true;
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ts:Date.now(), list:_gifList}));
+    console.log('[GIFs] lista cargada:', _gifList);
+  }catch(e){ console.warn('loadGifList error:', e); }
 }
-function populateGifSelect(currentVal){
+async function populateGifSelect(currentVal){
   var sel = document.getElementById('efVideo');
   if(!sel) return;
+  sel.innerHTML = '<option value="">Cargando videos...</option>';
+  if(!_gifListLoaded) await loadGifList();
   sel.innerHTML = '<option value="">— Sin video —</option>';
+  if(!_gifList.length){
+    sel.innerHTML += '<option disabled>No se encontraron GIFs</option>';
+  }
   _gifList.forEach(function(name){
     var opt = document.createElement('option');
     opt.value = name;
-    opt.textContent = name.replace('.gif','');
+    opt.textContent = name.replace(/\.gif$/i,'');
     if(name === currentVal) opt.selected = true;
     sel.appendChild(opt);
   });
-  // If currentVal not in list but is set, add it anyway
   if(currentVal && !_gifList.includes(currentVal)){
     var opt = document.createElement('option');
     opt.value = currentVal; opt.textContent = currentVal; opt.selected = true;
@@ -2402,7 +2418,7 @@ function exGoPage(p){
   document.getElementById('exTableBody').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-function openAddExModal(){
+async function openAddExModal(){
   editingExKey=null;
   document.getElementById('exFormTitle').textContent='Nuevo ejercicio';
   document.getElementById('efNombre').value='';
@@ -2417,7 +2433,7 @@ function openAddExModal(){
   setTimeout(()=>document.getElementById('efNombre').focus(),100);
 }
 
-function editExercise(muscle, idx, isCustom, isWarmup){
+async function editExercise(muscle, idx, isCustom, isWarmup){
   // get the exercise
   const exs=isWarmup ? DB.warmups : getMergedMuscle(muscle);
   const ex=exs[idx];
