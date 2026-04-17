@@ -5029,12 +5029,16 @@ async function loadAllFromCloud(){
       if(dbo.warmups) DB.warmups = dbo.warmups;
       if(dbo.cir_db) Object.keys(dbo.cir_db).forEach(k=>CIR_DB[k]=dbo.cir_db[k]);
       if(dbo.cir_custom) cirCustomEx = dbo.cir_custom;
-      if(dbo.ex_videos){ exVideos = dbo.ex_videos; saveExVideos(); }
-      // Si la nube no tenía ex_videos pero el local sí, subir ahora
-      else if(Object.keys(exVideos).length > 0){ saveDBOverridesToCloud(); }
+      // Solo cargamos ex_videos de la nube si tiene datos (objeto no vacío)
+      if(dbo.ex_videos && Object.keys(dbo.ex_videos).length > 0){
+        exVideos = dbo.ex_videos; saveExVideos();
+      } else if(Object.keys(exVideos).length > 0){
+        // La nube no tenía datos pero local sí — subir
+        saveDBOverridesToCloud();
+      }
+    } else if(Object.keys(exVideos).length > 0){
+      saveDBOverridesToCloud();
     }
-    // Si no había fila en cloud pero hay exVideos local, subir
-    else if(Object.keys(exVideos).length > 0){ saveDBOverridesToCloud(); }
 
     // Load saved circuits
     const {data:sc} = await supa.from('saved_circuits').select('*').eq('user_id', currentUser.id).single();
@@ -5139,15 +5143,17 @@ async function saveDBOverridesToCloud(){
     const ciKeys = ['CI – Tren Inferior','CI – Tren Superior','CI – Core','CI – Full Body / Aeróbico'];
     const musclesToSave = {};
     Object.keys(DB.muscles).forEach(function(k){ if(!ciKeys.includes(k)) musclesToSave[k]=DB.muscles[k]; });
-    await supa.from('db_overrides').upsert({
+    const overrideRow = {
       user_id:currentUser.id,
       muscles:musclesToSave,
       warmups:DB.warmups,
       cir_db:CIR_DB,
       cir_custom:cirCustomEx,
-      ex_videos:exVideos,
       updated_at:new Date().toISOString()
-    });
+    };
+    // Solo incluir ex_videos si tiene datos para no pisar valores válidos con vacío
+    if(Object.keys(exVideos).length > 0) overrideRow.ex_videos = exVideos;
+    await supa.from('db_overrides').upsert(overrideRow);
   }catch(e){}
 }
 
