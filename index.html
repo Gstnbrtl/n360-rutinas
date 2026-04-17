@@ -1631,7 +1631,13 @@ const EX_INFO = {
   'Elevación de piernas con pelota': 'Elevación de piernas sosteniendo una pelota entre los pies. Mayor dificultad que la elevación convencional. Trabaja abdomen inferior.',
 };
 function getExVideoUrl(name){var f=getExVideo(name);if(!f)return '';return f.startsWith('http')?f:VIDEOS_BASE+encodeURIComponent(f);}
-function openExVideo(name){const u=getExVideoUrl(name);if(u)window.open(u,'_blank');else showToast('Sin video cargado para este ejercicio');}
+function openExVideo(name){
+  const u=getExVideoUrl(name);
+  if(!u){ showToast('Sin video cargado para este ejercicio'); return; }
+  // Reusar el mismo modal que el portal cliente
+  _portalVideoList=[{nombre:name,s:'',r:'',d:'',i:'',accent:'var(--red)'}];
+  openPortalVideoByIdx(0);
+}
 
 const MUSCLES=MO.filter(m=>DB.muscles[m]);
 
