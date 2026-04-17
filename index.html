@@ -1233,6 +1233,8 @@ select option{background:var(--surface);color:var(--text)}
         <select id="efVideo" style="width:100%;padding:.6rem .75rem;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-family:var(--font-body);font-size:.95rem;cursor:pointer">
           <option value="">— Sin video —</option>
         </select></div>
+      <div><label>&#128221; Descripci&#xF3;n / Consejos <span style="font-weight:400;color:var(--gray);font-size:.78rem">(editable &#x2014; se muestra al cliente en el modal de video)</span></label>
+        <textarea id="efDescTxt" rows="6" placeholder="T&#xE9;cnica, cuidados, consejos de hipertrofia, tonificaci&#xF3;n..." style="width:100%;padding:.75rem;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-family:var(--font-body);font-size:.88rem;resize:vertical;box-sizing:border-box;outline:none;line-height:1.5" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border2)'"></textarea></div>
     </div>
     <div class="modal-foot">
       <button class="btn btn-dark" onclick="closeModal('ovExForm')">Cancelar</button>
@@ -1277,8 +1279,9 @@ const MO=['Cuádriceps','Cuádriceps / Glúteos','Isquiotibiales','Glúteos','Ad
 
 
 let exVideos={};
+let exDescriptions={};
 function loadExVideos(){try{exVideos=JSON.parse(localStorage.getItem('n360_ex_videos')||'{}')}catch(e){exVideos={}}
-  loadGifList();}
+  loadGifList(); loadExDescriptions();}
 function rebuildGifDatalist(){} // kept for compat
 var _gifList = [];
 var _gifListLoaded = false;
@@ -1334,6 +1337,25 @@ async function saveExVideosToCloud(){
       .update({ ex_videos: exVideos, updated_at: new Date().toISOString() })
       .eq('user_id', currentUser.id);
   }catch(e){ console.warn('saveExVideosToCloud error:', e); }
+}
+function loadExDescriptions(){try{exDescriptions=JSON.parse(localStorage.getItem('n360_ex_desc')||'{}')}catch(e){exDescriptions={}}}
+function saveExDescriptions(){
+  localStorage.setItem('n360_ex_desc',JSON.stringify(exDescriptions));
+  saveExDescriptionsToCloud();
+}
+async function saveExDescriptionsToCloud(){
+  if(!currentUser||!Object.keys(exDescriptions).length) return;
+  try{
+    await supa.from('db_overrides')
+      .update({ex_descriptions:exDescriptions,updated_at:new Date().toISOString()})
+      .eq('user_id',currentUser.id);
+  }catch(e){}
+}
+function getExDescription(name){
+  if(!name) return '';
+  const custom = exDescriptions[name.trim()];
+  if(custom !== undefined) return custom;
+  return EX_INFO[name.trim()] || '';
 }
 function getExVideo(name){return(name&&exVideos[name.trim()])||'';}
 var VIDEOS_BASE='https://raw.githubusercontent.com/Gstnbrtl/n360-rutinas/main/Videos%20de%20ejercicios/';
@@ -2750,6 +2772,7 @@ async function openAddExModal(){
   document.getElementById('efDesc').value='';
   document.getElementById('efObs').value='';
   populateGifSelect('');
+  document.getElementById('efDescTxt').value='';
   document.getElementById('efSaveBtn').textContent='✓ Guardar';
   openModal('ovExForm');
   setTimeout(()=>document.getElementById('efNombre').focus(),100);
@@ -2777,6 +2800,7 @@ async function editExercise(muscle, idx, isCustom, isWarmup){
   document.getElementById('efDesc').value=ex.d||'';
   document.getElementById('efObs').value=ex.o||'';
   populateGifSelect(getExVideo(ex.e||''));
+  document.getElementById('efDescTxt').value = getExDescription(ex.e||'');
   document.getElementById('efSaveBtn').textContent='✓ Actualizar';
   openModal('ovExForm');
   setTimeout(()=>document.getElementById('efNombre').focus(),100);
@@ -2801,6 +2825,9 @@ function saveExercise(){
     };
     if(vUrl) exVideos[nombre]=vUrl; else delete exVideos[nombre];
     saveExVideos();
+    const _desc=(document.getElementById('efDescTxt').value||'').trim();
+    if(_desc) exDescriptions[nombre]=_desc; else delete exDescriptions[nombre];
+    saveExDescriptions();
     saveDBOverrides();
     saveDBOverridesToCloud();
     showToast('✓ Calentamiento actualizado');
@@ -2822,6 +2849,9 @@ function saveExercise(){
     }
     if(vUrl) exVideos[nombre]=vUrl; else delete exVideos[nombre];
     saveExVideos();
+    const _desc=(document.getElementById('efDescTxt').value||'').trim();
+    if(_desc) exDescriptions[nombre]=_desc; else delete exDescriptions[nombre];
+    saveExDescriptions();
     saveCustomExercises();
     showToast('✓ Ejercicio actualizado');
 
@@ -2840,6 +2870,9 @@ function saveExercise(){
     }
     if(vUrl) exVideos[nombre]=vUrl; else delete exVideos[nombre];
     saveExVideos();
+    const _desc=(document.getElementById('efDescTxt').value||'').trim();
+    if(_desc) exDescriptions[nombre]=_desc; else delete exDescriptions[nombre];
+    saveExDescriptions();
     saveDBOverrides();
     saveDBOverridesToCloud();
     showToast('✓ Ejercicio actualizado');
@@ -2861,6 +2894,9 @@ function saveExercise(){
     });
     if(vUrl) exVideos[nombre]=vUrl; else delete exVideos[nombre];
     saveExVideos();
+    const _desc=(document.getElementById('efDescTxt').value||'').trim();
+    if(_desc) exDescriptions[nombre]=_desc; else delete exDescriptions[nombre];
+    saveExDescriptions();
     saveCustomExercises();
     showToast(`✓ Ejercicio "${nombre}" agregado`);
   }
@@ -4657,7 +4693,7 @@ async function loadClientPortal(user){
     let tvid = null;
     if(trainerId){
       const {data:r} = await supa.from('db_overrides')
-        .select('ex_videos')
+        .select('ex_videos,ex_descriptions')
         .eq('user_id', trainerId)
         .maybeSingle();
       tvid = r;
@@ -4665,13 +4701,14 @@ async function loadClientPortal(user){
     // Fallback: solo hay un trainer, traer cualquier fila con ex_videos
     if(!tvid || !tvid.ex_videos){
       const {data:r2} = await supa.from('db_overrides')
-        .select('ex_videos')
+        .select('ex_videos,ex_descriptions')
         .not('ex_videos', 'is', null)
         .limit(1)
         .maybeSingle();
       tvid = r2;
     }
     if(tvid && tvid.ex_videos) { exVideos = tvid.ex_videos; }
+    if(tvid && tvid.ex_descriptions && Object.keys(tvid.ex_descriptions).length > 0){ exDescriptions = tvid.ex_descriptions; }
     console.log('[portal] exVideos loaded:', Object.keys(exVideos||{}).length, 'entries');
   } catch(e){ console.warn('Could not load trainer exVideos:', e); }
   // Cargar ultima rutina
@@ -4765,7 +4802,7 @@ function openPortalVideoByIdx(idx){
   // Descripcion del ejercicio
   var descWrap = document.getElementById('pvDescWrap');
   var descEl   = document.getElementById('pvDesc');
-  var info = EX_INFO[v.nombre] || '';
+  var info = getExDescription(v.nombre);
   if(info){ descEl.textContent = info; descWrap.style.display = ''; }
   else     { descWrap.style.display = 'none'; }
   var ov = document.getElementById('ovPortalVideo');
@@ -5038,6 +5075,7 @@ async function loadAllFromCloud(){
       if(dbo.warmups) DB.warmups = dbo.warmups;
       if(dbo.cir_db) Object.keys(dbo.cir_db).forEach(k=>CIR_DB[k]=dbo.cir_db[k]);
       if(dbo.cir_custom) cirCustomEx = dbo.cir_custom;
+      if(dbo.ex_descriptions && Object.keys(dbo.ex_descriptions).length > 0){ exDescriptions = dbo.ex_descriptions; localStorage.setItem('n360_ex_desc', JSON.stringify(exDescriptions)); }
       // Solo cargamos ex_videos de la nube si tiene datos (objeto no vacío)
       if(dbo.ex_videos && Object.keys(dbo.ex_videos).length > 0){
         exVideos = dbo.ex_videos;
