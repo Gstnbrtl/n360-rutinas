@@ -513,6 +513,46 @@ select option{background:var(--surface);color:var(--text)}
 .cir-tab-btn:hover{color:var(--text);border-color:var(--gray2)}
 .cir-tab-btn.on{background:var(--tabata-dim);border-color:var(--tabata);color:var(--tabata)}
 </style>
+  <!-- Quill rich text editor -->
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+  <!-- Quill dark theme overrides -->
+  <style>
+    .ql-toolbar.ql-snow{background:#1E1E2C;border:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08);border-radius:10px 10px 0 0;padding:.5rem .75rem;flex-wrap:wrap;gap:.15rem}
+    .ql-container.ql-snow{border:1px solid rgba(255,255,255,.12);border-top:none;border-radius:0 0 10px 10px;background:#0F0F1A}
+    .ql-editor{color:#E0E0F0;font-family:'Barlow',sans-serif;font-size:.92rem;line-height:1.7;min-height:220px;padding:1rem 1.25rem}
+    .ql-editor.ql-blank::before{color:rgba(255,255,255,.25);font-style:italic}
+    .ql-snow .ql-stroke{stroke:rgba(255,255,255,.6)}
+    .ql-snow .ql-fill{fill:rgba(255,255,255,.6)}
+    .ql-snow .ql-picker{color:rgba(255,255,255,.7)}
+    .ql-snow .ql-picker-options{background:#1E1E2C;border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:.35rem}
+    .ql-snow .ql-picker-item{color:rgba(255,255,255,.75)}
+    .ql-snow .ql-picker-item:hover{color:#fff;background:rgba(255,255,255,.08);border-radius:4px}
+    .ql-snow .ql-picker-label:hover .ql-stroke,.ql-snow button:hover .ql-stroke{stroke:#E8321F}
+    .ql-snow .ql-picker-label:hover .ql-fill,.ql-snow button:hover .ql-fill{fill:#E8321F}
+    .ql-snow .ql-active .ql-stroke{stroke:#E8321F}
+    .ql-snow .ql-active .ql-fill{fill:#E8321F}
+    .ql-snow button.ql-active,
+    .ql-snow .ql-picker-label.ql-active{color:#E8321F}
+    .ql-snow .ql-tooltip{background:#1E1E2C;border:1px solid rgba(255,255,255,.15);border-radius:8px;color:#fff;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+    .ql-snow .ql-tooltip input[type=text]{background:#0F0F1A;border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:6px;padding:.3rem .6rem}
+    .ql-snow .ql-tooltip a.ql-action::after{color:#E8321F}
+    .ql-snow .ql-tooltip a.ql-remove::before{color:rgba(255,255,255,.5)}
+    /* Portal blog body HTML rendering */
+    .blog-body{color:var(--text);font-size:.88rem;line-height:1.75}
+    .blog-body h1,.blog-body h2,.blog-body h3{font-family:var(--font-cond);color:var(--text);margin:.85rem 0 .4rem;letter-spacing:.03em}
+    .blog-body h1{font-size:1.3rem}.blog-body h2{font-size:1.15rem}.blog-body h3{font-size:1rem}
+    .blog-body p{margin:.4rem 0}
+    .blog-body ul,.blog-body ol{padding-left:1.4rem;margin:.4rem 0}
+    .blog-body li{margin:.2rem 0}
+    .blog-body strong{color:#fff}
+    .blog-body em{color:rgba(255,255,255,.75)}
+    .blog-body a{color:#E8321F;text-decoration:none}
+    .blog-body a:hover{text-decoration:underline}
+    .blog-body img{max-width:100%;border-radius:10px;margin:.5rem 0}
+    .blog-body blockquote{border-left:3px solid #E8321F;margin:.6rem 0;padding:.4rem .8rem;color:var(--gray);font-style:italic;background:rgba(232,50,31,.06);border-radius:0 8px 8px 0}
+    .blog-body iframe{max-width:100%;border-radius:10px;margin:.5rem 0}
+  </style>
 </head>
 <body>
 
@@ -2375,6 +2415,11 @@ function renderClients(){
       </td>
     </tr>`;
   }).join('');
+  // Populate rich HTML bodies safely after render
+  sorted.forEach(function(p){
+    var el2 = document.getElementById('bfull_'+p.id);
+    if(el2) el2.innerHTML = p.body || '';
+  });
 }
 
 function deleteClient(cid){
@@ -4829,6 +4874,51 @@ async function portalSaveData(){
 // BLOG FUNCTIONS
 // ═══════════════════════════════════════════════════════════
 
+var quillEditor = null;
+
+function initQuillEditor(){
+  if(quillEditor) return;
+  var fontSizes = ['small', false, 'large', 'huge'];
+  var Size = Quill.import('attributors/style/size');
+  Size.whitelist = ['12px','14px','16px','18px','20px','24px','28px','32px'];
+  Quill.register(Size, true);
+  quillEditor = new Quill('#blogQuillEditor', {
+    theme: 'snow',
+    placeholder: 'Escribí el contenido del post aquí...',
+    modules:{
+      toolbar:{
+        container:[
+          [{'font':[]}, {'size':['12px','14px','16px','18px','20px','24px','28px','32px']}],
+          ['bold','italic','underline','strike'],
+          [{'color':[]},{'background':[]}],
+          [{'header':[1,2,3,false]}],
+          [{'list':'ordered'},{'list':'bullet'},{'indent':'-1'},{'indent':'+1'}],
+          [{'align':[]}],
+          ['link','image','video'],
+          ['blockquote','code-block'],
+          ['clean']
+        ],
+        handlers:{
+          image: function(){
+            var url = prompt('URL de la imagen:');
+            if(url){
+              var range = quillEditor.getSelection(true);
+              quillEditor.insertEmbed(range.index,'image',url);
+            }
+          },
+          video: function(){
+            var url = prompt('URL del video (YouTube embed URL):');
+            if(url){
+              var range = quillEditor.getSelection(true);
+              quillEditor.insertEmbed(range.index,'video',url);
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
 var _blogCatColors = {
   'Nutrici\u00f3n':'#FF9F0A', 'T\u00e9cnica':'#0A84FF',
   'Novedades':'#30D158', 'Motivaci\u00f3n':'#BF5AF2', 'Otro':'#8E8E93'
@@ -4840,6 +4930,7 @@ function openBlogAdmin(){
   document.getElementById('blogEditorWrap').style.display = 'none';
   renderBlogAdmin();
   openModal('ovBlogAdmin');
+  setTimeout(initQuillEditor, 80);
 }
 
 function renderBlogAdmin(){
@@ -4871,13 +4962,14 @@ function formatBlogDate(d){
 function newBlogPost(){
   _blogEditId = null;
   document.getElementById('blogETitle').value = '';
-  document.getElementById('blogEBody').value = '';
   document.getElementById('blogECat').value = 'Novedades';
   document.getElementById('blogEImg').value = '';
   document.getElementById('blogEPinned').checked = false;
   document.getElementById('blogEDate').value = new Date().toISOString().split('T')[0];
   document.getElementById('blogEditorTitle').textContent = 'Nuevo Post';
   document.getElementById('blogEditorWrap').style.display = '';
+  initQuillEditor();
+  if(quillEditor) quillEditor.setText('');
   document.getElementById('blogEditorWrap').scrollIntoView({behavior:'smooth'});
 }
 
@@ -4886,26 +4978,37 @@ function editBlogPost(id){
   if(!p) return;
   _blogEditId = id;
   document.getElementById('blogETitle').value = p.title || '';
-  document.getElementById('blogEBody').value = p.body || '';
   document.getElementById('blogECat').value = p.category || 'Otro';
   document.getElementById('blogEImg').value = p.imageUrl || '';
   document.getElementById('blogEPinned').checked = !!p.pinned;
   document.getElementById('blogEDate').value = p.date || new Date().toISOString().split('T')[0];
   document.getElementById('blogEditorTitle').textContent = 'Editar Post';
   document.getElementById('blogEditorWrap').style.display = '';
+  initQuillEditor();
+  if(quillEditor){
+    // Load: if content is plain text (legacy), convert newlines to <br>
+    var body = p.body || '';
+    if(body.startsWith('<') ){
+      quillEditor.root.innerHTML = body;
+    } else {
+      quillEditor.root.innerHTML = body.split('\n').map(function(l){ return l ? '<p>'+l+'</p>' : '<p><br></p>'; }).join('');
+    }
+  }
   document.getElementById('blogEditorWrap').scrollIntoView({behavior:'smooth'});
 }
 
 function cancelBlogEdit(){
   document.getElementById('blogEditorWrap').style.display = 'none';
   _blogEditId = null;
+  if(quillEditor) quillEditor.setText('');
 }
 
 async function saveBlogPost(){
   var title = document.getElementById('blogETitle').value.trim();
-  var body  = document.getElementById('blogEBody').value.trim();
-  if(!title){ showToast('\u26a0 El t\u00edtulo es obligatorio'); return; }
-  if(!body){  showToast('\u26a0 El contenido no puede estar vac\u00edo'); return; }
+  var body  = quillEditor ? quillEditor.root.innerHTML.trim() : '';
+  if(body === '<p><br></p>' || body === '<p></p>') body = '';
+  if(!title){ showToast('⚠ El título es obligatorio'); return; }
+  if(!body){  showToast('⚠ El contenido no puede estar vacío'); return; }
   var post = {
     id:       _blogEditId || uid(),
     title:    title,
@@ -4947,9 +5050,9 @@ function renderPortalBlog(){
     return;
   }
   var sorted = blogPosts.slice().sort(function(a,b){ return (b.pinned?1:0)-(a.pinned?1:0) || (b.date||'').localeCompare(a.date||''); });
+  // Render cards first, then populate HTML bodies safely
   el.innerHTML = sorted.map(function(p){
     var col = _blogCatColors[p.category] || '#8E8E93';
-    var preview = p.body.length > 120 ? p.body.slice(0,120)+'...' : p.body;
     var hasImg = p.imageUrl && p.imageUrl.trim();
     return '<div id="bcard_'+p.id+'" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:1rem">'
       + (hasImg ? '<img src="'+p.imageUrl+'" alt="" style="width:100%;max-height:180px;object-fit:cover;display:block">' : '')
@@ -4960,26 +5063,30 @@ function renderPortalBlog(){
       + '<span style="color:var(--gray);font-size:.75rem;margin-left:auto">'+formatBlogDate(p.date)+'</span>'
       + '</div>'
       + '<h3 style="margin:0 0 .5rem;font-family:var(--font-cond);font-size:1.05rem;font-weight:700;color:var(--text);letter-spacing:.03em;line-height:1.3">'+p.title+'</h3>'
-      + '<div id="bpreview_'+p.id+'" style="color:var(--gray);font-size:.85rem;line-height:1.6">'+preview+'</div>'
-      + '<div id="bfull_'+p.id+'" style="display:none;color:var(--text);font-size:.88rem;line-height:1.7;white-space:pre-wrap;margin-top:.5rem">'+p.body+'</div>'
-      + (p.body.length > 120 ? '<button onclick="portalBlogToggle(\''+p.id+'\')" id="btoggle_'+p.id+'" style="background:none;border:none;color:var(--red);font-family:var(--font-cond);font-size:.82rem;font-weight:700;cursor:pointer;padding:.5rem 0;letter-spacing:.04em;text-transform:uppercase">Ver m\u00e1s</button>' : '')
+            + '<div id="bfull_'+p.id+'" style="display:none;color:var(--text);font-size:.88rem;line-height:1.7;white-space:pre-wrap;margin-top:.5rem">'+p.body+'</div>'
+      + '<div id="bfull_'+p.id+'" class="blog-body" style="max-height:120px;overflow:hidden;mask-image:linear-gradient(180deg,#000 55%,transparent);-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent)"></div>'
+      + '<button onclick="portalBlogToggle(''+p.id+'')"  id="btoggle_'+p.id+'" style="background:none;border:none;color:var(--red);font-family:var(--font-cond);font-size:.82rem;font-weight:700;cursor:pointer;padding:.4rem 0;letter-spacing:.04em;text-transform:uppercase">Ver más ›</button>
       + '</div></div>';
   }).join('');
 }
 
 function portalBlogToggle(id){
-  var prev = document.getElementById('bpreview_'+id);
   var full = document.getElementById('bfull_'+id);
   var btn  = document.getElementById('btoggle_'+id);
-  if(!prev || !full || !btn) return;
-  if(full.style.display === 'none'){
-    prev.style.display = 'none';
-    full.style.display = '';
-    btn.textContent = 'Ver menos';
+  if(!full || !btn) return;
+  var expanded = full.dataset.expanded === '1';
+  if(expanded){
+    full.style.maxHeight = '120px';
+    full.style.webkitMaskImage = 'linear-gradient(180deg,#000 55%,transparent)';
+    full.style.maskImage = 'linear-gradient(180deg,#000 55%,transparent)';
+    full.dataset.expanded = '0';
+    btn.innerHTML = 'Ver más ›';
   } else {
-    prev.style.display = '';
-    full.style.display = 'none';
-    btn.textContent = 'Ver m\u00e1s';
+    full.style.maxHeight = 'none';
+    full.style.webkitMaskImage = 'none';
+    full.style.maskImage = 'none';
+    full.dataset.expanded = '1';
+    btn.innerHTML = 'Ver menos ‹';
   }
 }
 
@@ -5678,7 +5785,7 @@ async function initAuth(){
 
       <div style="margin-bottom:1rem">
         <label style="color:var(--gray);font-size:.72rem;font-weight:700;display:block;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.08em">Contenido *</label>
-        <textarea id="blogEBody" rows="8" placeholder="Escrib&#237; el contenido del post aqu&#237;..." style="width:100%;padding:.8rem .9rem;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-size:.88rem;box-sizing:border-box;font-family:var(--font-body);outline:none;resize:vertical;line-height:1.6" onfocus="this.style.borderColor='#BF5AF2'" onblur="this.style.borderColor='var(--border2)'"></textarea>
+        <div id="blogQuillEditor" style="border-radius:10px;overflow:hidden"></div>
       </div>
 
       <div style="display:flex;gap:.75rem;justify-content:flex-end">
