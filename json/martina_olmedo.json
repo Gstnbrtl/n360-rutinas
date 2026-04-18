@@ -5,9 +5,9 @@
     {
       "title": "Día 1 – Cuádriceps y aductores",
       "warmup": [
-        {"e": "Aperturas invertidas con banda", "s": "2", "r": "10", "d": "60 seg"},
-        {"e": "Puente de gluteos/isquios rolo", "s": "2", "r": "10", "d": "60 seg"},
-        {"e": "Sentadilla con peso corporal", "s": "2", "r": "15", "d": "60 seg"}
+        {"e": "Sentadilla aérea sobre banco", "s": "2", "r": "15", "d": "60 seg"},
+        {"e": "Estocadas con rotación", "s": "2", "r": "8 por lado", "d": "60 seg"},
+        {"e": "Perro de caza", "s": "2", "r": "10 por lado", "d": "60 seg"}
       ],
       "blocks": [
         {
@@ -51,9 +51,9 @@
     {
       "title": "Día 2 – Espalda y bíceps",
       "warmup": [
-        {"e": "Aperturas invertidas con banda", "s": "2", "r": "10", "d": "60 seg"},
-        {"e": "Puente de gluteos/isquios rolo", "s": "2", "r": "10", "d": "60 seg"},
-        {"e": "Remo TRX", "s": "2", "r": "12", "d": "60 seg"}
+        {"e": "Remo TRX", "s": "2", "r": "12", "d": "60 seg"},
+        {"e": "Aperturas invertidas con banda", "s": "2", "r": "12", "d": "60 seg"},
+        {"e": "Rotaciones con disco liviano", "s": "2", "r": "10 por lado", "d": "60 seg"}
       ],
       "blocks": [
         {
@@ -88,9 +88,9 @@
     {
       "title": "Día 3 – Isquiotibiales y glúteos",
       "warmup": [
-        {"e": "Aperturas invertidas con banda", "s": "2", "r": "10", "d": "60 seg"},
-        {"e": "Puente de gluteos/isquios rolo", "s": "2", "r": "15", "d": "60 seg"},
-        {"e": "Patada de gluteo en cuadrupedia", "s": "2", "r": "12", "d": "60 seg"}
+        {"e": "Puente de glúteos con rolo", "s": "2", "r": "15", "d": "60 seg"},
+        {"e": "Desplantes con mancuernas livianas", "s": "2", "r": "8 por lado", "d": "60 seg"},
+        {"e": "Perro de caza", "s": "2", "r": "10 por lado", "d": "60 seg"}
       ],
       "blocks": [
         {
@@ -125,9 +125,9 @@
     {
       "title": "Día 4 – Pecho, hombros y tríceps",
       "warmup": [
-        {"e": "Aperturas invertidas con banda", "s": "2", "r": "10", "d": "60 seg"},
-        {"e": "Puente de gluteos/isquios rolo", "s": "2", "r": "10", "d": "60 seg"},
-        {"e": "Remo TRX", "s": "2", "r": "12", "d": "60 seg"}
+        {"e": "Flexiones de brazos", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Press hombros con banda", "s": "2", "r": "12", "d": "60 seg"},
+        {"e": "Apertura con banda", "s": "2", "r": "12", "d": "60 seg"}
       ],
       "blocks": [
         {
