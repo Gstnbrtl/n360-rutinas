@@ -5426,7 +5426,8 @@ async function loadAllFromCloud(){
         const ciKeys = ['CI – Tren Inferior','CI – Tren Superior','CI – Core','CI – Full Body / Aeróbico'];
         Object.keys(dbo.muscles).forEach(function(k){ if(!ciKeys.includes(k)) DB.muscles[k]=dbo.muscles[k]; });
       }
-      if(dbo.warmups) DB.warmups = dbo.warmups;
+      if(dbo.warmups && dbo.warmups.length) DB.warmups = dbo.warmups;
+      rebuildWuDatalist();
       if(dbo.cir_db) Object.keys(dbo.cir_db).forEach(k=>CIR_DB[k]=dbo.cir_db[k]);
       if(dbo.cir_custom) cirCustomEx = dbo.cir_custom;
       if(dbo.ex_descriptions && Object.keys(dbo.ex_descriptions).length > 0){ exDescriptions = dbo.ex_descriptions; localStorage.setItem('n360_ex_desc', JSON.stringify(exDescriptions)); }
