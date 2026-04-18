@@ -1,0 +1,163 @@
+{
+  "alumno": "Martina Olmedo",
+  "objetivo": "Hipertrofia",
+  "days": [
+    {
+      "title": "Día 1 – Cuádriceps y aductores",
+      "warmup": [
+        {"e": "Aperturas invertidas con banda", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Puente de gluteos/isquios rolo", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Sentadilla con peso corporal", "s": "2", "r": "15", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Prensa", "type": "normal", "s": "4", "r": "10", "d": "150", "i": ""},
+            {"e": "Sentadilla búlgara", "type": "normal", "s": "4", "r": "8 PL", "d": "120", "i": "con mancuernas"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Aductores",
+          "cfg": {},
+          "exs": [
+            {"e": "Sentadilla sumo", "type": "normal", "s": "4", "r": "12", "d": "90", "i": ""},
+            {"e": "Sentadilla sumo con pesa rusa", "type": "normal", "s": "3", "r": "15", "d": "60", "i": "paso corto, foco aductores"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Gemelos",
+          "cfg": {},
+          "exs": [
+            {"e": "Elevaciones de gemelos", "type": "normal", "s": "4", "r": "20 PL", "d": "60", "i": ""},
+            {"e": "Gemelos sentado con mancuerna", "type": "normal", "s": "3", "r": "15", "d": "60", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Rueda abdominal", "type": "normal", "s": "3", "r": "8", "d": "90", "i": ""},
+            {"e": "Plancha con toque de hombros", "type": "normal", "s": "3", "r": "20", "d": "60", "i": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Espalda y bíceps",
+      "warmup": [
+        {"e": "Aperturas invertidas con banda", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Puente de gluteos/isquios rolo", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Remo TRX", "s": "2", "r": "12", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Jalón ancho", "type": "normal", "s": "4", "r": "10", "d": "120", "i": ""},
+            {"e": "Remo con mancuernas banco", "type": "normal", "s": "4", "r": "10 PL", "d": "90", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Bíceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Curl de biceps con manc", "type": "normal", "s": "4", "r": "10", "d": "90", "i": ""},
+            {"e": "Curl martillo", "type": "normal", "s": "3", "r": "12", "d": "60", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Lumbares tipo cobra", "type": "normal", "s": "3", "r": "12", "d": "90", "i": ""},
+            {"e": "Abdominales elevación piernas", "type": "normal", "s": "4", "r": "12", "d": "60", "i": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 3 – Isquiotibiales y glúteos",
+      "warmup": [
+        {"e": "Aperturas invertidas con banda", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Puente de gluteos/isquios rolo", "s": "2", "r": "15", "d": "60 seg"},
+        {"e": "Patada de gluteo en cuadrupedia", "s": "2", "r": "12", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Peso muerto rumano con mancuernas", "type": "normal", "s": "4", "r": "10", "d": "150", "i": ""},
+            {"e": "Sillón de isquios", "type": "normal", "s": "4", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Hip Thrust corebag", "type": "normal", "s": "4", "r": "12", "d": "120", "i": ""},
+            {"e": "Sentadilla Bulgara", "type": "normal", "s": "4", "r": "8 PL", "d": "90", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Abductores",
+          "cfg": {},
+          "exs": [
+            {"e": "Cangrejo con banda y tobilleras", "type": "normal", "s": "3", "r": "20", "d": "90", "i": ""},
+            {"e": "Abducción en máquina", "type": "normal", "s": "3", "r": "15", "d": "60", "i": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 4 – Pecho, hombros y tríceps",
+      "warmup": [
+        {"e": "Aperturas invertidas con banda", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Puente de gluteos/isquios rolo", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Remo TRX", "s": "2", "r": "12", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Pecho",
+          "cfg": {},
+          "exs": [
+            {"e": "Press con mancuernas", "type": "normal", "s": "4", "r": "10", "d": "120", "i": ""},
+            {"e": "Apertura con mancuernas", "type": "normal", "s": "3", "r": "12", "d": "90", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "Press militar", "type": "normal", "s": "4", "r": "10", "d": "120", "i": ""},
+            {"e": "Elevaciones laterales", "type": "normal", "s": "3", "r": "12", "d": "90", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Tríceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Press francés", "type": "normal", "s": "4", "r": "10", "d": "120", "i": ""},
+            {"e": "Tríceps en polea con soga", "type": "normal", "s": "3", "r": "12", "d": "90", "i": ""}
+          ]
+        }
+      ]
+    }
+  ]
+}
