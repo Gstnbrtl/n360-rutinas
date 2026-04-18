@@ -547,6 +547,7 @@ select option{background:var(--surface);color:var(--text)}
   <button class="anav-btn" onclick="showView('clientes')">👥 Clientes</button>
   <button class="anav-btn" onclick="showView('ejercicios')">🏋 Ejercicios</button>
   <button class="anav-btn" onclick="showView('circuito')">⚡ Circuito</button>
+  <button class="anav-btn" onclick="openBlogAdmin()" style="background:#BF5AF2;color:#fff;border-color:#BF5AF2">&#x1F4F0; Blog</button>
   <button class="anav-btn" onclick="openImportModal()" style="background:var(--blue);color:#fff;border-color:var(--blue)">&#8659; Importar Rutina</button>
 </nav>
 
@@ -985,13 +986,7 @@ select option{background:var(--surface);color:var(--text)}
       <div style="width:34px;flex-shrink:0"></div>
     </div>
 
-    <div style="max-width:480px;margin:0 auto;padding:2rem 1rem 5rem">
-      <div style="text-align:center;padding:3rem 1.5rem;background:var(--surface);border-radius:16px;border:1px solid var(--border)">
-        <div style="font-size:3rem;margin-bottom:1rem">📰</div>
-        <p style="color:var(--text);font-family:var(--font-cond);font-size:1.15rem;font-weight:700;margin:0 0 .5rem;letter-spacing:.04em">PRÓXIMAMENTE</p>
-        <p style="color:var(--gray);font-size:.88rem;margin:0">Aquí encontrarás noticias, tips y contenido exclusivo de N360.</p>
-      </div>
-    </div>
+    <div id="portalBlogList" style="max-width:480px;margin:0 auto;padding:1.5rem 1rem 5rem"></div>
 
   </div><!-- /portalBlogScreen -->
 
@@ -1336,6 +1331,7 @@ const MO=['Cuádriceps','Cuádriceps / Glúteos','Isquiotibiales','Glúteos','Ad
 
 let exVideos={};
 let exDescriptions={};
+let blogPosts=[];
 function loadExVideos(){try{exVideos=JSON.parse(localStorage.getItem('n360_ex_videos')||'{}')}catch(e){exVideos={}}
   loadGifList(); loadExDescriptions();}
 function rebuildGifDatalist(){} // kept for compat
@@ -1380,6 +1376,12 @@ async function populateGifSelect(currentVal){
 function saveExVideos(){
   localStorage.setItem('n360_ex_videos',JSON.stringify(exVideos));
   saveExVideosToCloud();
+}
+async function saveBlogPostsToCloud(){
+  if(!currentUser) return;
+  try{
+    await supa.from('db_overrides').update({blog_posts: blogPosts, updated_at: new Date().toISOString()}).eq('user_id', currentUser.id);
+  }catch(e){ console.error('saveBlogPostsToCloud error:', e); }
 }
 async function saveExVideosToCloud(){
   if(!currentUser || !Object.keys(exVideos).length) return;
@@ -4745,7 +4747,7 @@ async function loadClientPortal(user){
     let tvid = null;
     if(trainerId){
       const {data:r} = await supa.from('db_overrides')
-        .select('ex_videos,ex_descriptions')
+        .select('ex_videos,ex_descriptions,blog_posts')
         .eq('user_id', trainerId)
         .maybeSingle();
       tvid = r;
@@ -4753,7 +4755,7 @@ async function loadClientPortal(user){
     // Fallback: solo hay un trainer, traer cualquier fila con ex_videos
     if(!tvid || !tvid.ex_videos){
       const {data:r2} = await supa.from('db_overrides')
-        .select('ex_videos,ex_descriptions')
+        .select('ex_videos,ex_descriptions,blog_posts')
         .not('ex_videos', 'is', null)
         .limit(1)
         .maybeSingle();
@@ -4761,6 +4763,7 @@ async function loadClientPortal(user){
     }
     if(tvid && tvid.ex_videos) { exVideos = tvid.ex_videos; }
     if(tvid && tvid.ex_descriptions && Object.keys(tvid.ex_descriptions).length > 0){ exDescriptions = tvid.ex_descriptions; }
+    if(tvid && tvid.blog_posts && Array.isArray(tvid.blog_posts)) blogPosts = tvid.blog_posts;
     console.log('[portal] exVideos loaded:', Object.keys(exVideos||{}).length, 'entries');
   } catch(e){ console.warn('Could not load trainer exVideos:', e); }
   // Cargar ultima rutina
@@ -4821,6 +4824,166 @@ async function portalSaveData(){
   showToast('✓ Datos actualizados');
 }
 
+
+// ═══════════════════════════════════════════════════════════
+// BLOG FUNCTIONS
+// ═══════════════════════════════════════════════════════════
+
+var _blogCatColors = {
+  'Nutrici\u00f3n':'#FF9F0A', 'T\u00e9cnica':'#0A84FF',
+  'Novedades':'#30D158', 'Motivaci\u00f3n':'#BF5AF2', 'Otro':'#8E8E93'
+};
+var _blogEditId = null;  // null = nuevo post
+
+function openBlogAdmin(){
+  _blogEditId = null;
+  document.getElementById('blogEditorWrap').style.display = 'none';
+  renderBlogAdmin();
+  openModal('ovBlogAdmin');
+}
+
+function renderBlogAdmin(){
+  var list = document.getElementById('blogPostList');
+  if(!blogPosts.length){
+    list.innerHTML = '<p style="color:var(--gray);text-align:center;padding:1.5rem;font-size:.9rem">No hay posts todav\u00eda. \u00a1Cre\u00e1 el primero!</p>';
+    return;
+  }
+  var sorted = blogPosts.slice().sort(function(a,b){ return (b.pinned?1:0)-(a.pinned?1:0) || (b.date||'').localeCompare(a.date||''); });
+  list.innerHTML = sorted.map(function(p){
+    var col = _blogCatColors[p.category] || '#8E8E93';
+    return '<div style="display:flex;align-items:center;gap:.75rem;padding:.85rem .75rem;border-bottom:1px solid var(--border)">'
+      + (p.pinned ? '<span title="Destacado" style="font-size:.9rem;flex-shrink:0">&#x1F4CC;</span>' : '<span style="width:1rem;flex-shrink:0"></span>')
+      + '<span style="background:'+col+'22;color:'+col+';font-family:var(--font-cond);font-size:.7rem;font-weight:700;letter-spacing:.06em;padding:.2rem .5rem;border-radius:20px;flex-shrink:0;white-space:nowrap">'+p.category+'</span>'
+      + '<span style="flex:1;font-size:.9rem;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+p.title+'</span>'
+      + '<span style="color:var(--gray);font-size:.78rem;flex-shrink:0">'+formatBlogDate(p.date)+'</span>'
+      + '<button onclick="editBlogPost(\''+p.id+'\')" style="width:30px;height:30px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--gray);cursor:pointer;font-size:.85rem;flex-shrink:0;display:flex;align-items:center;justify-content:center" title="Editar">&#x270F;</button>'
+      + '<button onclick="deleteBlogPost(\''+p.id+'\')" style="width:30px;height:30px;border-radius:8px;background:rgba(232,50,31,.1);border:1px solid rgba(232,50,31,.2);color:#E8321F;cursor:pointer;font-size:.85rem;flex-shrink:0;display:flex;align-items:center;justify-content:center" title="Eliminar">&#x1F5D1;</button>'
+      + '</div>';
+  }).join('');
+}
+
+function formatBlogDate(d){
+  if(!d) return '';
+  var p = d.split('-');
+  return p[2]+'/'+p[1]+'/'+p[0];
+}
+
+function newBlogPost(){
+  _blogEditId = null;
+  document.getElementById('blogETitle').value = '';
+  document.getElementById('blogEBody').value = '';
+  document.getElementById('blogECat').value = 'Novedades';
+  document.getElementById('blogEImg').value = '';
+  document.getElementById('blogEPinned').checked = false;
+  document.getElementById('blogEDate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('blogEditorTitle').textContent = 'Nuevo Post';
+  document.getElementById('blogEditorWrap').style.display = '';
+  document.getElementById('blogEditorWrap').scrollIntoView({behavior:'smooth'});
+}
+
+function editBlogPost(id){
+  var p = blogPosts.find(function(x){ return x.id === id; });
+  if(!p) return;
+  _blogEditId = id;
+  document.getElementById('blogETitle').value = p.title || '';
+  document.getElementById('blogEBody').value = p.body || '';
+  document.getElementById('blogECat').value = p.category || 'Otro';
+  document.getElementById('blogEImg').value = p.imageUrl || '';
+  document.getElementById('blogEPinned').checked = !!p.pinned;
+  document.getElementById('blogEDate').value = p.date || new Date().toISOString().split('T')[0];
+  document.getElementById('blogEditorTitle').textContent = 'Editar Post';
+  document.getElementById('blogEditorWrap').style.display = '';
+  document.getElementById('blogEditorWrap').scrollIntoView({behavior:'smooth'});
+}
+
+function cancelBlogEdit(){
+  document.getElementById('blogEditorWrap').style.display = 'none';
+  _blogEditId = null;
+}
+
+async function saveBlogPost(){
+  var title = document.getElementById('blogETitle').value.trim();
+  var body  = document.getElementById('blogEBody').value.trim();
+  if(!title){ showToast('\u26a0 El t\u00edtulo es obligatorio'); return; }
+  if(!body){  showToast('\u26a0 El contenido no puede estar vac\u00edo'); return; }
+  var post = {
+    id:       _blogEditId || uid(),
+    title:    title,
+    body:     body,
+    category: document.getElementById('blogECat').value,
+    imageUrl: document.getElementById('blogEImg').value.trim(),
+    date:     document.getElementById('blogEDate').value || new Date().toISOString().split('T')[0],
+    pinned:   document.getElementById('blogEPinned').checked
+  };
+  if(_blogEditId){
+    var idx = blogPosts.findIndex(function(p){ return p.id === _blogEditId; });
+    if(idx >= 0) blogPosts[idx] = post;
+  } else {
+    blogPosts.unshift(post);
+  }
+  await saveBlogPostsToCloud();
+  showToast('\u2713 Post guardado');
+  cancelBlogEdit();
+  renderBlogAdmin();
+}
+
+async function deleteBlogPost(id){
+  if(!confirm('Eliminar este post?')) return;
+  blogPosts = blogPosts.filter(function(p){ return p.id !== id; });
+  await saveBlogPostsToCloud();
+  showToast('\u2713 Post eliminado');
+  renderBlogAdmin();
+}
+
+function renderPortalBlog(){
+  var el = document.getElementById('portalBlogList');
+  if(!el) return;
+  if(!blogPosts.length){
+    el.innerHTML = '<div style="text-align:center;padding:3rem 1.5rem;background:var(--surface);border-radius:16px;border:1px solid var(--border)">'
+      + '<div style="font-size:3rem;margin-bottom:1rem">&#x1F4F0;</div>'
+      + '<p style="color:var(--text);font-family:var(--font-cond);font-size:1.15rem;font-weight:700;margin:0 0 .5rem;letter-spacing:.04em">PR\u00d3XIMAMENTE</p>'
+      + '<p style="color:var(--gray);font-size:.88rem;margin:0">Aqu\u00ed encontrar\u00e1s noticias, tips y contenido exclusivo de N360.</p>'
+      + '</div>';
+    return;
+  }
+  var sorted = blogPosts.slice().sort(function(a,b){ return (b.pinned?1:0)-(a.pinned?1:0) || (b.date||'').localeCompare(a.date||''); });
+  el.innerHTML = sorted.map(function(p){
+    var col = _blogCatColors[p.category] || '#8E8E93';
+    var preview = p.body.length > 120 ? p.body.slice(0,120)+'...' : p.body;
+    var hasImg = p.imageUrl && p.imageUrl.trim();
+    return '<div id="bcard_'+p.id+'" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:1rem">'
+      + (hasImg ? '<img src="'+p.imageUrl+'" alt="" style="width:100%;max-height:180px;object-fit:cover;display:block">' : '')
+      + '<div style="padding:1rem 1.1rem">'
+      + '<div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem">'
+      + (p.pinned ? '<span style="font-size:.85rem">&#x1F4CC;</span>' : '')
+      + '<span style="background:'+col+'22;color:'+col+';font-family:var(--font-cond);font-size:.72rem;font-weight:700;letter-spacing:.06em;padding:.2rem .6rem;border-radius:20px">'+p.category+'</span>'
+      + '<span style="color:var(--gray);font-size:.75rem;margin-left:auto">'+formatBlogDate(p.date)+'</span>'
+      + '</div>'
+      + '<h3 style="margin:0 0 .5rem;font-family:var(--font-cond);font-size:1.05rem;font-weight:700;color:var(--text);letter-spacing:.03em;line-height:1.3">'+p.title+'</h3>'
+      + '<div id="bpreview_'+p.id+'" style="color:var(--gray);font-size:.85rem;line-height:1.6">'+preview+'</div>'
+      + '<div id="bfull_'+p.id+'" style="display:none;color:var(--text);font-size:.88rem;line-height:1.7;white-space:pre-wrap;margin-top:.5rem">'+p.body+'</div>'
+      + (p.body.length > 120 ? '<button onclick="portalBlogToggle(\''+p.id+'\')" id="btoggle_'+p.id+'" style="background:none;border:none;color:var(--red);font-family:var(--font-cond);font-size:.82rem;font-weight:700;cursor:pointer;padding:.5rem 0;letter-spacing:.04em;text-transform:uppercase">Ver m\u00e1s</button>' : '')
+      + '</div></div>';
+  }).join('');
+}
+
+function portalBlogToggle(id){
+  var prev = document.getElementById('bpreview_'+id);
+  var full = document.getElementById('bfull_'+id);
+  var btn  = document.getElementById('btoggle_'+id);
+  if(!prev || !full || !btn) return;
+  if(full.style.display === 'none'){
+    prev.style.display = 'none';
+    full.style.display = '';
+    btn.textContent = 'Ver menos';
+  } else {
+    prev.style.display = '';
+    full.style.display = 'none';
+    btn.textContent = 'Ver m\u00e1s';
+  }
+}
+
+
 function portalShowHome(){
   document.getElementById('portalHome').style.display='';
   document.getElementById('portalRutinaScreen').style.display='none';
@@ -4835,6 +4998,7 @@ function portalShowBlog(){
   document.getElementById('portalHome').style.display='none';
   document.getElementById('portalRutinaScreen').style.display='none';
   document.getElementById('portalBlogScreen').style.display='';
+  renderPortalBlog();
 }
 async function portalRefresh(){
   if(!currentUser){ showToast('⚠ No hay sesion activa'); return; }
@@ -5147,6 +5311,7 @@ async function loadAllFromCloud(){
       if(dbo.cir_custom) cirCustomEx = dbo.cir_custom;
       if(dbo.ex_descriptions && Object.keys(dbo.ex_descriptions).length > 0){ exDescriptions = dbo.ex_descriptions; localStorage.setItem('n360_ex_desc', JSON.stringify(exDescriptions)); }
       // Solo cargamos ex_videos de la nube si tiene datos (objeto no vacío)
+      if(dbo.blog_posts && Array.isArray(dbo.blog_posts)) blogPosts = dbo.blog_posts;
       if(dbo.ex_videos && Object.keys(dbo.ex_videos).length > 0){
         exVideos = dbo.ex_videos;
         localStorage.setItem('n360_ex_videos', JSON.stringify(exVideos));
@@ -5450,6 +5615,73 @@ async function initAuth(){
 </div>
 </div>
 
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- BLOG ADMIN MODAL                                                -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="ov" id="ovBlogAdmin">
+  <div class="ov-box" style="max-width:680px;max-height:88vh;overflow-y:auto">
+    <div class="ov-hdr">
+      <h3 style="font-family:var(--font-display);font-size:1.5rem;color:#BF5AF2;letter-spacing:.06em">BLOG</h3>
+      <div style="display:flex;gap:.5rem;align-items:center">
+        <button onclick="newBlogPost()" style="height:34px;padding:0 1rem;background:#BF5AF2;color:#fff;border:none;border-radius:8px;font-family:var(--font-cond);font-size:.85rem;font-weight:700;letter-spacing:.04em;cursor:pointer;text-transform:uppercase">+ Nuevo Post</button>
+        <button class="modal-close" onclick="closeModal('ovBlogAdmin')">&#x2715;</button>
+      </div>
+    </div>
+
+    <!-- EDITOR FORM -->
+    <div id="blogEditorWrap" style="display:none;background:var(--surface2);border:1px solid var(--border2);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem">
+      <h4 id="blogEditorTitle" style="margin:0 0 1rem;font-family:var(--font-cond);font-size:1.1rem;color:var(--text);letter-spacing:.04em;text-transform:uppercase">Nuevo Post</h4>
+
+      <div style="display:grid;grid-template-columns:1fr auto;gap:.75rem;margin-bottom:.75rem">
+        <div>
+          <label style="color:var(--gray);font-size:.72rem;font-weight:700;display:block;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.08em">T&#237;tulo *</label>
+          <input id="blogETitle" type="text" placeholder="Ej: Tips para mejorar tu recuperaci&#243;n" style="width:100%;padding:.7rem .9rem;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-size:.9rem;box-sizing:border-box;font-family:var(--font-body);outline:none" onfocus="this.style.borderColor='#BF5AF2'" onblur="this.style.borderColor='var(--border2)'">
+        </div>
+        <div>
+          <label style="color:var(--gray);font-size:.72rem;font-weight:700;display:block;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.08em">Fecha</label>
+          <input id="blogEDate" type="date" style="padding:.7rem .9rem;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-size:.88rem;outline:none;font-family:var(--font-body)" onfocus="this.style.borderColor='#BF5AF2'" onblur="this.style.borderColor='var(--border2)'">
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem">
+        <div>
+          <label style="color:var(--gray);font-size:.72rem;font-weight:700;display:block;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.08em">Categor&#237;a</label>
+          <select id="blogECat" style="width:100%;padding:.7rem .9rem;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-size:.88rem;outline:none;font-family:var(--font-body)">
+            <option>Novedades</option>
+            <option>Nutrici&#243;n</option>
+            <option>T&#233;cnica</option>
+            <option>Motivaci&#243;n</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:.6rem;padding-bottom:.15rem">
+          <input id="blogEPinned" type="checkbox" style="width:18px;height:18px;accent-color:#BF5AF2;cursor:pointer;flex-shrink:0">
+          <label for="blogEPinned" style="color:var(--gray);font-size:.85rem;cursor:pointer">&#x1F4CC; Destacar</label>
+        </div>
+      </div>
+
+      <div style="margin-bottom:.75rem">
+        <label style="color:var(--gray);font-size:.72rem;font-weight:700;display:block;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.08em">URL de imagen (opcional)</label>
+        <input id="blogEImg" type="url" placeholder="https://..." style="width:100%;padding:.7rem .9rem;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-size:.88rem;box-sizing:border-box;font-family:var(--font-body);outline:none" onfocus="this.style.borderColor='#BF5AF2'" onblur="this.style.borderColor='var(--border2)'">
+      </div>
+
+      <div style="margin-bottom:1rem">
+        <label style="color:var(--gray);font-size:.72rem;font-weight:700;display:block;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.08em">Contenido *</label>
+        <textarea id="blogEBody" rows="8" placeholder="Escrib&#237; el contenido del post aqu&#237;..." style="width:100%;padding:.8rem .9rem;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-size:.88rem;box-sizing:border-box;font-family:var(--font-body);outline:none;resize:vertical;line-height:1.6" onfocus="this.style.borderColor='#BF5AF2'" onblur="this.style.borderColor='var(--border2)'"></textarea>
+      </div>
+
+      <div style="display:flex;gap:.75rem;justify-content:flex-end">
+        <button onclick="cancelBlogEdit()" class="btn btn-sm" style="background:transparent;border-color:var(--border2);color:var(--gray)">Cancelar</button>
+        <button onclick="saveBlogPost()" class="btn btn-sm" style="background:#BF5AF2;border-color:#BF5AF2;color:#fff">Guardar Post</button>
+      </div>
+    </div>
+
+    <!-- POST LIST -->
+    <div id="blogPostList" style="border:1px solid var(--border);border-radius:12px;overflow:hidden;min-height:80px"></div>
+
+  </div>
+</div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <!-- IMPORT ROUTINE MODAL                                            -->
