@@ -877,74 +877,123 @@ select option{background:var(--surface);color:var(--text)}
 <!-- ═══════════════ PORTAL CLIENTE VIEW ═══════════════ -->
 <div class="app-view" id="view-portal" style="background:var(--bg);min-height:100vh;padding:0">
 
-  <!-- HERO HEADER -->
-  <div style="background:#0F1117;padding:1.5rem 1.25rem 2.5rem;position:relative;overflow:hidden">
-    <!-- Fondo decorativo -->
-    <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(232,50,31,.08);pointer-events:none"></div>
-    <div style="position:absolute;bottom:-20px;left:30%;width:120px;height:120px;border-radius:50%;background:rgba(232,50,31,.05);pointer-events:none"></div>
-    <!-- Top bar -->
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;position:relative">
-      <span style="font-family:var(--font-display);color:#fff;font-size:1.3rem;letter-spacing:.06em">N<span style="color:var(--red)">360</span></span>
-      <div style="display:flex;gap:.5rem">
-        <button onclick="portalRefresh()" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center" title="Actualizar">↻</button>
-        <button onclick="openModal('ovPortalDatos')" style="height:36px;padding:0 .85rem;border-radius:18px;background:rgba(255,255,255,.08);border:none;color:#fff;font-size:.82rem;font-family:var(--font-cond);font-weight:700;letter-spacing:.04em;cursor:pointer">MIS DATOS</button>
-        <button onclick="doLogout()" style="height:36px;padding:0 .85rem;border-radius:18px;background:rgba(232,50,31,.2);border:1px solid rgba(232,50,31,.4);color:#fff;font-size:.82rem;font-family:var(--font-cond);font-weight:700;letter-spacing:.04em;cursor:pointer">SALIR</button>
-      </div>
-    </div>
-    <!-- Saludo -->
-    <div style="position:relative">
-      <p style="margin:0 0 .2rem;color:rgba(255,255,255,.5);font-size:.82rem;font-family:var(--font-cond);letter-spacing:.1em;text-transform:uppercase">Bienvenido de nuevo</p>
-      <h1 style="margin:0 0 .6rem;font-family:var(--font-display);font-size:2.4rem;color:#fff;font-weight:400;letter-spacing:.04em;line-height:1">Hola, <span id="portalNombre" style="color:var(--red)"></span></h1>
-      <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
-        <span id="portalRoutineName" style="font-family:var(--font-cond);font-size:.9rem;color:rgba(255,255,255,.6);letter-spacing:.06em;text-transform:uppercase"></span>
-        <span id="portalRoutineDate" style="font-family:var(--font-cond);font-size:.78rem;color:var(--red);background:rgba(232,50,31,.15);padding:.2rem .6rem;border-radius:20px;letter-spacing:.06em"></span>
-      </div>
-    </div>
-  </div>
-
-  <!-- CONTENIDO -->
-  <div style="max-width:680px;margin:0 auto;padding:0 1rem 6rem">
-
-    <!-- Sin rutina -->
-    <div id="portalNoRoutine" style="display:none;padding-top:2rem">
-      <div style="text-align:center;padding:3rem 1.5rem;background:var(--surface);border-radius:16px;border:1px solid var(--border);margin-top:1rem">
-        <div style="font-size:3rem;margin-bottom:1rem">🏋️</div>
-        <p style="color:var(--text);font-family:var(--font-cond);font-size:1.1rem;font-weight:700;margin:0 0 .5rem">Rutina en preparación</p>
-        <p style="color:var(--gray);font-size:.88rem;margin:0">Tu entrenador todavía no cargó tu rutina. ¡Pronto estará disponible!</p>
-      </div>
+  <!-- ══ HOME DASHBOARD ══ -->
+  <div id="portalHome">
+    <!-- Hero -->
+    <div style="background:linear-gradient(180deg,#06060C 0%,#100B16 55%,#0F0A14 100%);padding:3.5rem 1.5rem 2.75rem;text-align:center;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-30px;left:50%;transform:translateX(-50%);width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(232,50,31,.2) 0%,transparent 70%);pointer-events:none"></div>
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#E8321F 35%,#E8321F 65%,transparent);pointer-events:none"></div>
+      <img src="media/logo.png" alt="N360" style="height:82px;filter:invert(1);display:block;margin:0 auto 2rem;position:relative;z-index:1">
+      <p style="margin:0 0 .3rem;color:rgba(255,255,255,.4);font-size:.76rem;font-family:var(--font-cond);letter-spacing:.22em;text-transform:uppercase;position:relative;z-index:1">Bienvenido de vuelta</p>
+      <h1 style="margin:0 0 .85rem;font-family:var(--font-display);font-size:3rem;color:#fff;font-weight:400;letter-spacing:.03em;line-height:1;position:relative;z-index:1"><span id="portalHomeNombre" style="color:#E8321F"></span></h1>
+      <p style="margin:0;color:rgba(255,255,255,.22);font-size:.78rem;font-family:var(--font-cond);letter-spacing:.2em;text-transform:uppercase;position:relative;z-index:1">――― Dale una vuelta a tu vida ―――</p>
     </div>
 
-    <!-- Rutina -->
-    <div id="portalRoutineCard" style="display:none">
+    <!-- Nav cards -->
+    <div style="max-width:480px;margin:0 auto;padding:1.75rem 1rem 5rem">
 
-      <!-- Selector de día -->
-      <div style="margin-top:-1.1rem;margin-bottom:1.25rem">
-        <div style="background:var(--surface);border-radius:16px;padding:1.1rem 1.1rem .9rem;box-shadow:var(--shadow-md);border:1px solid var(--border)">
-          <!-- Indicador día -->
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem">
-            <button id="portalBtnPrev" onclick="portalPrevDay()" style="width:40px;height:40px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:1.1rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .18s" onmouseover="this.style.background='var(--surface3)'" onmouseout="this.style.background='var(--surface2)'">←</button>
-            <div style="text-align:center;flex:1;padding:0 .75rem">
-              <div id="portalDayIndicator" style="font-family:var(--font-display);font-size:1.4rem;color:var(--text);letter-spacing:.04em;line-height:1.1"></div>
-              <div id="portalDayTitle" style="font-family:var(--font-cond);font-size:.82rem;font-weight:700;color:var(--gray);margin-top:.2rem;text-transform:uppercase;letter-spacing:.1em"></div>
-            </div>
-            <button id="portalBtnNext" onclick="portalNextDay()" style="width:40px;height:40px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:1.1rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .18s" onmouseover="this.style.background='var(--surface3)'" onmouseout="this.style.background='var(--surface2)'">→</button>
-          </div>
-          <!-- Dots -->
-          <div id="portalDayDots" style="display:flex;gap:.45rem;align-items:center;justify-content:center"></div>
+      <button onclick="portalShowRutina()" style="display:flex;align-items:center;gap:1rem;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.15rem 1.25rem;margin-bottom:.85rem;cursor:pointer;text-align:left;transition:border-color .18s,background .18s" onmouseover="this.style.borderColor='#E8321F';this.style.background='rgba(232,50,31,.06)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--surface)'">
+        <div style="width:48px;height:48px;border-radius:13px;background:rgba(232,50,31,.15);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0">💪</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-family:var(--font-cond);font-size:1.1rem;font-weight:700;color:var(--text);letter-spacing:.05em;text-transform:uppercase">Mi Rutina</div>
+          <div style="font-size:.8rem;color:var(--gray);margin-top:.15rem">Ver tu plan de entrenamiento</div>
+        </div>
+        <div style="color:var(--gray);font-size:1.5rem;font-family:var(--font-cond);flex-shrink:0">›</div>
+      </button>
+
+      <button onclick="portalShowBlog()" style="display:flex;align-items:center;gap:1rem;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.15rem 1.25rem;margin-bottom:.85rem;cursor:pointer;text-align:left;transition:border-color .18s,background .18s" onmouseover="this.style.borderColor='#0A84FF';this.style.background='rgba(10,132,255,.05)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--surface)'">
+        <div style="width:48px;height:48px;border-radius:13px;background:rgba(10,132,255,.15);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0">📰</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-family:var(--font-cond);font-size:1.1rem;font-weight:700;color:var(--text);letter-spacing:.05em;text-transform:uppercase">Información</div>
+          <div style="font-size:.8rem;color:var(--gray);margin-top:.15rem">Blog y novedades del gimnasio</div>
+        </div>
+        <div style="color:var(--gray);font-size:1.5rem;font-family:var(--font-cond);flex-shrink:0">›</div>
+      </button>
+
+      <button onclick="openModal('ovPortalDatos')" style="display:flex;align-items:center;gap:1rem;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.15rem 1.25rem;margin-bottom:1.75rem;cursor:pointer;text-align:left;transition:border-color .18s,background .18s" onmouseover="this.style.borderColor='#30D158';this.style.background='rgba(48,209,88,.05)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--surface)'">
+        <div style="width:48px;height:48px;border-radius:13px;background:rgba(48,209,88,.12);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0">👤</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-family:var(--font-cond);font-size:1.1rem;font-weight:700;color:var(--text);letter-spacing:.05em;text-transform:uppercase">Mis Datos</div>
+          <div style="font-size:.8rem;color:var(--gray);margin-top:.15rem">Editar información personal</div>
+        </div>
+        <div style="color:var(--gray);font-size:1.5rem;font-family:var(--font-cond);flex-shrink:0">›</div>
+      </button>
+
+      <button onclick="doLogout()" style="display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;background:transparent;border:1px solid rgba(232,50,31,.25);border-radius:16px;padding:1rem;cursor:pointer;color:#E8321F;font-family:var(--font-cond);font-size:1rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;transition:background .18s,border-color .18s" onmouseover="this.style.background='rgba(232,50,31,.08)';this.style.borderColor='rgba(232,50,31,.5)'" onmouseout="this.style.background='transparent';this.style.borderColor='rgba(232,50,31,.25)'">
+        ⏏ Cerrar Sesión
+      </button>
+
+    </div>
+  </div><!-- /portalHome -->
+
+  <!-- ══ RUTINA SCREEN ══ -->
+  <div id="portalRutinaScreen" style="display:none">
+
+    <div style="background:#0F1117;padding:.9rem 1.1rem;display:flex;align-items:center;gap:.75rem;position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(255,255,255,.06)">
+      <button onclick="portalShowHome()" style="flex-shrink:0;height:34px;padding:0 .9rem;border-radius:10px;background:rgba(255,255,255,.08);border:none;color:#fff;font-size:.82rem;font-family:var(--font-cond);font-weight:700;letter-spacing:.04em;cursor:pointer;transition:background .18s" onmouseover="this.style.background='rgba(255,255,255,.14)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">← Inicio</button>
+      <div style="flex:1;text-align:center;min-width:0;overflow:hidden">
+        <div id="portalNombre" style="font-family:var(--font-display);font-size:1.1rem;color:#E8321F;letter-spacing:.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
+        <div style="display:flex;justify-content:center;gap:.4rem;align-items:center;margin-top:.1rem;flex-wrap:wrap">
+          <span id="portalRoutineName" style="font-family:var(--font-cond);font-size:.76rem;color:rgba(255,255,255,.5);letter-spacing:.05em;text-transform:uppercase"></span>
+          <span id="portalRoutineDate" style="font-family:var(--font-cond);font-size:.72rem;color:#E8321F;background:rgba(232,50,31,.15);padding:.15rem .5rem;border-radius:20px;letter-spacing:.05em"></span>
+        </div>
+      </div>
+      <button onclick="portalRefresh()" style="flex-shrink:0;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s" title="Actualizar" onmouseover="this.style.background='rgba(255,255,255,.14)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">↻</button>
+    </div>
+
+    <div style="max-width:680px;margin:0 auto;padding:0 1rem 6rem">
+
+      <div id="portalNoRoutine" style="display:none;padding-top:2rem">
+        <div style="text-align:center;padding:3rem 1.5rem;background:var(--surface);border-radius:16px;border:1px solid var(--border);margin-top:1rem">
+          <div style="font-size:3rem;margin-bottom:1rem">🏋️</div>
+          <p style="color:var(--text);font-family:var(--font-cond);font-size:1.1rem;font-weight:700;margin:0 0 .5rem">Rutina en preparación</p>
+          <p style="color:var(--gray);font-size:.88rem;margin:0">Tu entrenador todavía no cargó tu rutina. ¡Pronto estará disponible!</p>
         </div>
       </div>
 
-      <!-- Contenido del día -->
-      <div id="portalDayContent"></div>
+      <div id="portalRoutineCard" style="display:none">
+        <div style="margin-top:.75rem;margin-bottom:1.25rem">
+          <div style="background:var(--surface);border-radius:16px;padding:1.1rem 1.1rem .9rem;box-shadow:var(--shadow-md);border:1px solid var(--border)">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem">
+              <button id="portalBtnPrev" onclick="portalPrevDay()" style="width:40px;height:40px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:1.1rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .18s" onmouseover="this.style.background='var(--surface3)'" onmouseout="this.style.background='var(--surface2)'">←</button>
+              <div style="text-align:center;flex:1;padding:0 .75rem">
+                <div id="portalDayIndicator" style="font-family:var(--font-display);font-size:1.4rem;color:var(--text);letter-spacing:.04em;line-height:1.1"></div>
+                <div id="portalDayTitle" style="font-family:var(--font-cond);font-size:.82rem;font-weight:700;color:var(--gray);margin-top:.2rem;text-transform:uppercase;letter-spacing:.1em"></div>
+              </div>
+              <button id="portalBtnNext" onclick="portalNextDay()" style="width:40px;height:40px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:1.1rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .18s" onmouseover="this.style.background='var(--surface3)'" onmouseout="this.style.background='var(--surface2)'">→</button>
+            </div>
+            <div id="portalDayDots" style="display:flex;gap:.45rem;align-items:center;justify-content:center"></div>
+          </div>
+        </div>
+        <div id="portalDayContent"></div>
+      </div>
 
-    </div><!-- /portalRoutineCard -->
+    </div>
 
-  </div><!-- /contenido -->
+    <div id="portalPdfBtn" style="display:none;position:fixed;bottom:1.5rem;right:1.25rem;z-index:200">
+      <button onclick="portalExportPDF()" style="background:var(--red);color:#fff;border:none;border-radius:50px;padding:.8rem 1.35rem;font-family:var(--font-cond);font-size:.95rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;box-shadow:0 4px 20px rgba(232,50,31,.45);display:flex;align-items:center;gap:.5rem">📄 PDF</button>
+    </div>
 
-  <!-- Boton PDF flotante -->
-  <div id="portalPdfBtn" style="display:none;position:fixed;bottom:1.5rem;right:1.25rem;z-index:200">
-    <button onclick="portalExportPDF()" style="background:var(--red);color:#fff;border:none;border-radius:50px;padding:.8rem 1.35rem;font-family:var(--font-cond);font-size:.95rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;box-shadow:0 4px 20px rgba(232,50,31,.45);display:flex;align-items:center;gap:.5rem">📄 PDF</button>
-  </div>
+  </div><!-- /portalRutinaScreen -->
+
+  <!-- ══ BLOG / INFO SCREEN ══ -->
+  <div id="portalBlogScreen" style="display:none">
+
+    <div style="background:#0F1117;padding:.9rem 1.1rem;display:flex;align-items:center;gap:.75rem;border-bottom:1px solid rgba(255,255,255,.06)">
+      <button onclick="portalShowHome()" style="flex-shrink:0;height:34px;padding:0 .9rem;border-radius:10px;background:rgba(255,255,255,.08);border:none;color:#fff;font-size:.82rem;font-family:var(--font-cond);font-weight:700;letter-spacing:.04em;cursor:pointer;transition:background .18s" onmouseover="this.style.background='rgba(255,255,255,.14)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">← Inicio</button>
+      <h2 style="margin:0;font-family:var(--font-display);font-size:1.3rem;color:#fff;letter-spacing:.06em;font-weight:400;flex:1;text-align:center">INFORMACIÓN</h2>
+      <div style="width:34px;flex-shrink:0"></div>
+    </div>
+
+    <div style="max-width:480px;margin:0 auto;padding:2rem 1rem 5rem">
+      <div style="text-align:center;padding:3rem 1.5rem;background:var(--surface);border-radius:16px;border:1px solid var(--border)">
+        <div style="font-size:3rem;margin-bottom:1rem">📰</div>
+        <p style="color:var(--text);font-family:var(--font-cond);font-size:1.15rem;font-weight:700;margin:0 0 .5rem;letter-spacing:.04em">PRÓXIMAMENTE</p>
+        <p style="color:var(--gray);font-size:.88rem;margin:0">Aquí encontrarás noticias, tips y contenido exclusivo de N360.</p>
+      </div>
+    </div>
+
+  </div><!-- /portalBlogScreen -->
 
 </div><!-- /view-portal -->
 
@@ -4726,6 +4775,7 @@ async function loadClientPortal(user){
   await loadPortalPesosFromCloud();
   // Poblar saludo y formulario de datos
   document.getElementById('portalNombre').textContent = clientRow.name;
+  document.getElementById('portalHomeNombre').textContent = clientRow.name;
   document.getElementById('portalFieldNombre').value   = clientRow.name    || '';
   document.getElementById('portalFieldTelefono').value = clientRow.telefono || '';
   document.getElementById('portalFieldEmail').value    = clientRow.portal_email || user.email || '';
@@ -4750,6 +4800,7 @@ async function loadClientPortal(user){
     document.getElementById('portalNoRoutine').style.display = '';
   }
   showView('portal');
+  portalShowHome();
   showToast('✓ Bienvenido/a, '+clientRow.name);
 }
 
@@ -4765,10 +4816,26 @@ async function portalSaveData(){
   const {error} = await supa.from('clients').update(updates).eq('id',_portalClientId);
   if(error){ showToast('⚠ Error al guardar: '+error.message); return; }
   document.getElementById('portalNombre').textContent = updates.name;
+  document.getElementById('portalHomeNombre').textContent = updates.name;
   closeModal('ovPortalDatos');
   showToast('✓ Datos actualizados');
 }
 
+function portalShowHome(){
+  document.getElementById('portalHome').style.display='';
+  document.getElementById('portalRutinaScreen').style.display='none';
+  document.getElementById('portalBlogScreen').style.display='none';
+}
+function portalShowRutina(){
+  document.getElementById('portalHome').style.display='none';
+  document.getElementById('portalRutinaScreen').style.display='';
+  document.getElementById('portalBlogScreen').style.display='none';
+}
+function portalShowBlog(){
+  document.getElementById('portalHome').style.display='none';
+  document.getElementById('portalRutinaScreen').style.display='none';
+  document.getElementById('portalBlogScreen').style.display='';
+}
 async function portalRefresh(){
   if(!currentUser){ showToast('⚠ No hay sesion activa'); return; }
   showToast('Actualizando...');
@@ -5328,110 +5395,59 @@ async function initAuth(){
 <!-- ══════════════════════════════════════════════ -->
 <!-- LOGIN OVERLAY -->
 <!-- ══════════════════════════════════════════════ -->
-<div id="loginOverlay" style="
-  display:flex; position:fixed; inset:0; z-index:9999;
-  background:#F2F4F8;
-  align-items:center; justify-content:center;
-  font-family:'Barlow Condensed',sans-serif;
-">
-  <div style="
-    background:#FFFFFF;
-    border:1px solid #E2E5EF;
-    border-radius:16px; padding:2.5rem 2rem; width:100%; max-width:380px;
-    box-shadow:0 8px 40px rgba(0,0,0,.1);
-    position:relative; overflow:hidden;
-  ">
-    <div style="
-      position:absolute;top:0;left:0;right:0;height:4px;
-      background:#E8321F;
-      border-radius:16px 16px 0 0;
-    "></div>
-    <div style="text-align:center; margin-bottom:2rem;">
-      <div style="display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;background:#0F1117;border-radius:12px;margin-bottom:1rem;">
-        <span style="font-family:'Bebas Neue',sans-serif;color:#fff;font-size:1.3rem;letter-spacing:.05em">N<span style="color:#E8321F">360</span></span>
-      </div>
-      <h1 style="font-family:'Bebas Neue',sans-serif; color:#111827; font-size:1.8rem; font-weight:400; letter-spacing:3px; margin:0 0 .3rem;">
-        N<span style="color:#E8321F">360</span>
-      </h1>
-      <small style="color:#6B7591; font-size:.78rem; letter-spacing:.12em; text-transform:uppercase;">Centro de Entrenamiento</small>
+<div id="loginOverlay" style="display:flex;position:fixed;inset:0;z-index:9999;background:linear-gradient(145deg,#06060C 0%,#100B16 100%);align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;overflow:hidden">
+  <!-- Background glow -->
+  <div style="position:absolute;top:-15%;right:-8%;width:55%;aspect-ratio:1/1;border-radius:50%;background:radial-gradient(circle,rgba(232,50,31,.16) 0%,transparent 65%);pointer-events:none"></div>
+  <div style="position:absolute;bottom:-20%;left:-5%;width:50%;aspect-ratio:1/1;border-radius:50%;background:radial-gradient(circle,rgba(232,50,31,.08) 0%,transparent 65%);pointer-events:none"></div>
+  <!-- Diagonal accent top -->
+  <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#E8321F 40%,#E8321F 60%,transparent);opacity:.7;pointer-events:none"></div>
+
+  <div style="position:relative;z-index:1;width:100%;max-width:400px;padding:1.25rem">
+    <!-- Logo + tagline -->
+    <div style="text-align:center;margin-bottom:2.25rem">
+      <img src="media/logo.png" alt="N360" style="height:88px;filter:invert(1);display:block;margin:0 auto 1.5rem">
+      <p style="margin:0;color:rgba(255,255,255,.38);font-size:.76rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:.22em;text-transform:uppercase">Dale una vuelta a tu vida</p>
     </div>
 
-    <div id="loginForm">
-      <div style="margin-bottom:1rem;">
-        <label style="color:#6B7591; font-size:.72rem; font-weight:700; display:block; margin-bottom:.4rem; text-transform:uppercase; letter-spacing:.08em;">Email</label>
-        <input id="loginEmail" type="email" placeholder="tu@email.com" style="
-          width:100%; padding:.75rem; border-radius:8px; border:1px solid #CDD1E0;
-          background:#FFFFFF; color:#111827; font-size:.95rem; box-sizing:border-box;
-          font-family:'Barlow',sans-serif; outline:none; transition:border-color .18s;
-        " onfocus="this.style.borderColor='#E8321F'" onblur="this.style.borderColor='#CDD1E0'">
-      </div>
-      <div style="margin-bottom:1.5rem;">
-        <label style="color:#6B7591; font-size:.72rem; font-weight:700; display:block; margin-bottom:.4rem; text-transform:uppercase; letter-spacing:.08em;">Contrasena</label>
-        <input id="loginPass" type="password" placeholder="••••••••" style="
-          width:100%; padding:.75rem; border-radius:8px; border:1px solid #CDD1E0;
-          background:#FFFFFF; color:#111827; font-size:1rem; box-sizing:border-box;
-          font-family:'Barlow',sans-serif; outline:none; transition:border-color .18s;
-        " onfocus="this.style.borderColor='#E8321F'" onblur="this.style.borderColor='#CDD1E0'"
-          onkeydown="if(event.key==='Enter')doLogin()">
-      </div>
-      <button onclick="doLogin()" style="
-        width:100%; padding:.9rem;
-        background:#E8321F;
-        color:#fff; border:none; border-radius:10px; font-size:1rem; font-weight:800;
-        cursor:pointer; letter-spacing:2px; margin-bottom:.75rem; font-family:'Barlow Condensed',sans-serif;
-        box-shadow:0 4px 16px rgba(232,50,31,.3); transition:all .2s;
-        text-transform:uppercase;
-      " onmouseover="this.style.background='#C8270F'" onmouseout="this.style.background='#E8321F'">INGRESAR</button>
-      <button onclick="showRegister()" style="
-        width:100%; padding:.75rem; background:transparent; color:#6B7591;
-        border:1px solid #CDD1E0; border-radius:8px; font-size:.88rem;
-        cursor:pointer; font-family:'Barlow Condensed',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
-        transition:all .2s;
-      " onmouseover="this.style.borderColor='#A0A8BF';this.style.color='#111827'" onmouseout="this.style.borderColor='#CDD1E0';this.style.color='#6B7591'">Crear cuenta nueva</button>
-      <div id="loginError" style="color:#E8321F; font-size:.85rem; margin-top:.75rem; text-align:center; display:none;"></div>
-    </div>
+    <!-- Card -->
+    <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:2rem 1.75rem;backdrop-filter:blur(12px)">
 
-    <div id="registerForm" style="display:none;">
-      <div style="margin-bottom:1rem;">
-        <label style="color:#6B7591; font-size:.72rem; font-weight:700; display:block; margin-bottom:.4rem; text-transform:uppercase; letter-spacing:.08em;">Nombre</label>
-        <input id="regNombre" type="text" placeholder="Tu nombre" style="
-          width:100%; padding:.75rem; border-radius:8px; border:1px solid #CDD1E0;
-          background:#FFFFFF; color:#111827; font-size:.95rem; box-sizing:border-box;
-          font-family:'Barlow',sans-serif; outline:none;
-        " onfocus="this.style.borderColor='#E8321F'" onblur="this.style.borderColor='#CDD1E0'">
+      <div id="loginForm">
+        <div style="margin-bottom:1rem">
+          <label style="color:rgba(255,255,255,.45);font-size:.7rem;font-weight:700;display:block;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.1em">Email</label>
+          <input id="loginEmail" type="email" placeholder="tu@email.com" style="width:100%;padding:.8rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;font-size:.95rem;box-sizing:border-box;font-family:'Barlow',sans-serif;outline:none;transition:border-color .18s" onfocus="this.style.borderColor='rgba(232,50,31,.7)'" onblur="this.style.borderColor='rgba(255,255,255,.12)'">
+        </div>
+        <div style="margin-bottom:1.75rem">
+          <label style="color:rgba(255,255,255,.45);font-size:.7rem;font-weight:700;display:block;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.1em">Contraseña</label>
+          <input id="loginPass" type="password" placeholder="••••••••" style="width:100%;padding:.8rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;font-size:1rem;box-sizing:border-box;font-family:'Barlow',sans-serif;outline:none;transition:border-color .18s" onfocus="this.style.borderColor='rgba(232,50,31,.7)'" onblur="this.style.borderColor='rgba(255,255,255,.12)'" onkeydown="if(event.key==='Enter')doLogin()">
+        </div>
+        <button onclick="doLogin()" style="width:100%;padding:.95rem;background:#E8321F;color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:800;cursor:pointer;letter-spacing:2px;margin-bottom:.85rem;font-family:'Barlow Condensed',sans-serif;box-shadow:0 4px 20px rgba(232,50,31,.35);transition:all .2s;text-transform:uppercase" onmouseover="this.style.background='#C8270F';this.style.boxShadow='0 6px 24px rgba(232,50,31,.5)'" onmouseout="this.style.background='#E8321F';this.style.boxShadow='0 4px 20px rgba(232,50,31,.35)'">INGRESAR</button>
+        <button onclick="showRegister()" style="width:100%;padding:.75rem;background:transparent;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.12);border-radius:10px;font-size:.88rem;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em;transition:all .2s" onmouseover="this.style.borderColor='rgba(255,255,255,.3)';this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.borderColor='rgba(255,255,255,.12)';this.style.color='rgba(255,255,255,.4)'">Crear cuenta nueva</button>
+        <div id="loginError" style="color:#E8321F;font-size:.85rem;margin-top:.75rem;text-align:center;display:none"></div>
       </div>
-      <div style="margin-bottom:1rem;">
-        <label style="color:#6B7591; font-size:.72rem; font-weight:700; display:block; margin-bottom:.4rem; text-transform:uppercase; letter-spacing:.08em;">Email</label>
-        <input id="regEmail" type="email" placeholder="tu@email.com" style="
-          width:100%; padding:.75rem; border-radius:8px; border:1px solid #CDD1E0;
-          background:#FFFFFF; color:#111827; font-size:.95rem; box-sizing:border-box;
-          font-family:'Barlow',sans-serif; outline:none;
-        " onfocus="this.style.borderColor='#E8321F'" onblur="this.style.borderColor='#CDD1E0'">
+
+      <div id="registerForm" style="display:none">
+        <div style="margin-bottom:1rem">
+          <label style="color:rgba(255,255,255,.45);font-size:.7rem;font-weight:700;display:block;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.1em">Nombre</label>
+          <input id="regNombre" type="text" placeholder="Tu nombre" style="width:100%;padding:.8rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;font-size:.95rem;box-sizing:border-box;font-family:'Barlow',sans-serif;outline:none" onfocus="this.style.borderColor='rgba(232,50,31,.7)'" onblur="this.style.borderColor='rgba(255,255,255,.12)'">
+        </div>
+        <div style="margin-bottom:1rem">
+          <label style="color:rgba(255,255,255,.45);font-size:.7rem;font-weight:700;display:block;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.1em">Email</label>
+          <input id="regEmail" type="email" placeholder="tu@email.com" style="width:100%;padding:.8rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;font-size:.95rem;box-sizing:border-box;font-family:'Barlow',sans-serif;outline:none" onfocus="this.style.borderColor='rgba(232,50,31,.7)'" onblur="this.style.borderColor='rgba(255,255,255,.12)'">
+        </div>
+        <div style="margin-bottom:1.75rem">
+          <label style="color:rgba(255,255,255,.45);font-size:.7rem;font-weight:700;display:block;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.1em">Contraseña</label>
+          <input id="regPass" type="password" placeholder="Mínimo 6 caracteres" style="width:100%;padding:.8rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;font-size:.95rem;box-sizing:border-box;font-family:'Barlow',sans-serif;outline:none" onfocus="this.style.borderColor='rgba(232,50,31,.7)'" onblur="this.style.borderColor='rgba(255,255,255,.12)'">
+        </div>
+        <button onclick="doRegister()" style="width:100%;padding:.9rem;background:#1A9E3A;color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:800;cursor:pointer;letter-spacing:1px;margin-bottom:.85rem;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;box-shadow:0 4px 16px rgba(26,158,58,.3);transition:all .2s" onmouseover="this.style.background='#157A2D'" onmouseout="this.style.background='#1A9E3A'">REGISTRARSE</button>
+        <button onclick="showLogin()" style="width:100%;padding:.75rem;background:transparent;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.12);border-radius:10px;font-size:.88rem;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em;transition:all .2s" onmouseover="this.style.borderColor='rgba(255,255,255,.3)';this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.borderColor='rgba(255,255,255,.12)';this.style.color='rgba(255,255,255,.4)'">← Volver al login</button>
+        <div id="registerError" style="color:#E8321F;font-size:.85rem;margin-top:.75rem;text-align:center;display:none"></div>
       </div>
-      <div style="margin-bottom:1.5rem;">
-        <label style="color:#6B7591; font-size:.72rem; font-weight:700; display:block; margin-bottom:.4rem; text-transform:uppercase; letter-spacing:.08em;">Contrasena</label>
-        <input id="regPass" type="password" placeholder="Minimo 6 caracteres" style="
-          width:100%; padding:.75rem; border-radius:8px; border:1px solid #CDD1E0;
-          background:#FFFFFF; color:#111827; font-size:.95rem; box-sizing:border-box;
-          font-family:'Barlow',sans-serif; outline:none;
-        " onfocus="this.style.borderColor='#E8321F'" onblur="this.style.borderColor='#CDD1E0'">
-      </div>
-      <button onclick="doRegister()" style="
-        width:100%; padding:.85rem; background:#1A9E3A; color:#fff;
-        border:none; border-radius:8px; font-size:1rem; font-weight:800;
-        cursor:pointer; letter-spacing:1px; margin-bottom:.75rem;
-        font-family:'Barlow Condensed',sans-serif; text-transform:uppercase;
-        box-shadow:0 4px 14px rgba(26,158,58,.3); transition:all .2s;
-      " onmouseover="this.style.background='#157A2D'" onmouseout="this.style.background='#1A9E3A'">REGISTRARSE</button>
-      <button onclick="showLogin()" style="
-        width:100%; padding:.75rem; background:transparent; color:#6B7591;
-        border:1px solid #CDD1E0; border-radius:8px; font-size:.88rem;
-        cursor:pointer; font-family:'Barlow Condensed',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
-        transition:all .2s;
-      " onmouseover="this.style.borderColor='#A0A8BF';this.style.color='#111827'" onmouseout="this.style.borderColor='#CDD1E0';this.style.color='#6B7591'">← Volver al login</button>
-      <div id="registerError" style="color:#E8321F; font-size:.85rem; margin-top:.75rem; text-align:center; display:none;"></div>
+
     </div>
+    <p style="text-align:center;margin:1.5rem 0 0;color:rgba(255,255,255,.18);font-size:.7rem;letter-spacing:.14em;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase">N360 Centro de Entrenamiento y Salud</p>
   </div>
+</div>
 </div>
 
 
