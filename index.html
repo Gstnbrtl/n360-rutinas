@@ -1772,6 +1772,7 @@ const MUSCLES=MO.filter(m=>DB.muscles[m]);
 let nDays=4, sharedWu=true, curDay=0;
 let blockCounter={}; // {dayIdx: count}
 let clients={}; // {id: {name,objetivo,notas,routines:[]}}
+let activeRoutines={}; // {clientId: routineId} — rutina activa por cliente
 let selectedClientId=null;
 let selectedRoutineIdx=null;
 
@@ -2454,12 +2455,15 @@ function openClientModal(cid){
     h+=`<div class="routine-list">`;
     const lastIdx = c.routines.length - 1;
     c.routines.forEach((r,i)=>{
-      const isActive = i === lastIdx;
+      const _actId = activeRoutines[cid];
+      const isActive = _actId ? r.id === _actId : i === lastIdx;
+      const activarBtn = !isActive ? `<button class="btn btn-sm" onclick="event.stopPropagation();setActiveRoutine('${cid}','${r.id}')" style="background:rgba(39,174,96,.15);color:#27AE60;border:1px solid rgba(39,174,96,.3);font-size:.65rem;padding:.2rem .5rem;font-weight:700">★ Activar</button>` : '';
       h+=`<div class="routine-item" onclick="selectRoutine(${i})" id="ri_${i}">
         <div class="ri-name">${r.name||r.data.alumno} · ${r.data.days.length} días${isActive?' <span style="background:#27AE60;color:#fff;font-size:.65rem;padding:.15rem .45rem;border-radius:20px;font-weight:700;vertical-align:middle;margin-left:.3rem">ACTIVA</span>':''}</div>
         <div class="ri-date">${r.date}</div>
-        <div style="display:flex;gap:.3rem">
-          <button class="btn btn-dark btn-sm" title="Copiar rutina a otro cliente" onclick="event.stopPropagation();openCopyRoutineModal('${cid}',${i})" style="font-size:.65rem;padding:.2rem .5rem">⎘ Copiar</button>
+        <div style="display:flex;gap:.3rem;flex-wrap:wrap">
+          ${activarBtn}
+          <button class="btn btn-dark btn-sm" title="Copiar rutina a otro cliente" onclick="event.stopPropagation();openCopyRoutineModal('${cid}',${i})" style="font-size:.65rem;padding:.2rem .5rem">⥘ Copiar</button>
           <button class="btn btn-dark btn-sm" title="Renombrar rutina" onclick="event.stopPropagation();renameRoutine('${cid}',${i})" style="font-size:.65rem;padding:.2rem .5rem">✏ Renombrar</button>
           <button class="btn btn-sm" onclick="event.stopPropagation();deleteRoutine('${cid}',${i})" style="background:var(--red-dim);color:var(--red);border:1px solid var(--red-dim);font-size:.65rem;padding:.2rem .5rem">✕</button>
         </div>
@@ -2478,6 +2482,13 @@ function openClientModal(cid){
     }else{showToast('Seleccioná una rutina primero');}
   };
   openModal('ovClient');
+}
+
+async function setActiveRoutine(cid, routineId){
+  activeRoutines[cid] = routineId;
+  await saveDBOverridesToCloud();
+  openClientModal(cid);
+  showToast('★ Rutina activa actualizada');
 }
 
 function selectRoutine(i){
@@ -4793,7 +4804,7 @@ async function loadClientPortal(user){
     let tvid = null;
     if(trainerId){
       const {data:r} = await supa.from('db_overrides')
-        .select('ex_videos,ex_descriptions,blog_posts')
+        .select('ex_videos,ex_descriptions,blog_posts,active_routines')
         .eq('user_id', trainerId)
         .maybeSingle();
       tvid = r;
@@ -4801,7 +4812,7 @@ async function loadClientPortal(user){
     // Fallback: solo hay un trainer, traer cualquier fila con ex_videos
     if(!tvid || !tvid.ex_videos){
       const {data:r2} = await supa.from('db_overrides')
-        .select('ex_videos,ex_descriptions,blog_posts')
+        .select('ex_videos,ex_descriptions,blog_posts,active_routines')
         .not('ex_videos', 'is', null)
         .limit(1)
         .maybeSingle();
@@ -4812,13 +4823,21 @@ async function loadClientPortal(user){
     if(tvid && tvid.blog_posts && Array.isArray(tvid.blog_posts)) blogPosts = tvid.blog_posts;
     console.log('[portal] exVideos loaded:', Object.keys(exVideos||{}).length, 'entries');
   } catch(e){ console.warn('Could not load trainer exVideos:', e); }
-  // Cargar ultima rutina
-  const {data:ruts} = await supa.from('routines')
-    .select('*')
-    .eq('client_id', clientRow.id)
-    .order('id',{ascending:false})
-    .limit(1);
-  const latestRut = ruts && ruts[0];
+  // Cargar rutina activa (o la ultima si no hay preferencia)
+  const _portalActiveId = (tvid && tvid.active_routines && tvid.active_routines[_portalClientId]) || null;
+  let latestRut = null;
+  if(_portalActiveId){
+    const {data:rSingle} = await supa.from('routines').select('*').eq('id',_portalActiveId).maybeSingle();
+    latestRut = rSingle || null;
+  }
+  if(!latestRut){
+    const {data:ruts} = await supa.from('routines')
+      .select('*')
+      .eq('client_id', clientRow.id)
+      .order('id',{ascending:false})
+      .limit(1);
+    latestRut = ruts && ruts[0];
+  }
   _portalRoutineId = latestRut ? latestRut.id : null;
   loadPortalPesos();
   await loadPortalPesosFromCloud();
@@ -5430,6 +5449,7 @@ async function loadAllFromCloud(){
       }
       if(dbo.warmups && dbo.warmups.length) DB.warmups = dbo.warmups;
       rebuildWuDatalist();
+      if(dbo.active_routines) activeRoutines = dbo.active_routines;
       if(dbo.cir_db) Object.keys(dbo.cir_db).forEach(k=>CIR_DB[k]=dbo.cir_db[k]);
       if(dbo.cir_custom) cirCustomEx = dbo.cir_custom;
       if(dbo.ex_descriptions && Object.keys(dbo.ex_descriptions).length > 0){ exDescriptions = dbo.ex_descriptions; localStorage.setItem('n360_ex_desc', JSON.stringify(exDescriptions)); }
@@ -5556,6 +5576,7 @@ async function saveDBOverridesToCloud(){
       warmups:DB.warmups,
       cir_db:CIR_DB,
       cir_custom:cirCustomEx,
+      active_routines:activeRoutines,
       updated_at:new Date().toISOString()
     });
   }catch(e){}
