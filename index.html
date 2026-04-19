@@ -2126,6 +2126,8 @@ function saveAsNew(data){
   const routine={id:uid(), name:data.routineName||data.alumno, date:new Date().toLocaleDateString('es-AR'), data};
   clients[cid].routines.push(routine);
   editorCid=cid; editorRid=routine.id;
+  activeRoutines[cid] = routine.id; // nueva rutina siempre activa
+  saveDBOverridesToCloud();
   saveToStorage();
   document.getElementById('clientBadge').textContent='Guardado ✓';
   document.getElementById('clientBadge').className='chip chip-red';
@@ -2191,6 +2193,8 @@ async function importRoutine(data){
   const routine = {id:uid(), name:data.routineName||data.alumno, date:new Date().toLocaleDateString('es-AR'), data};
   clients[cid].routines.push(routine);
   editorCid=cid; editorRid=routine.id;
+  activeRoutines[cid] = routine.id; // nueva rutina siempre activa
+  saveDBOverridesToCloud();
   // load into editor and navigate
   loadRoutineData(data);
   showView('view-editor');
