@@ -5370,6 +5370,7 @@ async function onLogin(user){
     await loadClientPortal(user);
   } else {
     showToast('✓ Bienvenido');
+    renderDays();
     await loadAllFromCloud();
     loadExtra(); renderClients();
     renderDays();
