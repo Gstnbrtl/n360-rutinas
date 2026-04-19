@@ -1792,6 +1792,7 @@ function showView(v){
   document.querySelectorAll('.anav-btn').forEach((b,i)=>{
     b.classList.toggle('on',['editor','clientes','ejercicios','circuito'][i]===v);
   });
+  if(v==='editor'){const p=document.getElementById('dpanels');if(p&&!p.children.length)renderDays();}
   if(v==='clientes')renderClients();
   if(v==='ejercicios')renderExercises();
   if(v==='circuito')renderSavedCircuits();
