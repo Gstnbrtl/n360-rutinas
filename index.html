@@ -5413,7 +5413,7 @@ async function loadAllFromCloud(){
     if(cls && cls.length){
       clients = {};
       // Load routines for each client
-      const {data:rts} = await supa.from('routines').select('*').eq('user_id', currentUser.id);
+      const {data:rts} = await supa.from('routines').select('*').eq('user_id', currentUser.id).order('id',{ascending:true});
       cls.forEach(function(c){
         clients[c.id] = {
           id: c.id,
@@ -5473,6 +5473,17 @@ async function loadAllFromCloud(){
     // Load saved circuits
     const {data:sc} = await supa.from('saved_circuits').select('*').eq('user_id', currentUser.id).single();
     if(sc) savedCircuits = sc.data;
+
+    // Auto-set activeRoutines para clientes sin seleccion explicita
+    let activeChanged = false;
+    Object.keys(clients).forEach(function(cid){
+      if(!activeRoutines[cid] && clients[cid].routines && clients[cid].routines.length){
+        const rts2 = clients[cid].routines;
+        activeRoutines[cid] = rts2[rts2.length - 1].id;
+        activeChanged = true;
+      }
+    });
+    if(activeChanged) saveDBOverridesToCloud();
 
     // Rebuild CI muscle groups
     loadCirDB();
