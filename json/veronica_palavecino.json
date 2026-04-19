@@ -1,0 +1,85 @@
+{
+  "alumno": "Verónica Palavecino",
+  "objetivo": "Rendimiento deportivo",
+  "days": [
+    {
+      "title": "Día 1 – Tren Inferior + AMRAP",
+      "warmup": [
+        {"e": "Sentadilla aérea sobre banco", "s": "2", "r": "15", "d": "60 seg"},
+        {"e": "Rotaciones con disco liviano", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Apertura con banda", "s": "2", "r": "12", "d": "45 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Sentadilla con barra", "type": "normal", "s": "4", "r": "10", "d": "90", "i": "Explosiva en la subida, simula despegue de salto"},
+            {"e": "Zancadas con mancuernas", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "Paso largo, simula movimiento de pivote en handball"},
+            {"e": "Prensa 45°", "type": "normal", "s": "3", "r": "12", "d": "75", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "Press de hombros con mancuernas", "type": "normal", "s": "4", "r": "10", "d": "75", "i": "Movimiento similar al lanzamiento en handball"},
+            {"e": "Remo con mancuerna", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "Retracción escapular, estabilidad de hombro lanzador"},
+            {"e": "Elevaciones laterales con mancuernas", "type": "normal", "s": "3", "r": "15", "d": "45", "i": ""}
+          ]
+        },
+        {
+          "type": "amrap",
+          "muscle": "Glúteos",
+          "cfg": {"time": "10 min", "rest": "2 min"},
+          "exs": [
+            {"e": "Sentadilla con salto", "type": "normal", "s": "—", "r": "8", "d": "—", "i": "Máx potencia en cada salto"},
+            {"e": "Remo con mancuerna", "type": "normal", "s": "—", "r": "10", "d": "—", "i": "Alternar brazos"},
+            {"e": "Russian twist con disco", "type": "normal", "s": "—", "r": "20", "d": "—", "i": "10 cada lado — rotación de tronco para lanzamiento"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Tren Posterior + Tabata",
+      "warmup": [
+        {"e": "Puente de glúteos con rolo", "s": "2", "r": "15", "d": "45 seg"},
+        {"e": "Estocadas con rotación", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Aperturas invertidas con banda", "s": "2", "r": "12", "d": "45 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Peso muerto rumano con barra", "type": "normal", "s": "4", "r": "10", "d": "90", "i": "Espalda neutra, foco en cadena posterior"},
+            {"e": "Hip Thrust con barra", "type": "normal", "s": "4", "r": "12", "d": "75", "i": "Extensión completa de cadera — potencia para el salto"},
+            {"e": "Curl femoral en máquina", "type": "normal", "s": "3", "r": "12", "d": "60", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Jalón al pecho en polea", "type": "normal", "s": "4", "r": "10", "d": "75", "i": "Equilibrio muscular con el movimiento de lanzamiento"},
+            {"e": "Remo en polea baja", "type": "normal", "s": "3", "r": "12", "d": "60", "i": ""},
+            {"e": "Curl con barra", "type": "normal", "s": "3", "r": "12", "d": "45", "i": "Fuerza de agarre — importante para recepción en handball"}
+          ]
+        },
+        {
+          "type": "tabata",
+          "muscle": "Glúteos",
+          "cfg": {"work": "20", "rest": "10", "rounds": "8", "brk": "1 min"},
+          "exs": [
+            {"e": "Sentadilla con salto", "type": "normal", "s": "—", "r": "máx", "d": "—", "i": "Explosividad handball"},
+            {"e": "Mountain climbers", "type": "normal", "s": "—", "r": "máx", "d": "—", "i": "Agilidad y core"}
+          ]
+        }
+      ]
+    }
+  ]
+}
