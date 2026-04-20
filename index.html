@@ -4803,9 +4803,9 @@ async function loadClientPortal(user){
   }
   _portalClientId = clientRow.id;
   // Cargar ex_videos del trainer para mostrar GIFs en el portal
+  let tvid = null;
   try {
     const trainerId = user.user_metadata && user.user_metadata.trainer_id;
-    let tvid = null;
     if(trainerId){
       const {data:r} = await supa.from('db_overrides')
         .select('ex_videos,ex_descriptions,blog_posts,active_routines')
