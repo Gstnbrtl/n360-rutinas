@@ -2647,16 +2647,39 @@ function renderClients(){
   });
 }
 
-function deleteClient(cid){
-  if(!confirm(`¿Eliminar a ${clients[cid].name} y todas sus rutinas?`))return;
-  delete clients[cid];
-  saveToStorage();
-  renderClients();
-  showToast('Cliente eliminado');
+async function deleteClient(cid){
+  const name = clients[cid] ? clients[cid].name : cid;
+  if(!confirm('¿Eliminar a '+name+' y todas sus rutinas?'))return;
+
+  // 1. Borrar de Supabase PRIMERO (fuente de verdad)
   if(currentUser){
-    supa.from('routines').delete().eq('client_id',cid).eq('user_id',currentUser.id).then(()=>{});
-    supa.from('clients').delete().eq('id',cid).eq('user_id',currentUser.id).then(()=>{});
+    try{
+      const {error:re} = await supa.from('routines').delete().eq('client_id',cid).eq('user_id',currentUser.id);
+      if(re) throw re;
+      const {error:ce} = await supa.from('clients').delete().eq('id',cid).eq('user_id',currentUser.id);
+      if(ce) throw ce;
+    } catch(e){
+      console.error('deleteClient Supabase error:', e);
+      showToast('⚠ Error al eliminar en la nube: ' + (e.message||JSON.stringify(e)));
+      return;
+    }
   }
+
+  // 2. Borrar de memoria y localStorage
+  delete clients[cid];
+  if(extraData[cid]) delete extraData[cid];
+  saveToStorage();
+  saveExtra();
+
+  // 3. Limpiar activeRoutines si aplica
+  if(activeRoutines[cid]){
+    delete activeRoutines[cid];
+    saveDBOverridesToCloud();
+  }
+
+  renderClients();
+  renderDashboard();
+  showToast('✓ Cliente eliminado');
 }
 
 function openClientModal(cid){
@@ -2721,12 +2744,35 @@ function selectRoutine(i){
   });
 }
 
-function deleteRoutine(cid,i){
+async function deleteRoutine(cid,i){
   const rid = clients[cid].routines[i]?.id;
+
+  // 1. Borrar de Supabase primero
+  if(rid && currentUser){
+    try{
+      const {error} = await supa.from('routines').delete().eq('id',rid).eq('user_id',currentUser.id);
+      if(error) throw error;
+    } catch(e){
+      console.error('deleteRoutine error:', e);
+      showToast('⚠ Error al eliminar rutina: ' + (e.message||JSON.stringify(e)));
+      return;
+    }
+  }
+
+  // 2. Limpiar activeRoutines si era la activa
+  if(activeRoutines[cid] === rid){
+    delete activeRoutines[cid];
+    // Asignar la siguiente disponible si existe
+    const remaining = clients[cid].routines.filter((_,j)=>j!==i);
+    if(remaining.length) activeRoutines[cid] = remaining[remaining.length-1].id;
+    saveDBOverridesToCloud();
+  }
+
+  // 3. Borrar de memoria y UI
   clients[cid].routines.splice(i,1);
   saveToStorage();
   openClientModal(cid);
-  if(rid && currentUser) supa.from('routines').delete().eq('id',rid).eq('user_id',currentUser.id).then(()=>{});
+  showToast('✓ Rutina eliminada');
 }
 
 function renameRoutine(cid, i){
