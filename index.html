@@ -4808,7 +4808,7 @@ async function loadClientPortal(user){
     const trainerId = user.user_metadata && user.user_metadata.trainer_id;
     if(trainerId){
       const {data:r} = await supa.from('db_overrides')
-        .select('ex_videos,ex_descriptions,blog_posts,active_routines')
+        .select('ex_videos,ex_descriptions,blog_posts')
         .eq('user_id', trainerId)
         .maybeSingle();
       tvid = r;
@@ -4816,7 +4816,7 @@ async function loadClientPortal(user){
     // Fallback: solo hay un trainer, traer cualquier fila con ex_videos
     if(!tvid || !tvid.ex_videos){
       const {data:r2} = await supa.from('db_overrides')
-        .select('ex_videos,ex_descriptions,blog_posts,active_routines')
+        .select('ex_videos,ex_descriptions,blog_posts')
         .not('ex_videos', 'is', null)
         .limit(1)
         .maybeSingle();
@@ -4827,8 +4827,20 @@ async function loadClientPortal(user){
     if(tvid && tvid.blog_posts && Array.isArray(tvid.blog_posts)) blogPosts = tvid.blog_posts;
     console.log('[portal] exVideos loaded:', Object.keys(exVideos||{}).length, 'entries');
   } catch(e){ console.warn('Could not load trainer exVideos:', e); }
-  // Cargar rutina activa (o la ultima si no hay preferencia)
-  const _portalActiveId = (tvid && tvid.active_routines && tvid.active_routines[_portalClientId]) || null;
+  // Cargar rutina activa: query separada para no romper ex_videos si la columna no existe
+  let _portalActiveId = null;
+  try {
+    const _arTrainerId = user.user_metadata && user.user_metadata.trainer_id;
+    if(_arTrainerId){
+      const {data:arRow} = await supa.from('db_overrides')
+        .select('active_routines')
+        .eq('user_id', _arTrainerId)
+        .maybeSingle();
+      if(arRow && arRow.active_routines && arRow.active_routines[_portalClientId]){
+        _portalActiveId = arRow.active_routines[_portalClientId];
+      }
+    }
+  } catch(e){ /* columna puede no existir aun */ }
   let latestRut = null;
   if(_portalActiveId){
     const {data:rSingle} = await supa.from('routines').select('*').eq('id',_portalActiveId).maybeSingle();
