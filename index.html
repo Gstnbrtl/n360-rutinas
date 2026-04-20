@@ -608,7 +608,7 @@ select option{background:var(--surface);color:var(--text)}
 
 <!-- ═══════════════ DASHBOARD VIEW ═══════════════ -->
 <div class="app-view" id="view-dashboard">
-<div style="min-height:100vh;background:var(--bg)">
+<div style="min-height:100vh;position:relative"><div id="dashFullBg" style="position:fixed;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .8s;z-index:0"></div><div style="position:fixed;inset:0;background:rgba(6,6,12,.82);z-index:1;pointer-events:none"></div><div style="position:relative;z-index:2">
 
   <!-- HERO con foto de fondo -->
   <div id="dashHero" style="position:relative;overflow:hidden;padding:2.5rem 2rem 2rem;min-height:180px;display:flex;align-items:flex-end">
@@ -643,7 +643,7 @@ select option{background:var(--surface);color:var(--text)}
 
   </div>
 </div>
-</div><!-- /view-dashboard -->
+</div></div><!-- /view-dashboard -->
 
 <!-- ═══════════════ EDITOR VIEW ═══════════════ -->
 <div class="app-view on" id="view-editor">
@@ -2119,6 +2119,8 @@ function renderDashboard(){
 function _setDashBg(){
   const imgs=['media/GYM1.jpeg','media/GYM2.jpeg','media/GYM3.jpeg','media/GYM4.jpeg',
               'media/GYM5.jpeg','media/GYM6.jpeg','media/GYM7.jpeg','media/GYM8.jpeg','media/GYM9.jpeg'];
+  const fullBg=document.getElementById('dashFullBg');
+  if(fullBg){const img2=new Image();img2.onload=function(){fullBg.style.backgroundImage="url('"+chosen+"')";setTimeout(()=>fullBg.style.opacity='1',50);};img2.src=chosen;}
   const bg=document.getElementById('dashBg');
   if(!bg)return;
   const chosen=imgs[Math.floor(Math.random()*imgs.length)];
