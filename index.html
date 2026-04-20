@@ -5486,16 +5486,13 @@ async function loadAllFromCloud(){
     const {data:sc} = await supa.from('saved_circuits').select('*').eq('user_id', currentUser.id).single();
     if(sc) savedCircuits = sc.data;
 
-    // Auto-set activeRoutines para clientes sin seleccion explicita
-    let activeChanged = false;
+    // Auto-set activeRoutines para clientes sin seleccion explicita (solo en memoria)
     Object.keys(clients).forEach(function(cid){
       if(!activeRoutines[cid] && clients[cid].routines && clients[cid].routines.length){
         const rts2 = clients[cid].routines;
         activeRoutines[cid] = rts2[rts2.length - 1].id;
-        activeChanged = true;
       }
     });
-    if(activeChanged) saveDBOverridesToCloud();
 
     // Rebuild CI muscle groups
     loadCirDB();
