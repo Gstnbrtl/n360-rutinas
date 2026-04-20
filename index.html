@@ -607,43 +607,45 @@ select option{background:var(--surface);color:var(--text)}
 </nav>
 
 <!-- ═══════════════ DASHBOARD VIEW ═══════════════ -->
-<div class="app-view" id="view-dashboard">
-<div style="min-height:100vh;position:relative"><div id="dashFullBg" style="position:fixed;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .8s;z-index:0"></div><div style="position:fixed;inset:0;background:rgba(6,6,12,.82);z-index:1;pointer-events:none"></div><div style="position:relative;z-index:2">
+<div class="app-view" id="view-dashboard" style="min-height:100vh;position:relative;overflow-x:hidden">
 
-  <!-- HERO con foto de fondo -->
-  <div id="dashHero" style="position:relative;overflow:hidden;padding:2.5rem 2rem 2rem;min-height:180px;display:flex;align-items:flex-end">
-    <div id="dashBg" style="position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .8s"></div>
-    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,6,12,.55) 0%,rgba(6,6,12,.88) 100%)"></div>
-    <div style="position:relative;z-index:1;width:100%">
-      <p style="margin:0 0 .2rem;color:rgba(255,255,255,.4);font-family:var(--font-cond);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase">Panel de control</p>
+  <!-- Fondo full-page -->
+  <div id="dashFullBg" style="position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1s;z-index:0"></div>
+  <div style="position:absolute;inset:0;background:rgba(6,6,12,.80);z-index:1;pointer-events:none"></div>
+
+  <!-- Contenido sobre el fondo -->
+  <div style="position:relative;z-index:2;min-height:100vh">
+
+    <!-- HERO -->
+    <div style="padding:2.5rem 2rem 2rem;border-bottom:1px solid rgba(255,255,255,.07)">
+      <p style="margin:0 0 .3rem;color:rgba(255,255,255,.35);font-family:var(--font-cond);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase">Panel de control</p>
       <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
-        <img src="media/logo.png" style="height:36px;filter:invert(1);flex-shrink:0">
+        <img src="media/logo.png" style="height:40px;filter:invert(1);flex-shrink:0">
         <div>
-          <h1 style="margin:0;font-family:var(--font-display);font-size:2rem;color:#fff;letter-spacing:.04em;line-height:1">N360 <span style="color:var(--red)">ADMIN</span></h1>
-          <p style="margin:.15rem 0 0;color:rgba(255,255,255,.35);font-size:.75rem;font-family:var(--font-cond);letter-spacing:.12em">SISTEMA DE RUTINAS — CENTRO DE ENTRENAMIENTO</p>
+          <h1 style="margin:0;font-family:var(--font-display);font-size:2.2rem;color:#fff;letter-spacing:.04em;line-height:1">N360 <span style="color:var(--red)">ADMIN</span></h1>
+          <p style="margin:.2rem 0 0;color:rgba(255,255,255,.3);font-size:.72rem;font-family:var(--font-cond);letter-spacing:.12em">SISTEMA DE RUTINAS — CENTRO DE ENTRENAMIENTO</p>
         </div>
       </div>
     </div>
+
+    <!-- BODY -->
+    <div style="max-width:1080px;margin:0 auto;padding:1.75rem 1.25rem 5rem">
+
+      <!-- STATS -->
+      <p style="font-family:var(--font-cond);font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin:0 0 .75rem">Resumen</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:.8rem;margin-bottom:2rem" id="dashStats"></div>
+
+      <!-- TILES -->
+      <p style="font-family:var(--font-cond);font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin:0 0 .75rem">Módulos</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:2rem;max-width:520px" id="dashTiles"></div>
+
+      <!-- RECIENTES -->
+      <p style="font-family:var(--font-cond);font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin:0 0 .75rem">Clientes recientes</p>
+      <div id="dashRecent" style="background:rgba(19,19,28,.75);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:14px;overflow:hidden"></div>
+
+    </div>
   </div>
-
-  <div style="max-width:1080px;margin:0 auto;padding:1.5rem 1.25rem 5rem">
-
-    <!-- STATS ROW -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.85rem;margin-bottom:2rem" id="dashStats"></div>
-
-    <!-- SECCIÓN: Acciones rápidas -->
-    <p style="font-family:var(--font-cond);font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin:0 0 .85rem">Módulos</p>
-
-    <!-- NAV TILES 3x2 -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-bottom:2rem" id="dashTiles"></div>
-
-    <!-- Actividad reciente -->
-    <p style="font-family:var(--font-cond);font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin:0 0 .85rem">Clientes recientes</p>
-    <div id="dashRecent" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden"></div>
-
-  </div>
-</div>
-</div></div><!-- /view-dashboard -->
+</div><!-- /view-dashboard -->
 
 <!-- ═══════════════ EDITOR VIEW ═══════════════ -->
 <div class="app-view on" id="view-editor">
@@ -2119,13 +2121,11 @@ function renderDashboard(){
 function _setDashBg(){
   const imgs=['media/GYM1.jpeg','media/GYM2.jpeg','media/GYM3.jpeg','media/GYM4.jpeg',
               'media/GYM5.jpeg','media/GYM6.jpeg','media/GYM7.jpeg','media/GYM8.jpeg','media/GYM9.jpeg'];
-  const fullBg=document.getElementById('dashFullBg');
-  if(fullBg){const img2=new Image();img2.onload=function(){fullBg.style.backgroundImage="url('"+chosen+"')";setTimeout(()=>fullBg.style.opacity='1',50);};img2.src=chosen;}
-  const bg=document.getElementById('dashBg');
-  if(!bg)return;
   const chosen=imgs[Math.floor(Math.random()*imgs.length)];
+  const bg=document.getElementById('dashFullBg');
+  if(!bg)return;
   const img=new Image();
-  img.onload=function(){bg.style.backgroundImage="url('"+chosen+"')";setTimeout(()=>bg.style.opacity='1',50);};
+  img.onload=function(){ bg.style.backgroundImage="url('"+chosen+"')"; setTimeout(()=>bg.style.opacity='1',80); };
   img.src=chosen;
 }
 
@@ -5671,7 +5671,7 @@ async function onLogin(user){
     await loadAllFromCloud();
     loadExtra(); renderClients();
     renderDays();
-    renderDashboard();
+    renderDashboard(); // re-render con datos reales
     setTimeout(patchAddButtons,100);
   }
 }
