@@ -5884,7 +5884,16 @@ async function portalRefresh(){
 
 function portalExportPDF(){
   if(!_portalRoutineData){ showToast('⚠ No hay rutina para exportar'); return; }
-  genPDF(_portalRoutineData, _portalRoutineDate);
+  var _days = _portalRoutineData.days || (_portalRoutineData.data && _portalRoutineData.data.days);
+  if(!_days || !_days.length){ showToast('⚠ Sin días en la rutina: '+JSON.stringify(Object.keys(_portalRoutineData||{}))); return; }
+  var _data = _days === _portalRoutineData.days ? _portalRoutineData : _portalRoutineData.data;
+  try {
+    if(typeof jspdf === 'undefined'){ showToast('⚠ jsPDF no cargó'); return; }
+    genPDF(_data, _portalRoutineDate);
+  } catch(e) {
+    showToast('Error PDF: ' + e.message);
+    console.error('portalExportPDF error:', e, _portalRoutineData);
+  }
 }
 
 function openPortalVideoByIdx(idx){
