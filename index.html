@@ -5456,6 +5456,8 @@ async function loadClientPortal(user){
   // Ocultar elementos del trainer
   const nav = document.querySelector('.app-nav');
   if(nav) nav.style.display='none';
+  const hdr = document.querySelector('.hdr');
+  if(hdr) hdr.style.display='none';
   const hdrBtns = document.getElementById('trainerHeaderBtns');
   if(hdrBtns) hdrBtns.style.display='none';
   // Buscar el registro de cliente vinculado
