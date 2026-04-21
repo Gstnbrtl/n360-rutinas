@@ -1021,6 +1021,7 @@ select option{background:var(--surface);color:var(--text)}
 
     <div style="background:#0F1117;padding:.9rem 1.1rem;display:flex;align-items:center;gap:.75rem;position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(255,255,255,.06)">
       <button onclick="portalShowHome()" style="flex-shrink:0;height:34px;padding:0 .9rem;border-radius:10px;background:rgba(255,255,255,.08);border:none;color:#fff;font-size:.82rem;font-family:var(--font-cond);font-weight:700;letter-spacing:.04em;cursor:pointer;transition:background .18s" onmouseover="this.style.background='rgba(255,255,255,.14)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">← Inicio</button>
+      <img src="media/logo.png" alt="N360" style="flex-shrink:0;height:28px;object-fit:contain;opacity:.9">
       <div style="flex:1;text-align:center;min-width:0;overflow:hidden">
         <div id="portalNombre" style="font-family:var(--font-display);font-size:1.1rem;color:#E8321F;letter-spacing:.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
         <div style="display:flex;justify-content:center;gap:.4rem;align-items:center;margin-top:.1rem;flex-wrap:wrap">
@@ -3581,11 +3582,17 @@ function genPDF(preloadedData, fecha){
     doc.text(String(text||''), x, yy, {maxWidth: o.maxWidth||undefined, align: o.align||'left'});
   }
   function drawPageHeader(pageN) {
-    // Thin navy bar at very top of each page
-    fillRect(marginL, 4, colW, 3, navy);
+    // Thin red bar at very top
+    fillRect(marginL, 4, colW, 3, red);
+    // Logo image (top-left)
+    try {
+      var logoEl = document.createElement('img');
+      logoEl.src = 'media/logo.png';
+      doc.addImage(logoEl, 'PNG', marginL, 7, 22, 7);
+    } catch(e){}
     setFont('italic', 7, gray);
-    doc.text('N360 Centro de Entrenamiento y Salud', marginL, 10);
-    doc.text('Pag. ' + pageN, pageW - marginR, 10, {align:'right'});
+    doc.text('N360 — Centro de Entrenamiento y Salud', marginL + 24, 12);
+    doc.text('Pag. ' + pageN, pageW - marginR, 12, {align:'right'});
   }
 
   // ── Render a single training day at current y position ──
@@ -3619,10 +3626,10 @@ function genPDF(preloadedData, fecha){
       drawText(BULLET+'  CALENTAMIENTO', marginL+2, y+4);
       y += 5.5;
       // Activation reminder
-      setFont('italic', 7, [80, 100, 160]);
+      setFont('italic', 8.5, [80, 100, 160]);
       var actLines = doc.splitTextToSize('IMPORTANTE: Recordar realizar la activacion muscular y articular correspondiente antes de comenzar.', colW-2);
-      actLines.forEach(function(line){ drawText(line, marginL+1, y); y += 3.8; });
-      y += 1;
+      actLines.forEach(function(line){ drawText(line, marginL+2, y); y += 5; });
+      y += 2;
       day.warmup.forEach(function(w, wi){
         fillRect(marginL, y, colW, 6, wi%2===0?[235,245,251]:wuBg);
         setFont('normal', 8.5, wuTxt);
@@ -3677,9 +3684,9 @@ function genPDF(preloadedData, fecha){
 
     // Cardio recommendation at end
     y += 3;
-    setFont('italic', 7, [50, 140, 80]);
+    setFont('italic', 8.5, [50, 140, 80]);
     var cardioLines = doc.splitTextToSize('Recomendacion: finalizar con 10 minutos de cardio leve — bicicleta tranquila o caminata en cinta.', colW-2);
-    cardioLines.forEach(function(line){ drawText(line, marginL+1, y); y += 3.8; });
+    cardioLines.forEach(function(line){ drawText(line, marginL+2, y); y += 5; });
 
     return y;
   }
@@ -5659,8 +5666,8 @@ function portalRenderDay(idx){
   let html = '';
 
   // Aviso activacion articular
-  html += '<div style="margin-bottom:.9rem;padding:.6rem .9rem;background:rgba(10,132,255,.08);border-left:3px solid var(--blue);border-radius:0 9px 9px 0">' +
-          '<span style="font-family:var(--font-cond);font-size:.82rem;color:var(--blue);letter-spacing:.04em">' +
+  html += '<div style="margin-bottom:1.25rem;padding:1rem 1.1rem;background:rgba(10,132,255,.1);border-left:4px solid var(--blue);border-radius:0 12px 12px 0;line-height:1.55">' +
+          '<span style="font-family:var(--font-body);font-size:1rem;color:var(--blue)">' +
           '&#9432;&#160;&#160;Recordá realizar la <strong>activación muscular y articular</strong> correspondiente antes de comenzar.' +
           '</span></div>';
 
@@ -5760,8 +5767,8 @@ function portalRenderDay(idx){
   }
 
   // Recomendacion cardio al final
-  html += '<div style="margin-top:1.5rem;padding:.75rem 1rem;background:rgba(48,209,88,.07);border-left:3px solid var(--green);border-radius:0 9px 9px 0">' +
-          '<span style="font-family:var(--font-cond);font-size:.82rem;color:var(--green);letter-spacing:.04em">' +
+  html += '<div style="margin-top:1.75rem;padding:1rem 1.1rem;background:rgba(48,209,88,.09);border-left:4px solid var(--green);border-radius:0 12px 12px 0;line-height:1.55">' +
+          '<span style="font-family:var(--font-body);font-size:1rem;color:var(--green)">' +
           '&#128690;&#160;&#160;<strong>Al finalizar:</strong> recomendamos 10 minutos de cardio leve — bicicleta tranquila o caminata en cinta.' +
           '</span></div>';
 
