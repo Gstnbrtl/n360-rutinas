@@ -3587,17 +3587,11 @@ function genPDF(preloadedData, fecha){
     doc.text(String(text||''), x, yy, {maxWidth: o.maxWidth||undefined, align: o.align||'left'});
   }
   function drawPageHeader(pageN) {
-    // Thin red bar at very top
-    fillRect(marginL, 4, colW, 3, red);
-    // Logo image (top-left)
-    try {
-      var logoEl = document.createElement('img');
-      logoEl.src = 'media/logo.png';
-      doc.addImage(logoEl, 'PNG', marginL, 7, 22, 7);
-    } catch(e){}
+    // Thin red accent line + compact one-line header
+    fillRect(marginL, marginT-2, colW, 1.5, red);
     setFont('italic', 7, gray);
-    doc.text('N360 — Centro de Entrenamiento y Salud', marginL + 24, 12);
-    doc.text('Pag. ' + pageN, pageW - marginR, 12, {align:'right'});
+    doc.text('N360 • Centro de Entrenamiento y Salud • ' + (data.alumno||''), marginL, marginT+3);
+    doc.text('Pag. ' + pageN, pageW - marginR, marginT+3, {align:'right'});
   }
 
   // ── Render a single training day at current y position ──
@@ -3606,10 +3600,10 @@ function genPDF(preloadedData, fecha){
     var y = startY;
 
     // Day header — red
-    fillRect(marginL, y, colW, 9, red);
+    fillRect(marginL, y, colW, 8, red);
     setFont('bold', 11, white);
-    drawText('ENTRENAMIENTO '+(di+1)+'  -  '+(day.title||''), marginL+3, y+6.2);
-    y += 9;
+    drawText('ENTRENAMIENTO '+(di+1)+'  -  '+(day.title||''), marginL+3, y+5.5);
+    y += 8;
 
     // Col headers — blue
     fillRect(marginL, y, colW, 7, blue);
@@ -3673,7 +3667,7 @@ function genPDF(preloadedData, fecha){
         var exNotes = ex.i||'';
         // Calculate row height: base + extra lines for long notes
         var noteLineCount = exNotes ? doc.splitTextToSize(exNotes, cols[4]-2).length : 0;
-        var rowH = Math.max(8, 8 + Math.max(0, noteLineCount - 1) * 4.5);
+        var rowH = Math.max(7, 7 + Math.max(0, noteLineCount - 1) * 4.5);
         fillRect(marginL, y, colW, rowH, ei%2===0?rowA:rowB);
         fillRect(marginL, y, 2, rowH, lTxt);
         var rxc = marginL+3;
@@ -3705,47 +3699,47 @@ function genPDF(preloadedData, fecha){
 
   // ── Measure how tall a day will be (mm) ──
   function measureDay(day) {
-    var h = 9 + 6; // header(9) + col headers(6)
+    var h = 8 + 7; // day header(8) + col headers(7)
     if(day.warmup && day.warmup.length){
-      h += 5.5 + 10; // section label + activation notice
-      day.warmup.forEach(function(w){
-        // notes in 5th col may wrap — estimate 1-2 lines
-        h += 7;
-      });
+      h += 7 + 8; // warmup label(7) + activation notice(8)
+      h += day.warmup.length * 7;
     }
     day.blocks.forEach(function(blk){
       if(!blk.muscle && !blk.exs.length) return;
-      h += 5.5; // block label
+      h += 7; // block label
       blk.exs.forEach(function(ex){
-        // indicaciones (ex.i) shown in 5th col, may wrap
         var noteLines = ex.i ? Math.ceil(ex.i.length / 42) : 0;
-        h += 7 + Math.max(0, noteLines - 1) * 4;
+        h += 7 + Math.max(0, noteLines - 1) * 4.5;
       });
     });
-    h += 10; // cardio notice at end
+    h += 8; // cardio notice
     return h;
   }
 
   // ── GLOBAL HEADER (first page only) ──
   var y = marginT;
 
-  // Title block
-  fillRect(marginL, y, colW, 15, navy);
-  setFont('bold', 16, white);
-  drawText(data.alumno + '  -  RUTINA DE GYM', marginL+3, y+10.5);
-  if(fecha){ setFont('normal', 9, [200,200,200]); drawText(fecha, pageW-marginR-3, y+10.5, {align:'right'}); }
-  y += 15;
-
-  fillRect(marginL, y, colW, 7, [26,37,47]);
-  setFont('italic', 7.5, gray);
-  drawText('N360 Centro de Entrenamiento y Salud' + (data.objetivo ? '  -  '+data.objetivo : ''), marginL+3, y+4.2);
-  y += 7.5;
-  if(fecha){ fillRect(marginL, y, colW, 6, [20,25,40]); setFont('bold', 10, [255,220,80]); drawText('Fecha: ' + fecha, marginL+3, y+4.2); y += 6; }
-
-  fillRect(marginL, y, colW, 1.5, red);
-  y += 4;
-
+  // Compact title block — one bar, all info in one line each
   drawPageHeader(pageNum);
+  y = marginT + 6;
+
+  // Row 1: alumno + fecha
+  fillRect(marginL, y, colW, 9, navy);
+  setFont('bold', 13, white);
+  drawText(data.alumno + '  –  RUTINA DE GYM', marginL+3, y+6.2);
+  if(fecha){ setFont('normal', 8, [200,200,200]); drawText(fecha, pageW-marginR-3, y+6.2, {align:'right'}); }
+  y += 9;
+
+  // Row 2: objetivo (if any) — compact
+  if(data.objetivo){
+    fillRect(marginL, y, colW, 5, [26,37,47]);
+    setFont('italic', 7.5, gray);
+    drawText(data.objetivo, marginL+3, y+3.5);
+    y += 5;
+  }
+
+  fillRect(marginL, y, colW, 1, red);
+  y += 3;
 
   // ── LAYOUT: 2 entrenamientos por página ──
   var days = data.days;
