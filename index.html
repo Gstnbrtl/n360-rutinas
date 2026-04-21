@@ -1540,13 +1540,12 @@ function saveExDescriptions(){
   localStorage.setItem('n360_ex_desc',JSON.stringify(exDescriptions));
   saveExDescriptionsToCloud();
 }
-async async function saveExDescriptionsToCloud(){
+function saveExDescriptionsToCloud(){
   if(!currentUser||!Object.keys(exDescriptions).length) return;
-  try{
-    await supa.from('db_overrides')
-      .update({ex_descriptions:exDescriptions,updated_at:new Date().toISOString()})
-      .eq('user_id',currentUser.id);
-  }catch(e){}
+  supa.from('db_overrides')
+    .update({ex_descriptions:exDescriptions,updated_at:new Date().toISOString()})
+    .eq('user_id',currentUser.id)
+    .then(function(){}).catch(function(e){ console.warn('saveExDesc error',e); });
 }
 function getExDescription(name){
   if(!name) return '';
