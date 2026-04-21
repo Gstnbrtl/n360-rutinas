@@ -3900,7 +3900,7 @@ function fillEx(bid){
 // ════════════════════════════════════
 function genPDF(preloadedData, fecha){
   var data = preloadedData || collect();
-  if(!fecha && editorCid && editorRid && clients[editorCid]){
+  if(!fecha && typeof editorCid !== 'undefined' && editorCid && typeof editorRid !== 'undefined' && editorRid && typeof clients !== 'undefined' && clients[editorCid]){
     var _er = clients[editorCid].routines.find(function(r){return r.id===editorRid;});
     if(_er) fecha = _er.date||''
   }
@@ -5884,12 +5884,8 @@ async function portalRefresh(){
 
 function portalExportPDF(){
   if(!_portalRoutineData){ showToast('⚠ No hay rutina para exportar'); return; }
-  var _days = _portalRoutineData.days || (_portalRoutineData.data && _portalRoutineData.data.days);
-  if(!_days || !_days.length){ showToast('⚠ Sin días en la rutina: '+JSON.stringify(Object.keys(_portalRoutineData||{}))); return; }
-  var _data = _days === _portalRoutineData.days ? _portalRoutineData : _portalRoutineData.data;
   try {
-    if(typeof jspdf === 'undefined'){ showToast('⚠ jsPDF no cargó'); return; }
-    genPDF(_data, _portalRoutineDate);
+    genPDF(_portalRoutineData, _portalRoutineDate);
   } catch(e) {
     showToast('Error PDF: ' + e.message);
     console.error('portalExportPDF error:', e, _portalRoutineData);
