@@ -3612,50 +3612,40 @@ function genPDF(preloadedData, fecha){
     y += 9;
 
     // Col headers — blue
-    fillRect(marginL, y, colW, 6, blue);
-    setFont('bold', 7.5, white);
+    fillRect(marginL, y, colW, 7, blue);
+    setFont('bold', 8.5, white);
     var cx = marginL+1.5, cumX = cx;
     var colLabels = ['EJERCICIO','S','REPS/T','DESC','INDICACIONES'];
     var colAligns = ['left','center','center','center','left'];
     colLabels.forEach(function(lbl, ci){
       var x2 = cumX + (colAligns[ci]==='center' ? cols[ci]/2 : 0);
-      drawText(lbl, x2, y+4.2, {align:colAligns[ci]});
+      drawText(lbl, x2, y+5, {align:colAligns[ci]});
       cumX += cols[ci];
     });
-    y += 6;
+    y += 7;
 
     // Warmup
     if(day.warmup && day.warmup.length){
-      fillRect(marginL, y, colW, 5.5, wuBg);
-      setFont('bolditalic', 7.5, wuTxt);
-      drawText(BULLET+'  CALENTAMIENTO', marginL+2, y+4);
-      y += 5.5;
+      fillRect(marginL, y, colW, 7, wuBg);
+      setFont('bolditalic', 9, wuTxt);
+      drawText(BULLET+'  CALENTAMIENTO', marginL+2, y+5);
+      y += 7;
       // Activation reminder
       setFont('italic', 8.5, [80, 100, 160]);
       var actLines = doc.splitTextToSize('IMPORTANTE: Recordar realizar la activacion muscular y articular correspondiente antes de comenzar.', colW-2);
       actLines.forEach(function(line){ drawText(line, marginL+2, y); y += 5; });
       y += 2;
       day.warmup.forEach(function(w, wi){
-        var wDesc = getExDescription(w.e||'');
-        var rowBg = wi%2===0?[235,245,251]:wuBg;
-        var mainH = 6;
-        var descExtra = exDescH(w.e||'','');
-        fillRect(marginL, y, colW, mainH + descExtra, rowBg);
-        setFont('normal', 8.5, wuTxt);
+        fillRect(marginL, y, colW, 7, wi%2===0?[235,245,251]:wuBg);
+        setFont('normal', 9, wuTxt);
         var rx = marginL+1.5, rxc = rx;
         [w.e,w.s,w.r,w.d,''].forEach(function(val,ci){
           var al = colAligns[ci];
           var x2 = rxc + (al==='center'?cols[ci]/2:0);
-          drawText(val||'', x2, y+4.2, {align:al, maxWidth:cols[ci]-2});
+          drawText(val||'', x2, y+4.8, {align:al, maxWidth:cols[ci]-2});
           rxc += cols[ci];
         });
-        y += mainH;
-        if(wDesc){
-          setFont('italic', 7.5, [50, 80, 140]);
-          var dLines = doc.splitTextToSize(wDesc, colW-4);
-          dLines.forEach(function(line){ drawText(line, marginL+3, y); y += 4.2; });
-          y += 3;
-        }
+        y += 7;
       });
     }
 
@@ -3673,48 +3663,34 @@ function genPDF(preloadedData, fecha){
         if(blk.cfg) lbl += '  [TABATA '+blk.cfg.work+'/'+blk.cfg.rest+'x'+blk.cfg.rounds+']';
       }
       // Block label with left accent bar
-      fillRect(marginL, y, 2, 5.5, lTxt);
-      fillRect(marginL+2, y, colW-2, 5.5, lBg);
-      setFont('bolditalic', 8, lTxt);
-      drawText(lbl, marginL+4, y+4, {maxWidth:colW-6});
-      y += 5.5;
+      fillRect(marginL, y, 2, 7, lTxt);
+      fillRect(marginL+2, y, colW-2, 7, lBg);
+      setFont('bolditalic', 9, lTxt);
+      drawText(lbl, marginL+4, y+5, {maxWidth:colW-6});
+      y += 7;
 
       blk.exs.forEach(function(ex, ei){
-        var exDesc = getExDescription(ex.e||'');
         var exNotes = ex.i||'';
-        var mainH = 7;
-        var descExtra = exDescH(ex.e||'', exNotes);
-        fillRect(marginL, y, colW, mainH + descExtra, ei%2===0?rowA:rowB);
-        // Left accent stripe
-        fillRect(marginL, y, 2, mainH + descExtra, lTxt);
+        // Calculate row height: base + extra lines for long notes
+        var noteLineCount = exNotes ? doc.splitTextToSize(exNotes, cols[4]-2).length : 0;
+        var rowH = Math.max(8, 8 + Math.max(0, noteLineCount - 1) * 4.5);
+        fillRect(marginL, y, colW, rowH, ei%2===0?rowA:rowB);
+        fillRect(marginL, y, 2, rowH, lTxt);
         var rxc = marginL+3;
-        var rowVals=[ex.e,ex.s,ex.r,ex.d,''];
-        var cColors=[dark,serC,gray,gray,gray];
+        var rowVals=[ex.e, ex.s, ex.r, ex.d, exNotes];
+        var cColors=[dark, serC, gray, gray, [100,100,100]];
         var cBolds=['bold','bold','normal','normal','normal'];
-        var cSizes=[9,8.5,8,8,7.5];
-        var colsAdj=[cols[0]-1.5,cols[1],cols[2],cols[3],cols[4]];
-        rowVals.forEach(function(val,ci){
+        var cSizes=[9.5, 9, 8.5, 8.5, 8];
+        var colsAdj=[cols[0]-1.5, cols[1], cols[2], cols[3], cols[4]];
+        rowVals.forEach(function(val, ci){
           setFont(cBolds[ci], cSizes[ci], cColors[ci]);
-          var al=colAligns[ci];
-          var x2=rxc+(al==='center'?colsAdj[ci]/2:0);
-          drawText(val||'', x2, y+5, {align:al, maxWidth:colsAdj[ci]-2});
-          rxc+=colsAdj[ci];
+          var al = colAligns[ci];
+          var x2 = rxc + (al==='center' ? colsAdj[ci]/2 : 0);
+          var midY = y + rowH/2 + 1.5;
+          drawText(val||'', x2, ci===4 ? y+5 : midY, {align:al, maxWidth:colsAdj[ci]-2});
+          rxc += colsAdj[ci];
         });
-        y += mainH;
-        // Indicaciones del entrenador (ex.i)
-        if(exNotes){
-          setFont('italic', 8, [160, 60, 60]);
-          var nLines = doc.splitTextToSize('▶ '+exNotes, colW-5);
-          nLines.forEach(function(line){ drawText(line, marginL+4, y); y += 4.5; });
-          y += 1;
-        }
-        // Descripcion del ejercicio (EX_INFO / personalizada)
-        if(exDesc){
-          setFont('italic', 7.5, [80, 80, 120]);
-          var dLines = doc.splitTextToSize(exDesc, colW-5);
-          dLines.forEach(function(line){ drawText(line, marginL+4, y); y += 4.2; });
-          y += 3;
-        }
+        y += rowH;
       });
     });
 
@@ -3728,33 +3704,25 @@ function genPDF(preloadedData, fecha){
   }
 
   // ── Measure how tall a day will be (mm) ──
-  // Estimate extra height for description + notes below an exercise row
-  function exDescH(name, notes) {
-    var extra = 0;
-    if(notes){
-      var nl = doc.splitTextToSize(notes, colW-4).length;
-      extra += nl * 4.5 + 2;
-    }
-    var desc = getExDescription(name||'');
-    if(desc){
-      var dl = doc.splitTextToSize(desc, colW-4).length;
-      extra += dl * 4.2 + 3;
-    }
-    return extra;
-  }
   function measureDay(day) {
     var h = 9 + 6; // header(9) + col headers(6)
     if(day.warmup && day.warmup.length){
-      h += 5.5; // section label
-      h += 10;  // activation notice (approx)
-      day.warmup.forEach(function(w){ h += 6 + exDescH(w.e,''); });
+      h += 5.5 + 10; // section label + activation notice
+      day.warmup.forEach(function(w){
+        // notes in 5th col may wrap — estimate 1-2 lines
+        h += 7;
+      });
     }
     day.blocks.forEach(function(blk){
       if(!blk.muscle && !blk.exs.length) return;
       h += 5.5; // block label
-      blk.exs.forEach(function(ex){ h += 7 + exDescH(ex.e, ex.i||''); });
+      blk.exs.forEach(function(ex){
+        // indicaciones (ex.i) shown in 5th col, may wrap
+        var noteLines = ex.i ? Math.ceil(ex.i.length / 42) : 0;
+        h += 7 + Math.max(0, noteLines - 1) * 4;
+      });
     });
-    h += 14; // cardio notice at end
+    h += 10; // cardio notice at end
     return h;
   }
 
