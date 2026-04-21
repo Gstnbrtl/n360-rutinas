@@ -5630,18 +5630,10 @@ function _renderPortalWorkout(){
   var notesHtml = '';
   // Trainer's per-routine annotation (italic, separator)
   if(item.notes) notesHtml += '<p style="font-style:italic;color:rgba(255,255,255,.75);margin:0 0 .75rem;padding-bottom:.6rem;border-bottom:1px solid rgba(255,255,255,.15)">&#9654; '+item.notes+'</p>';
-  // Built-in DB description directly from EX_INFO (always available, no sync needed)
+  // Built-in DB description from EX_INFO (single source of truth)
   var _key = (item.name||'').trim();
   var _builtinDesc = EX_INFO[_key] || (function(){ var _kl=_key.toLowerCase(); var _f=Object.keys(EX_INFO).find(function(k){return k.toLowerCase()===_kl;}); return _f?EX_INFO[_f]:''; })();
-  // Trainer's custom description from exDescriptions (complements built-in)
-  var _customDesc = (exDescriptions[_key]||'').trim();
-  var _fullDesc = '';
-  if(_customDesc && _customDesc !== _builtinDesc.trim()){
-    _fullDesc = _customDesc + (_builtinDesc ? '<br><br>' + _builtinDesc : '');
-  } else {
-    _fullDesc = _builtinDesc;
-  }
-  if(_fullDesc) notesHtml += '<p style="color:rgba(255,255,255,.82);margin:0;line-height:1.6;font-size:.93rem">'+_fullDesc.replace(/\n\n/g,'<br><br>')+'</p>';
+  if(_builtinDesc) notesHtml += '<p style="color:rgba(255,255,255,.82);margin:0;line-height:1.6;font-size:.93rem">'+_builtinDesc+'</p>';
   notesEl.innerHTML = notesHtml;
   notesEl.style.display = notesHtml ? '' : 'none';
   // Video button
