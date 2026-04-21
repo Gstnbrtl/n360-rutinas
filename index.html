@@ -3600,46 +3600,43 @@ function genPDF(preloadedData, fecha){
     var y = startY;
 
     // Day header — red
-    fillRect(marginL, y, colW, 8, red);
+    fillRect(marginL, y, colW, 9, red);
     setFont('bold', 11, white);
-    drawText('ENTRENAMIENTO '+(di+1)+'  -  '+(day.title||''), marginL+3, y+5.5);
-    y += 8;
+    drawText('ENTRENAMIENTO '+(di+1)+'  -  '+(day.title||''), marginL+3, y+6.2);
+    y += 9;
 
     // Col headers — blue
-    fillRect(marginL, y, colW, 7, blue);
-    setFont('bold', 8.5, white);
+    fillRect(marginL, y, colW, 6, blue);
+    setFont('bold', 7.5, white);
     var cx = marginL+1.5, cumX = cx;
     var colLabels = ['EJERCICIO','S','REPS/T','DESC','INDICACIONES'];
     var colAligns = ['left','center','center','center','left'];
     colLabels.forEach(function(lbl, ci){
       var x2 = cumX + (colAligns[ci]==='center' ? cols[ci]/2 : 0);
-      drawText(lbl, x2, y+5, {align:colAligns[ci]});
+      drawText(lbl, x2, y+4.2, {align:colAligns[ci]});
       cumX += cols[ci];
     });
-    y += 7;
+    y += 6;
 
     // Warmup
     if(day.warmup && day.warmup.length){
-      fillRect(marginL, y, colW, 7, wuBg);
-      setFont('bolditalic', 9, wuTxt);
-      drawText(BULLET+'  CALENTAMIENTO', marginL+2, y+5);
-      y += 7;
-      // Activation reminder
-      setFont('italic', 8.5, [80, 100, 160]);
-      var actLines = doc.splitTextToSize('IMPORTANTE: Recordar realizar la activacion muscular y articular correspondiente antes de comenzar.', colW-2);
-      actLines.forEach(function(line){ drawText(line, marginL+2, y); y += 5; });
-      y += 2;
+      fillRect(marginL, y, colW, 5.5, wuBg);
+      setFont('bolditalic', 7.5, wuTxt);
+      drawText(BULLET+'  CALENTAMIENTO', marginL+2, y+4);
+      setFont('italic', 6.5, [80, 100, 160]);
+      drawText('(activar muscular y articular antes de comenzar)', marginL+42, y+4);
+      y += 5.5;
       day.warmup.forEach(function(w, wi){
-        fillRect(marginL, y, colW, 7, wi%2===0?[235,245,251]:wuBg);
-        setFont('normal', 9, wuTxt);
+        fillRect(marginL, y, colW, 6, wi%2===0?[235,245,251]:wuBg);
+        setFont('normal', 8.5, wuTxt);
         var rx = marginL+1.5, rxc = rx;
         [w.e,w.s,w.r,w.d,''].forEach(function(val,ci){
           var al = colAligns[ci];
           var x2 = rxc + (al==='center'?cols[ci]/2:0);
-          drawText(val||'', x2, y+4.8, {align:al, maxWidth:cols[ci]-2});
+          drawText(val||'', x2, y+4.2, {align:al, maxWidth:cols[ci]-2});
           rxc += cols[ci];
         });
-        y += 7;
+        y += 6;
       });
     }
 
@@ -3657,62 +3654,51 @@ function genPDF(preloadedData, fecha){
         if(blk.cfg) lbl += '  [TABATA '+blk.cfg.work+'/'+blk.cfg.rest+'x'+blk.cfg.rounds+']';
       }
       // Block label with left accent bar
-      fillRect(marginL, y, 2, 7, lTxt);
-      fillRect(marginL+2, y, colW-2, 7, lBg);
-      setFont('bolditalic', 9, lTxt);
-      drawText(lbl, marginL+4, y+5, {maxWidth:colW-6});
-      y += 7;
+      fillRect(marginL, y, 2, 5.5, lTxt);
+      fillRect(marginL+2, y, colW-2, 5.5, lBg);
+      setFont('bolditalic', 8, lTxt);
+      drawText(lbl, marginL+4, y+4, {maxWidth:colW-6});
+      y += 5.5;
 
       blk.exs.forEach(function(ex, ei){
-        var exNotes = ex.i||'';
-        // Calculate row height: base + extra lines for long notes
-        var noteLineCount = exNotes ? doc.splitTextToSize(exNotes, cols[4]-2).length : 0;
-        var rowH = Math.max(7, 7 + Math.max(0, noteLineCount - 1) * 4.5);
-        fillRect(marginL, y, colW, rowH, ei%2===0?rowA:rowB);
-        fillRect(marginL, y, 2, rowH, lTxt);
-        var rxc = marginL+3;
-        var rowVals=[ex.e, ex.s, ex.r, ex.d, exNotes];
-        var cColors=[dark, serC, gray, gray, [100,100,100]];
+        var rxc = marginL+1.5;
+        var rowVals=[ex.e,ex.s,ex.r,ex.d,ex.i];
+        var cColors=[dark,serC,gray,gray,gray];
         var cBolds=['bold','bold','normal','normal','normal'];
-        var cSizes=[9.5, 9, 8.5, 8.5, 8];
-        var colsAdj=[cols[0]-1.5, cols[1], cols[2], cols[3], cols[4]];
-        rowVals.forEach(function(val, ci){
+        var cSizes=[9,8.5,8,8,7.5];
+        fillRect(marginL, y, colW, 6, ei%2===0?rowA:rowB);
+        rowVals.forEach(function(val,ci){
           setFont(cBolds[ci], cSizes[ci], cColors[ci]);
-          var al = colAligns[ci];
-          var x2 = rxc + (al==='center' ? colsAdj[ci]/2 : 0);
-          var midY = y + rowH/2 + 1.5;
-          drawText(val||'', x2, ci===4 ? y+5 : midY, {align:al, maxWidth:colsAdj[ci]-2});
-          rxc += colsAdj[ci];
+          var al=colAligns[ci];
+          var x2=rxc+(al==='center'?cols[ci]/2:0);
+          drawText(val||'', x2, y+4.2, {align:al, maxWidth:cols[ci]-2});
+          rxc+=cols[ci];
         });
-        y += rowH;
+        y+=6;
       });
     });
 
-    // Cardio recommendation at end
-    y += 3;
-    setFont('italic', 8.5, [50, 140, 80]);
-    var cardioLines = doc.splitTextToSize('Recomendacion: finalizar con 10 minutos de cardio leve — bicicleta tranquila o caminata en cinta.', colW-2);
-    cardioLines.forEach(function(line){ drawText(line, marginL+2, y); y += 5; });
+    // Cardio recommendation — compact one line
+    y += 2;
+    setFont('italic', 7, [50, 140, 80]);
+    drawText('>> Finalizar con 10 min de cardio leve (bicicleta o caminata en cinta).', marginL+2, y);
+    y += 4;
 
     return y;
   }
 
   // ── Measure how tall a day will be (mm) ──
   function measureDay(day) {
-    var h = 8 + 7; // day header(8) + col headers(7)
+    var h = 9 + 6; // day header(9) + col headers(6)
     if(day.warmup && day.warmup.length){
-      h += 7 + 8; // warmup label(7) + activation notice(8)
-      h += day.warmup.length * 7;
+      h += 5.5; // warmup label (activation inline, no extra row)
+      h += day.warmup.length * 6;
     }
     day.blocks.forEach(function(blk){
       if(!blk.muscle && !blk.exs.length) return;
-      h += 7; // block label
-      blk.exs.forEach(function(ex){
-        var noteLines = ex.i ? Math.ceil(ex.i.length / 42) : 0;
-        h += 7 + Math.max(0, noteLines - 1) * 4.5;
-      });
+      h += 5.5 + blk.exs.length * 6;
     });
-    h += 8; // cardio notice
+    h += 6; // cardio one-liner
     return h;
   }
 
@@ -3760,7 +3746,7 @@ function genPDF(preloadedData, fecha){
       // Need a new page for this day
       doc.addPage();
       pageNum++;
-      y = marginT;
+      y = marginT + 6;
       drawPageHeader(pageNum);
       availH = pageH - y - marginB;
     }
@@ -3784,7 +3770,7 @@ function genPDF(preloadedData, fecha){
         // Doesn't fit — new page for day 2
         doc.addPage();
         pageNum++;
-        y = marginT;
+        y = marginT + 6;
         drawPageHeader(pageNum);
         y = renderDay(day2, di, y);
         di++;
