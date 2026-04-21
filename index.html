@@ -1540,7 +1540,7 @@ function saveExDescriptions(){
   localStorage.setItem('n360_ex_desc',JSON.stringify(exDescriptions));
   saveExDescriptionsToCloud();
 }
-async function saveExDescriptionsToCloud(){
+async async function saveExDescriptionsToCloud(){
   if(!currentUser||!Object.keys(exDescriptions).length) return;
   try{
     await supa.from('db_overrides')
@@ -5145,11 +5145,10 @@ async function loadClientPortal(user){
         .maybeSingle();
       tvid = r;
     }
-    // Fallback: solo hay un trainer, traer cualquier fila con ex_videos
-    if(!tvid || !tvid.ex_videos){
+    // Fallback: solo hay un trainer, traer cualquier fila de db_overrides
+    if(!tvid){
       const {data:r2} = await supa.from('db_overrides')
-        .select('ex_videos,ex_descriptions,blog_posts')
-        .not('ex_videos', 'is', null)
+        .select('ex_videos,ex_descriptions,blog_posts,active_routines')
         .limit(1)
         .maybeSingle();
       tvid = r2;
@@ -5695,8 +5694,6 @@ function portalRenderDay(idx){
       html += '<span style="font-family:var(--font-cond);font-size:1.05rem;color:var(--text)">' + (w.e||'') + '</span>';
       html += '<span style="font-size:.8rem;color:var(--gray);white-space:nowrap;margin-left:.5rem">' + (w.s||'-') + ' × ' + (w.r||'-') + '</span>';
       html += '</div>';
-      var _wDesc = getExDescription(w.e||'');
-      if(_wDesc) html += '<div style="font-size:.8rem;color:rgba(255,255,255,.45);line-height:1.5;margin-top:.3rem;padding-top:.3rem;border-top:1px solid rgba(0,114,229,.1)">' + _wDesc + '</div>';
     });
     html += '</div>';
     // Boton comenzar calentamiento
@@ -5762,9 +5759,7 @@ function portalRenderDay(idx){
         if(ex.r) html += '<div style="display:flex;flex-direction:column;gap:.1rem"><span style="font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray)">Reps</span><span style="font-family:var(--font-cond);font-size:1.1rem;font-weight:700;color:var(--text)">' + ex.r + '</span></div>';
         if(ex.d) html += '<div style="display:flex;flex-direction:column;gap:.1rem"><span style="font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray)">Descanso</span><span style="font-family:var(--font-cond);font-size:1.1rem;font-weight:700;color:var(--text)">' + ex.d + 's</span></div>';
         html += '</div>';
-        if(ex.i) html += '<div style="margin-bottom:.6rem;font-size:.82rem;color:var(--gray);font-style:italic;padding-bottom:.5rem;border-bottom:1px solid var(--border)">' + ex.i + '</div>';
-        var _exDesc = getExDescription(exNombre);
-        if(_exDesc) html += '<div style="margin-bottom:.7rem;font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.5;padding-bottom:.5rem;border-bottom:1px solid var(--border)">' + _exDesc + '</div>';
+        if(ex.i) html += '<div style="margin-bottom:.75rem;font-size:.82rem;color:var(--gray);font-style:italic;padding-bottom:.6rem;border-bottom:1px solid var(--border)">' + ex.i + '</div>';
         // Input de peso / IRM + Anotacion
         const anotValor = pesoGuardado ? (pesoGuardado.anotacion||'') : '';
         const anotId = 'anot_' + exNombre.replace(/[^a-z0-9]/gi,'_');
@@ -6090,6 +6085,7 @@ async function saveDBOverridesToCloud(){
       cir_db:CIR_DB,
       cir_custom:cirCustomEx,
       active_routines:activeRoutines,
+      ex_descriptions:exDescriptions,
       updated_at:new Date().toISOString()
     });
   }catch(e){}
