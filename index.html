@@ -1549,9 +1549,22 @@ function saveExDescriptionsToCloud(){
 }
 function getExDescription(name){
   if(!name) return '';
-  const custom = exDescriptions[name.trim()];
-  if(custom !== undefined) return custom;
-  return EX_INFO[name.trim()] || '';
+  var key = name.trim();
+  // Busqueda exacta en custom descriptions
+  var custom = exDescriptions[key];
+  // Busqueda en EX_INFO exacta, luego case-insensitive
+  var builtin = EX_INFO[key];
+  if(!builtin){
+    var keyLow = key.toLowerCase();
+    var found = Object.keys(EX_INFO).find(function(k){ return k.toLowerCase()===keyLow; });
+    if(found) builtin = EX_INFO[found];
+  }
+  // Si hay descripcion custom no-vacia, mostrarla primero; luego agregar builtin si es diferente
+  if(custom && custom.trim()){
+    return custom.trim() + (builtin && builtin.trim() && builtin.trim()!==custom.trim() ? '\n\n' + builtin.trim() : '');
+  }
+  // Si no hay custom o esta vacia, usar builtin
+  return builtin || '';
 }
 function getExVideo(name){return(name&&exVideos[name.trim()])||'';}
 var VIDEOS_BASE='https://raw.githubusercontent.com/Gstnbrtl/n360-rutinas/main/Videos%20de%20ejercicios/';
@@ -5611,8 +5624,8 @@ function _renderPortalWorkout(){
   var desc = getExDescription(item.name);
   var notesEl = document.getElementById('pwNotes');
   var notesHtml = '';
-  if(item.notes) notesHtml += '<p style="font-style:italic;color:rgba(255,255,255,.75);margin:0 0 .5rem">'+item.notes+'</p>';
-  if(desc)       notesHtml += '<p style="color:rgba(255,255,255,.88);margin:0;line-height:1.55">'+desc+'</p>';
+  if(item.notes) notesHtml += '<p style="font-style:italic;color:rgba(255,255,255,.75);margin:0 0 .75rem;padding-bottom:.6rem;border-bottom:1px solid rgba(255,255,255,.15)">&#9654; '+item.notes+'</p>';
+  if(desc)       notesHtml += '<p style="color:rgba(255,255,255,.82);margin:0;line-height:1.6;font-size:.93rem">'+desc.replace(/\n\n/g,'<br><br>')+'</p>';
   notesEl.innerHTML = notesHtml;
   notesEl.style.display = notesHtml ? '' : 'none';
   // Video button
