@@ -1891,6 +1891,7 @@ const EX_INFO = {
   'Subidas al banco': 'Subida a un banco o cajón con un pie, extendiendo rodilla y cadera hasta estar completamente erguido, luego bajando de forma controlada. Trabaja cuádriceps, glúteos e isquiotibiales de forma unilateral. Apoyar el pie completo en el banco y empujar desde el talón para mayor activación de glúteos. Alternar piernas o trabajar por series.',
   'Thrusters con barra o manc': 'Movimiento combinado de sentadilla frontal seguida de press por encima de la cabeza en un solo impulso. Se puede realizar con barra o mancuernas. Trabaja cuádriceps, glúteos, hombros, tríceps y core en una sola secuencia explosiva. Muy demandante metabólicamente. La extensión de cadera genera el impulso necesario para el press overhead.',
   'Triceps con soga': 'Extensión de tríceps en polea alta con soga. Al bajar, se separan los extremos de la soga hacia afuera en el punto inferior para maximizar la contracción. Trabaja las tres cabezas del tríceps con énfasis en las laterales. Mantener los codos fijos pegados al torso durante todo el movimiento y controlar el regreso lentamente.',
+  'Press militar sentado': 'Press de hombros sentado con barra o mancuernas. La posición sentada elimina la compensación de las piernas y la zona lumbar, aislando mejor los deltoides. Trabajar con respaldo para mayor soporte lumbar o sin él para mayor activación del core. Empujar en línea recta sobre la cabeza hasta la extensión completa, sin arquear la espalda.',
   'Elevación de piernas con pelota': 'Elevación de piernas sosteniendo una pelota entre los pies. Mayor dificultad que la elevación convencional. Trabaja abdomen inferior.',
 };
 function getExVideoUrl(name){var f=getExVideo(name);if(!f)return '';return f.startsWith('http')?f:VIDEOS_BASE+encodeURIComponent(f);}
@@ -5661,7 +5662,7 @@ function _renderPortalWorkout(){
     if(_f) return EX_INFO[_f];
     // 3. Edit-distance ≤ 2 (handles typos like "Hip Trust" → "Hip Thrust")
     function _ed(a,b){ var m=a.length,n=b.length,i,j,dp=[];for(i=0;i<=m;i++){dp[i]=[];dp[i][0]=i;}for(j=0;j<=n;j++)dp[0][j]=j;for(i=1;i<=m;i++)for(j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);return dp[m][n]; }
-    var _best=null, _bestD=3;
+    var _best=null, _bestD=5;
     _keys.forEach(function(k){ var d=_ed(_kl,k.toLowerCase()); if(d<_bestD){_bestD=d;_best=k;} });
     return _best ? EX_INFO[_best] : '';
   })();
