@@ -3951,7 +3951,7 @@ function genPDF(preloadedData, fecha){
     // Thin red accent line + compact one-line header
     fillRect(marginL, marginT-2, colW, 1.5, red);
     setFont('italic', 7, gray);
-    doc.text('N360 • Centro de Entrenamiento y Salud • ' + (data.alumno||''), marginL, marginT+3);
+    doc.text('N360 • Centro de Entrenamiento y Salud' + (data.alumno ? ' • ' + data.alumno : ''), marginL, marginT+3);
     doc.text('Pag. ' + pageN, pageW - marginR, marginT+3, {align:'right'});
   }
 
@@ -4153,7 +4153,7 @@ function genPDF(preloadedData, fecha){
   setFont('italic', 7.5, gray);
   drawText('N360  -  Sistema de Rutinas  -  Centro de Entrenamiento y Salud', marginL+colW/2, y+3.8, {align:'center'});
 
-  var fname = 'N360_'+(data.alumno.replace(/\s+/g,'_')||'Rutina')+'_rutina.pdf';
+  var fname = 'N360_'+((data.alumno||'Rutina').replace(/\s+/g,'_'))+'_rutina.pdf';
   doc.save(fname);
   showToast('PDF descargado: '+fname);
 }
@@ -5922,7 +5922,12 @@ function openPortalVideoByIdx(idx){
 function closePortalVideo(){
   var ov = document.getElementById('ovPortalVideo');
   ov.style.display = 'none';
-  document.getElementById('pvGif').src = '';
+  var pvGif = document.getElementById('pvGif');
+  pvGif.onload = pvGif.onerror = null; // detach handlers before clearing src
+  pvGif.src = '';
+  pvGif.onload  = function(){ this.style.display=''; document.getElementById('pvGifErr').style.display='none'; };
+  pvGif.onerror = function(){ this.style.display='none'; document.getElementById('pvGifErr').style.display=''; };
+  document.getElementById('pvGifErr').style.display = 'none'; // always reset
 }
 
 // ─── Workout guided modal ─────────────────────────────────────────────────────
