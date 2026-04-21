@@ -1142,7 +1142,7 @@ select option{background:var(--surface);color:var(--text)}
 </div>
 
 <!-- PORTAL VIDEO MODAL -->
-<div id="ovPortalVideo" style="display:none;position:fixed;inset:0;z-index:10001;background:rgba(0,0,0,.88);align-items:flex-start;justify-content:center;flex-direction:column;padding:1rem;overflow-y:auto">
+<div id="ovPortalVideo" style="display:none;position:fixed;inset:0;z-index:10003;background:rgba(0,0,0,.88);align-items:flex-start;justify-content:center;flex-direction:column;padding:1rem;overflow-y:auto">
   <div style="position:relative;width:100%;max-width:500px;background:var(--surface);border-radius:16px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.5)">
     <!-- Close -->
     <button onclick="closePortalVideo()" style="position:absolute;top:.6rem;right:.6rem;z-index:2;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.4);border:none;color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1">&#x2715;</button>
@@ -1198,6 +1198,11 @@ select option{background:var(--surface);color:var(--text)}
 
     <!-- Notes / Description -->
     <div id="pwNotes" style="background:rgba(255,255,255,.09);border-radius:12px;padding:1rem 1.2rem;margin-bottom:2rem;font-size:.95rem;font-family:var(--font-body);line-height:1.6;display:none"></div>
+
+    <!-- Video button -->
+    <button id="pwVideoBtn" onclick="openPwVideo()" style="display:none;width:100%;margin-bottom:.75rem;padding:.75rem;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.25);color:#fff;border-radius:12px;font-family:var(--font-cond);font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:.06em;text-align:center">
+      &#9654; Ver video del ejercicio
+    </button>
 
     <!-- Navigation -->
     <div style="display:flex;gap:.75rem;margin-top:auto;padding-top:1rem">
@@ -3631,7 +3636,11 @@ function genPDF(preloadedData, fecha){
       actLines.forEach(function(line){ drawText(line, marginL+2, y); y += 5; });
       y += 2;
       day.warmup.forEach(function(w, wi){
-        fillRect(marginL, y, colW, 6, wi%2===0?[235,245,251]:wuBg);
+        var wDesc = getExDescription(w.e||'');
+        var rowBg = wi%2===0?[235,245,251]:wuBg;
+        var mainH = 6;
+        var descExtra = exDescH(w.e||'','');
+        fillRect(marginL, y, colW, mainH + descExtra, rowBg);
         setFont('normal', 8.5, wuTxt);
         var rx = marginL+1.5, rxc = rx;
         [w.e,w.s,w.r,w.d,''].forEach(function(val,ci){
@@ -3640,7 +3649,13 @@ function genPDF(preloadedData, fecha){
           drawText(val||'', x2, y+4.2, {align:al, maxWidth:cols[ci]-2});
           rxc += cols[ci];
         });
-        y += 6;
+        y += mainH;
+        if(wDesc){
+          setFont('italic', 7.5, [50, 80, 140]);
+          var dLines = doc.splitTextToSize(wDesc, colW-4);
+          dLines.forEach(function(line){ drawText(line, marginL+3, y); y += 4.2; });
+          y += 3;
+        }
       });
     }
 
@@ -3665,20 +3680,41 @@ function genPDF(preloadedData, fecha){
       y += 5.5;
 
       blk.exs.forEach(function(ex, ei){
-        fillRect(marginL, y, colW, 7, ei%2===0?rowA:rowB);
-        var rxc = marginL+1.5;
-        var rowVals=[ex.e,ex.s,ex.r,ex.d,ex.i];
+        var exDesc = getExDescription(ex.e||'');
+        var exNotes = ex.i||'';
+        var mainH = 7;
+        var descExtra = exDescH(ex.e||'', exNotes);
+        fillRect(marginL, y, colW, mainH + descExtra, ei%2===0?rowA:rowB);
+        // Left accent stripe
+        fillRect(marginL, y, 2, mainH + descExtra, lTxt);
+        var rxc = marginL+3;
+        var rowVals=[ex.e,ex.s,ex.r,ex.d,''];
         var cColors=[dark,serC,gray,gray,gray];
         var cBolds=['bold','bold','normal','normal','normal'];
         var cSizes=[9,8.5,8,8,7.5];
+        var colsAdj=[cols[0]-1.5,cols[1],cols[2],cols[3],cols[4]];
         rowVals.forEach(function(val,ci){
           setFont(cBolds[ci], cSizes[ci], cColors[ci]);
           var al=colAligns[ci];
-          var x2=rxc+(al==='center'?cols[ci]/2:0);
-          drawText(val||'', x2, y+4.8, {align:al, maxWidth:cols[ci]-2});
-          rxc+=cols[ci];
+          var x2=rxc+(al==='center'?colsAdj[ci]/2:0);
+          drawText(val||'', x2, y+5, {align:al, maxWidth:colsAdj[ci]-2});
+          rxc+=colsAdj[ci];
         });
-        y+=6;
+        y += mainH;
+        // Indicaciones del entrenador (ex.i)
+        if(exNotes){
+          setFont('italic', 8, [160, 60, 60]);
+          var nLines = doc.splitTextToSize('▶ '+exNotes, colW-5);
+          nLines.forEach(function(line){ drawText(line, marginL+4, y); y += 4.5; });
+          y += 1;
+        }
+        // Descripcion del ejercicio (EX_INFO / personalizada)
+        if(exDesc){
+          setFont('italic', 7.5, [80, 80, 120]);
+          var dLines = doc.splitTextToSize(exDesc, colW-5);
+          dLines.forEach(function(line){ drawText(line, marginL+4, y); y += 4.2; });
+          y += 3;
+        }
       });
     });
 
@@ -3692,13 +3728,33 @@ function genPDF(preloadedData, fecha){
   }
 
   // ── Measure how tall a day will be (mm) ──
+  // Estimate extra height for description + notes below an exercise row
+  function exDescH(name, notes) {
+    var extra = 0;
+    if(notes){
+      var nl = doc.splitTextToSize(notes, colW-4).length;
+      extra += nl * 4.5 + 2;
+    }
+    var desc = getExDescription(name||'');
+    if(desc){
+      var dl = doc.splitTextToSize(desc, colW-4).length;
+      extra += dl * 4.2 + 3;
+    }
+    return extra;
+  }
   function measureDay(day) {
     var h = 9 + 6; // header(9) + col headers(6)
-    if(day.warmup && day.warmup.length) h += 5.5 + day.warmup.length * 6;
+    if(day.warmup && day.warmup.length){
+      h += 5.5; // section label
+      h += 10;  // activation notice (approx)
+      day.warmup.forEach(function(w){ h += 6 + exDescH(w.e,''); });
+    }
     day.blocks.forEach(function(blk){
       if(!blk.muscle && !blk.exs.length) return;
-      h += 5.5 + blk.exs.length * 7; // block label(5.5) + rows(7 each)
+      h += 5.5; // block label
+      blk.exs.forEach(function(ex){ h += 7 + exDescH(ex.e, ex.i||''); });
     });
+    h += 14; // cardio notice at end
     return h;
   }
 
@@ -5613,6 +5669,9 @@ function _renderPortalWorkout(){
   if(desc)       notesHtml += '<p style="color:rgba(255,255,255,.88);margin:0;line-height:1.55">'+desc+'</p>';
   notesEl.innerHTML = notesHtml;
   notesEl.style.display = notesHtml ? '' : 'none';
+  // Video button
+  var pwVidBtn = document.getElementById('pwVideoBtn');
+  if(pwVidBtn) pwVidBtn.style.display = getExVideo(item.name) ? '' : 'none';
   // Prev button
   document.getElementById('pwBtnPrev').style.opacity = _pwIdx===0 ? '.3' : '1';
   document.getElementById('pwBtnPrev').disabled = _pwIdx===0;
@@ -5632,6 +5691,14 @@ function portalWorkoutNav(dir){
 
 function closePortalWorkout(){
   document.getElementById('ovPortalWorkout').style.display = 'none';
+}
+function openPwVideo(){
+  var item = _pwList[_pwIdx];
+  if(!item || !getExVideo(item.name)) return;
+  // Temporarily override video list with this exercise so the existing modal works
+  _portalVideoList = [{nombre:item.name, s:item.s, r:item.r, d:item.d, i:item.notes, accent:item.accent||'var(--red)'}];
+  _portalVideoIdx = 0;
+  openPortalVideoByIdx(0);
 }
 function portalVideoNav(dir){
   var next = _portalVideoIdx + dir;
