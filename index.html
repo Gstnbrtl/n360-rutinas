@@ -5630,9 +5630,23 @@ function _renderPortalWorkout(){
   var notesHtml = '';
   // Trainer's per-routine annotation (italic, separator)
   if(item.notes) notesHtml += '<p style="font-style:italic;color:rgba(255,255,255,.75);margin:0 0 .75rem;padding-bottom:.6rem;border-bottom:1px solid rgba(255,255,255,.15)">&#9654; '+item.notes+'</p>';
-  // Built-in DB description from EX_INFO (single source of truth)
+  // Built-in DB description from EX_INFO (single source of truth, fuzzy name match)
   var _key = (item.name||'').trim();
-  var _builtinDesc = EX_INFO[_key] || (function(){ var _kl=_key.toLowerCase(); var _f=Object.keys(EX_INFO).find(function(k){return k.toLowerCase()===_kl;}); return _f?EX_INFO[_f]:''; })();
+  var _builtinDesc = (function(){
+    if(!_key) return '';
+    // 1. Exact match
+    if(EX_INFO[_key]) return EX_INFO[_key];
+    // 2. Case-insensitive
+    var _kl = _key.toLowerCase();
+    var _keys = Object.keys(EX_INFO);
+    var _f = _keys.find(function(k){ return k.toLowerCase()===_kl; });
+    if(_f) return EX_INFO[_f];
+    // 3. Edit-distance ≤ 2 (handles typos like "Hip Trust" → "Hip Thrust")
+    function _ed(a,b){ var m=a.length,n=b.length,i,j,dp=[];for(i=0;i<=m;i++){dp[i]=[];dp[i][0]=i;}for(j=0;j<=n;j++)dp[0][j]=j;for(i=1;i<=m;i++)for(j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);return dp[m][n]; }
+    var _best=null, _bestD=3;
+    _keys.forEach(function(k){ var d=_ed(_kl,k.toLowerCase()); if(d<_bestD){_bestD=d;_best=k;} });
+    return _best ? EX_INFO[_best] : '';
+  })();
   if(_builtinDesc) notesHtml += '<p style="color:rgba(255,255,255,.82);margin:0;line-height:1.6;font-size:.93rem">'+_builtinDesc+'</p>';
   notesEl.innerHTML = notesHtml;
   notesEl.style.display = notesHtml ? '' : 'none';
