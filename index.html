@@ -16,36 +16,36 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ════════════════════════════════════════════════
-   N360  —  DESIGN SYSTEM  v4  LIGHT
+   N360  —  DESIGN SYSTEM  v5  DARK
    ════════════════════════════════════════════════ */
 :root{
   /* Superficies */
-  --bg:#F2F4F8;
-  --surface:#FFFFFF;
-  --surface2:#F7F8FC;
-  --surface3:#EEF0F6;
-  --border:#E2E5EF;
-  --border2:#CDD1E0;
+  --bg:#0B0C12;
+  --surface:#13141C;
+  --surface2:#1A1B25;
+  --surface3:#20212D;
+  --border:#2C2D3C;
+  --border2:#3A3C4E;
 
-  /* Colores de acento */
-  --red:#E8321F;    --red2:#FF5547;   --red-dim:#FFF0EE;
-  --green:#1A9E3A;  --green-dim:#EDFAF1;
-  --blue:#0072E5;   --bluedim:#EEF4FF;
-  --amrap:#C47A0A;  --amrap-dim:#FFF8EE;
-  --tabata:#7B3AAE; --tabata-dim:#F5EEFF;
-  --cyan:#0095C8;   --cyan-dim:#EEF9FF;
+  /* Colores de acento — naranja gym */
+  --red:#E8621A;    --red2:#FF7C35;   --red-dim:rgba(232,98,26,.15);
+  --green:#22C55E;  --green-dim:rgba(34,197,94,.12);
+  --blue:#4DA8FF;   --bluedim:rgba(77,168,255,.12);
+  --amrap:#E8A020;  --amrap-dim:rgba(232,160,32,.12);
+  --tabata:#A855F7; --tabata-dim:rgba(168,85,247,.12);
+  --cyan:#22D3EE;   --cyan-dim:rgba(34,211,238,.12);
 
   /* Texto */
   --white:#FFFFFF;
-  --text:#111827;
-  --gray:#6B7591;
-  --gray2:#A0A8BF;
-  --gray3:#EEF0F6;
+  --text:#E8EAF2;
+  --gray:#7A8099;
+  --gray2:#4E5268;
+  --gray3:#20212D;
 
   /* Sombras */
-  --shadow-sm:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
-  --shadow-md:0 4px 16px rgba(0,0,0,.07),0 2px 6px rgba(0,0,0,.04);
-  --shadow-lg:0 12px 40px rgba(0,0,0,.1),0 4px 12px rgba(0,0,0,.06);
+  --shadow-sm:0 1px 3px rgba(0,0,0,.35),0 1px 2px rgba(0,0,0,.25);
+  --shadow-md:0 4px 16px rgba(0,0,0,.45),0 2px 6px rgba(0,0,0,.3);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.55),0 4px 12px rgba(0,0,0,.4);
 
   --font-display:'Bebas Neue',sans-serif;
   --font-cond:'Barlow Condensed',sans-serif;
@@ -262,8 +262,8 @@ select option{background:var(--surface);color:var(--text)}
 .blk-hdr.type-amrap{border-left:4px solid var(--amrap);background:var(--amrap-dim)}
 .blk-hdr.type-tabata{border-left:4px solid var(--tabata);background:var(--tabata-dim)}
 .blk-num{font-family:var(--font-cond);font-weight:700;font-size:.73rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
-.blk-muscle{flex:1;border:none;border-radius:6px;padding:.3rem .6rem;font-family:var(--font-body);font-size:.82rem;font-weight:600;color:var(--text);background:rgba(0,0,0,.04)}
-.blk-muscle:focus{outline:none;background:rgba(0,0,0,.07)}
+.blk-muscle{flex:1;border:none;border-radius:6px;padding:.3rem .6rem;font-family:var(--font-body);font-size:.82rem;font-weight:600;color:var(--text);background:rgba(255,255,255,.06)}
+.blk-muscle:focus{outline:none;background:rgba(255,255,255,.1)}
 
 .amrap-cfg{background:var(--amrap-dim);padding:.5rem .85rem;display:flex;align-items:center;gap:1rem;border-bottom:1px solid rgba(196,122,10,.2);flex-wrap:wrap}
 .amrap-cfg label{color:var(--amrap);font-size:.62rem;margin-bottom:0;white-space:nowrap}
@@ -313,7 +313,7 @@ select option{background:var(--surface);color:var(--text)}
 .add-blk-btn:hover{border-color:var(--red);color:var(--red);background:var(--red-dim)}
 
 /* ── STICKY BAR ──────────────────────────────────── */
-.sbar{position:sticky;bottom:0;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:.8rem 1.5rem;display:flex;gap:.65rem;justify-content:flex-end;align-items:center;box-shadow:0 -4px 20px rgba(0,0,0,.08);z-index:100}
+.sbar{position:sticky;bottom:0;background:rgba(11,12,18,.96);backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:.8rem 1.5rem;display:flex;gap:.65rem;justify-content:flex-end;align-items:center;box-shadow:0 -4px 20px rgba(0,0,0,.08);z-index:100}
 .sbar-info{flex:1;font-size:.75rem;color:var(--gray);font-family:var(--font-cond);letter-spacing:.04em}
 
 /* ── BUTTONS ─────────────────────────────────────── */
