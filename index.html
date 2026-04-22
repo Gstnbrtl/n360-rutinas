@@ -5578,6 +5578,8 @@ async function loadClientPortal(user){
     document.getElementById('portalPdfBtn').style.display = 'none';
     document.getElementById('portalNoRoutine').style.display = '';
   }
+  var _pls2 = document.getElementById('portalLoadingScreen');
+  if(_pls2){ _pls2.style.display='none'; }
   showView('portal');
   portalShowHome();
   _setPortalBg();
@@ -6275,6 +6277,8 @@ async function onLogin(user){
     if(hdrBtns) hdrBtns.style.display='';
   }
   if(isClient){
+    var _pls = document.getElementById('portalLoadingScreen');
+    if(_pls){ _pls.style.display='flex'; }
     await loadClientPortal(user);
   } else {
     showToast('✓ Bienvenido');
@@ -6631,7 +6635,7 @@ async function initAuth(){
           <input id="loginPass" type="password" placeholder="••••••••" style="width:100%;padding:.8rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;font-size:1rem;box-sizing:border-box;font-family:'Barlow',sans-serif;outline:none;transition:border-color .18s" onfocus="this.style.borderColor='rgba(232,50,31,.7)'" onblur="this.style.borderColor='rgba(255,255,255,.12)'" onkeydown="if(event.key==='Enter')doLogin()">
         </div>
         <button onclick="doLogin()" style="width:100%;padding:.95rem;background:#E8321F;color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:800;cursor:pointer;letter-spacing:2px;margin-bottom:.85rem;font-family:'Barlow Condensed',sans-serif;box-shadow:0 4px 20px rgba(232,50,31,.35);transition:all .2s;text-transform:uppercase" onmouseover="this.style.background='#C8270F';this.style.boxShadow='0 6px 24px rgba(232,50,31,.5)'" onmouseout="this.style.background='#E8321F';this.style.boxShadow='0 4px 20px rgba(232,50,31,.35)'">INGRESAR</button>
-        <button onclick="showRegister()" style="width:100%;padding:.75rem;background:transparent;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.12);border-radius:10px;font-size:.88rem;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em;transition:all .2s" onmouseover="this.style.borderColor='rgba(255,255,255,.3)';this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.borderColor='rgba(255,255,255,.12)';this.style.color='rgba(255,255,255,.4)'">Crear cuenta nueva</button>
+
         <div id="loginError" style="color:#E8321F;font-size:.85rem;margin-top:.75rem;text-align:center;display:none"></div>
       </div>
 
@@ -6661,6 +6665,22 @@ async function initAuth(){
 
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PORTAL LOADING SCREEN -->
+<div id="portalLoadingScreen" style="display:none;position:fixed;inset:0;z-index:9998;background:#000;align-items:center;justify-content:center;flex-direction:column;font-family:'Barlow Condensed',sans-serif">
+  <div style="position:absolute;inset:0;background-image:url('media/GYM3.jpeg');background-size:cover;background-position:center;filter:brightness(.35)"></div>
+  <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:1.5rem">
+    <img src="media/logo.png" alt="N360" style="height:72px;filter:invert(1);opacity:.9">
+    <div style="display:flex;align-items:center;gap:.7rem">
+      <div style="width:10px;height:10px;border-radius:50%;background:#E8321F;animation:plsDot 1.2s ease-in-out infinite"></div>
+      <div style="width:10px;height:10px;border-radius:50%;background:#E8321F;animation:plsDot 1.2s ease-in-out .2s infinite"></div>
+      <div style="width:10px;height:10px;border-radius:50%;background:#E8321F;animation:plsDot 1.2s ease-in-out .4s infinite"></div>
+    </div>
+    <p style="margin:0;color:rgba(255,255,255,.7);font-size:1rem;letter-spacing:.25em;text-transform:uppercase">Cargando</p>
+  </div>
+  <style>
+    @keyframes plsDot { 0%,80%,100%{transform:scale(.6);opacity:.3} 40%{transform:scale(1);opacity:1} }
+  </style>
+</div>
 <!-- BLOG ADMIN MODAL                                                -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <!-- BLOG PREVIEW MODAL -->
