@@ -2819,7 +2819,7 @@ async function importRoutine(data){
   saveDBOverridesToCloud();
   // load into editor and navigate
   loadRoutineData(data);
-  showView('view-editor');
+  showView('editor');
   saveToStorage();
   try{
     await saveToCloud();
@@ -5508,8 +5508,9 @@ async function loadClientPortal(user){
         .maybeSingle();
       tvid = r;
     }
-    // Fallback: solo hay un trainer, traer cualquier fila de db_overrides
-    if(!tvid){
+    // Fallback seguro: solo si trainer_id no estaba disponible Y hay exactamente 1 trainer en el sistema
+    // (protege privacidad en escenario multi-trainer futuro)
+    if(!tvid && !trainerId){
       const {data:r2} = await supa.from('db_overrides')
         .select('ex_videos,ex_descriptions,blog_posts,active_routines')
         .limit(1)
