@@ -535,12 +535,12 @@ select option{background:var(--surface);color:var(--text)}
   <!-- Quill dark theme overrides -->
   <style>
     .ql-toolbar.ql-snow{background:#2A2A3C;border:1px solid rgba(255,255,255,.15);border-bottom:1px solid rgba(255,255,255,.1);border-radius:10px 10px 0 0;padding:.5rem .75rem;flex-wrap:wrap;gap:.15rem}
-    .ql-container.ql-snow{border:1px solid rgba(255,255,255,.15);border-top:none;border-radius:0 0 10px 10px;background:#F7F7FA!important}
-    .ql-editor{color:#1A1A2E!important;background:#F7F7FA!important;font-family:'Barlow',sans-serif;font-size:.93rem;line-height:1.75;min-height:220px;padding:1rem 1.25rem}
+    .ql-container.ql-snow{border:1px solid rgba(255,255,255,.15);border-top:none;border-radius:0 0 10px 10px;background:#1A1B25!important}
+    .ql-editor{color:#E8EAF2!important;background:#1A1B25!important;font-family:'Barlow',sans-serif;font-size:.93rem;line-height:1.75;min-height:220px;padding:1rem 1.25rem}
     .ql-editor.ql-blank::before{color:#9090A8;font-style:italic}
-    .ql-editor p,.ql-editor li{color:#1A1A2E}
-    .ql-editor h1,.ql-editor h2,.ql-editor h3{color:#09090F}
-    .ql-editor strong{color:#09090F}
+    .ql-editor p,.ql-editor li{color:#E8EAF2}
+    .ql-editor h1,.ql-editor h2,.ql-editor h3{color:#FFFFFF}
+    .ql-editor strong{color:#FFFFFF}
     .ql-editor a{color:#0A84FF}
     .ql-snow .ql-stroke{stroke:rgba(255,255,255,.6)}
     .ql-snow .ql-fill{fill:rgba(255,255,255,.6)}
@@ -588,15 +588,15 @@ select option{background:var(--surface);color:var(--text)}
   </div>
   <div id="trainerHeaderBtns" style="position:relative;display:flex;align-items:center;gap:.5rem">
     <div class="hdr-pill">v4.0</div>
-    <button onclick="toggleAdminMenu()" id="adminMenuBtn" style="background:#FFFFFF;color:#111827;border:1px solid #CDD1E0;border-radius:8px;padding:.4rem .85rem;font-size:.8rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.4rem;font-family:var(--font-cond);letter-spacing:.04em">⚙ ADMIN <span style="font-size:.6rem;opacity:.5">▾</span></button>
-    <div id="adminMenu" style="display:none;position:absolute;right:0;top:calc(100% + 6px);background:#FFFFFF;border:1px solid #E2E5EF;border-radius:12px;padding:.4rem;min-width:190px;z-index:600;box-shadow:0 8px 24px rgba(0,0,0,.1)">
-      <button onclick="backupSystem();closeAdminMenu()" style="width:100%;text-align:left;background:none;border:none;color:#111827;padding:.55rem .85rem;font-size:.88rem;font-family:var(--font-cond);cursor:pointer;border-radius:7px;display:flex;align-items:center;gap:.6rem" onmouseover="this.style.background='#F2F4F8'" onmouseout="this.style.background='none'">⬇ Descargar backup</button>
-      <label style="width:100%;text-align:left;color:#111827;padding:.55rem .85rem;font-size:.88rem;font-family:var(--font-cond);cursor:pointer;border-radius:7px;display:flex;align-items:center;gap:.6rem;margin:0;box-sizing:border-box" onmouseover="this.style.background='#F2F4F8'" onmouseout="this.style.background='none'">⬆ Restaurar backup<input type="file" accept=".json" onchange="restoreSystem(event);closeAdminMenu()" style="display:none"></label>
-      <div style="height:1px;background:#E2E5EF;margin:.3rem .5rem"></div>
-      <button onclick="cleanupRoutines();closeAdminMenu()" style="width:100%;text-align:left;background:none;border:none;color:#111827;padding:.55rem .85rem;font-size:.88rem;font-family:var(--font-cond);cursor:pointer;border-radius:7px;display:flex;align-items:center;gap:.6rem" onmouseover="this.style.background='#F2F4F8'" onmouseout="this.style.background='none'">♻ Limpiar rutinas</button>
-      <div style="height:1px;background:#E2E5EF;margin:.3rem .5rem"></div>
-      <button onclick="emergencyClear();closeAdminMenu()" style="width:100%;text-align:left;background:none;border:none;color:#6B7591;padding:.55rem .85rem;font-size:.88rem;font-family:var(--font-cond);cursor:pointer;border-radius:7px;display:flex;align-items:center;gap:.6rem" onmouseover="this.style.background='#F2F4F8'" onmouseout="this.style.background='none'">⚠ Reset caché</button>
-      <button onclick="doLogout();closeAdminMenu()" style="width:100%;text-align:left;background:none;border:none;color:#E8321F;padding:.55rem .85rem;font-size:.88rem;font-family:var(--font-cond);cursor:pointer;border-radius:7px;display:flex;align-items:center;gap:.6rem" onmouseover="this.style.background='#FFF0EE'" onmouseout="this.style.background='none'">⏏ Cerrar sesión</button>
+    <button onclick="toggleAdminMenu()" id="adminMenuBtn" style="background:#20212D;color:#E8EAF2;border:1px solid #3A3C4E;border-radius:8px;padding:.4rem .85rem;font-size:.8rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.4rem;font-family:var(--font-cond);letter-spacing:.04em">⚙ ADMIN <span style="font-size:.6rem;opacity:.5">▾</span></button>
+    <div id="adminMenu" style="display:none;position:absolute;right:0;top:calc(100% + 6px);background:#1A1B25;border:1px solid #3A3C4E;border-radius:12px;padding:.4rem;min-width:190px;z-index:600;box-shadow:0 8px 32px rgba(0,0,0,.5)">
+      <button onclick="backupSystem();closeAdminMenu()" style="width:100%;text-align:left;background:none;border:none;color:#E8EAF2;padding:.55rem .85rem;font-size:.88rem;font-family:var(--font-cond);cursor:pointer;border-radius:7px;display:flex;align-items:center;gap:.6rem" onmouseover="this.style.background='#2C2D3C'" onmouseout="this.style.background='none'">⬇ Descargar backup</button>
+      <label style="width:100%;text-align:left;color:#E8EAF2;padding:.55rem .85rem;font-size:.88rem;font-family:var(--font-cond);cursor:pointer;border-radius:7px;display:flex;align-items:center;gap:.6rem;margin:0;box-sizing:border-box" onmouseover="this.style.background='#2C2D3C'" onmouseout="this.style.background='none'">⬆ Restaurar backup<input type="file" accept=".json" onchange="restoreSystem(event);closeAdminMenu()" style="display:none"></label>
+      <div style="height:1px;background:#2C2D3C;margin:.3rem .5rem"></div>
+      <button onclick="cleanupRoutines();closeAdminMenu()" style="width:100%;text-align:left;background:none;border:none;color:#E8EAF2;padding:.55rem .85rem;font-size:.88rem;font-family:var(--font-cond);cursor:pointer;border-radius:7px;display:flex;align-items:center;gap:.6rem" onmouseover="this.style.background='#2C2D3C'" onmouseout="this.style.background='none'">♻ Limpiar rutinas</button>
+      <div style="height:1px;background:#2C2D3C;margin:.3rem .5rem"></div>
+      <button onclick="emergencyClear();closeAdminMenu()" style="width:100%;text-align:left;background:none;border:none;color:#6B7591;padding:.55rem .85rem;font-size:.88rem;font-family:var(--font-cond);cursor:pointer;border-radius:7px;display:flex;align-items:center;gap:.6rem" onmouseover="this.style.background='#2C2D3C'" onmouseout="this.style.background='none'">⚠ Reset caché</button>
+      <button onclick="doLogout();closeAdminMenu()" style="width:100%;text-align:left;background:none;border:none;color:#E8321F;padding:.55rem .85rem;font-size:.88rem;font-family:var(--font-cond);cursor:pointer;border-radius:7px;display:flex;align-items:center;gap:.6rem" onmouseover="this.style.background='rgba(232,98,26,.15)'" onmouseout="this.style.background='none'">⏏ Cerrar sesión</button>
     </div>
   </div>
 </header>
@@ -6640,7 +6640,7 @@ async function initAuth(){
           <label style="color:rgba(255,255,255,.45);font-size:.7rem;font-weight:700;display:block;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.1em">Contraseña</label>
           <input id="loginPass" type="password" placeholder="••••••••" style="width:100%;padding:.8rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;font-size:1rem;box-sizing:border-box;font-family:'Barlow',sans-serif;outline:none;transition:border-color .18s" onfocus="this.style.borderColor='rgba(232,50,31,.7)'" onblur="this.style.borderColor='rgba(255,255,255,.12)'" onkeydown="if(event.key==='Enter')doLogin()">
         </div>
-        <button onclick="doLogin()" style="width:100%;padding:.95rem;background:#E8321F;color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:800;cursor:pointer;letter-spacing:2px;margin-bottom:.85rem;font-family:'Barlow Condensed',sans-serif;box-shadow:0 4px 20px rgba(232,50,31,.35);transition:all .2s;text-transform:uppercase" onmouseover="this.style.background='#C8270F';this.style.boxShadow='0 6px 24px rgba(232,50,31,.5)'" onmouseout="this.style.background='#E8321F';this.style.boxShadow='0 4px 20px rgba(232,50,31,.35)'">INGRESAR</button>
+        <button onclick="doLogin()" style="width:100%;padding:.95rem;background:#E8621A;color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:800;cursor:pointer;letter-spacing:2px;margin-bottom:.85rem;font-family:'Barlow Condensed',sans-serif;box-shadow:0 4px 20px rgba(232,50,31,.35);transition:all .2s;text-transform:uppercase" onmouseover="this.style.background='#C84E10';this.style.boxShadow='0 6px 24px rgba(232,50,31,.5)'" onmouseout="this.style.background='#E8321F';this.style.boxShadow='0 4px 20px rgba(232,50,31,.35)'">INGRESAR</button>
 
         <div id="loginError" style="color:#E8321F;font-size:.85rem;margin-top:.75rem;text-align:center;display:none"></div>
       </div>
