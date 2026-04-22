@@ -24,6 +24,8 @@
   --surface:#13141C;
   --surface2:#252633;
   --surface3:#2E2F3E;
+  --card2:#1D1E2C;
+  --bg3:#22232F;
   --border:#2C2D3C;
   --border2:#3A3C4E;
 
@@ -4868,7 +4870,7 @@ function renderCirLib(){
              + '<div style="display:flex;gap:.2rem;flex-shrink:0">'
              + '<button title="Agregar al circuito" data-ex="' + eName + '" data-cat="' + catEsc + '" onclick="cirAddFromLib(this)" style="background:' + col + ';color:#fff;border:none;border-radius:3px;padding:.15rem .4rem;cursor:pointer;font-size:.7rem">+</button>'
              + '<button title="Editar" data-ex="' + eName + '" data-cat="' + catEsc + '" data-custom="' + customFlag + '" onclick="cirEditFromLib(this)" style="background:var(--bg3);color:var(--text);border:1px solid var(--border2);border-radius:3px;padding:.15rem .4rem;cursor:pointer;font-size:.7rem">✏</button>'
-             + '<button title="Eliminar" data-ex="' + eName + '" data-cat="' + catEsc + '" data-custom="' + customFlag + '" onclick="cirDelFromLib(this)" style="background:#fde8e8;color:#c0392b;border:1px solid #f5c6c6;border-radius:3px;padding:.15rem .4rem;cursor:pointer;font-size:.7rem">✕</button>'
+             + '<button title="Eliminar" data-ex="' + eName + '" data-cat="' + catEsc + '" data-custom="' + customFlag + '" onclick="cirDelFromLib(this)" style="background:rgba(232,98,26,.15);color:var(--red2);border:1px solid rgba(232,98,26,.3);border-radius:3px;padding:.15rem .4rem;cursor:pointer;font-size:.7rem">✕</button>'
              + '</div></div>';
     });
     html += '<div style="margin-bottom:1rem">'
@@ -6677,9 +6679,9 @@ async function initAuth(){
   <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:1.5rem">
     <img src="media/logo.png" alt="N360" style="height:72px;filter:invert(1);opacity:.9">
     <div style="display:flex;align-items:center;gap:.7rem">
-      <div style="width:10px;height:10px;border-radius:50%;background:#E8321F;animation:plsDot 1.2s ease-in-out infinite"></div>
-      <div style="width:10px;height:10px;border-radius:50%;background:#E8321F;animation:plsDot 1.2s ease-in-out .2s infinite"></div>
-      <div style="width:10px;height:10px;border-radius:50%;background:#E8321F;animation:plsDot 1.2s ease-in-out .4s infinite"></div>
+      <div style="width:10px;height:10px;border-radius:50%;background:#E8621A;animation:plsDot 1.2s ease-in-out infinite"></div>
+      <div style="width:10px;height:10px;border-radius:50%;background:#E8621A;animation:plsDot 1.2s ease-in-out .2s infinite"></div>
+      <div style="width:10px;height:10px;border-radius:50%;background:#E8621A;animation:plsDot 1.2s ease-in-out .4s infinite"></div>
     </div>
     <p style="margin:0;color:rgba(255,255,255,.7);font-size:1rem;letter-spacing:.25em;text-transform:uppercase">Cargando</p>
   </div>
