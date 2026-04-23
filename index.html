@@ -3094,9 +3094,28 @@ async function deleteClient(cid){
   showToast('✓ Cliente eliminado');
 }
 
-function openClientModal(cid){
+async function openClientModal(cid){
   selectedClientId=cid;
   selectedRoutineIdx=null;
+  // Re-fetch fresh client data from Supabase (client may have updated their profile)
+  try{
+    const {data:fresh} = await supa.from('clients')
+      .select('name,objetivo,notas,telefono,portal_email')
+      .eq('id',cid).maybeSingle();
+    if(fresh){
+      // Sync in-memory clients object
+      if(clients[cid]){
+        clients[cid].name    = fresh.name    || clients[cid].name;
+        clients[cid].objetivo= fresh.objetivo|| clients[cid].objetivo;
+        clients[cid].notas   = fresh.notas   || clients[cid].notas;
+      }
+      // Sync extraData (telefono, email)
+      if(!extraData[cid]) extraData[cid]={};
+      if(fresh.telefono)    extraData[cid].telefono = fresh.telefono;
+      if(fresh.portal_email)extraData[cid].email    = fresh.portal_email;
+      saveExtra();
+    }
+  }catch(e){ /* no block modal on error */ }
   const c=clients[cid];
   document.getElementById('clientModalTitle').textContent=c.name;
   const body=document.getElementById('clientModalBody');
