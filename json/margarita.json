@@ -1,0 +1,161 @@
+{
+  "alumno": "Margarita",
+  "objetivo": "Recuperación funcional – 73 años, sobrepeso. Hernias discales múltiples, cifosis dorsal, rectificación cervical, atrofia de tren inferior, hernia umbilical. Prioridad: postura, activación de tren inferior en máquinas, sin carga axial de columna. Sin ejercicios en el suelo. Core solo adaptado en banco. Sin aumento de presión intraabdominal.",
+  "days": [
+    {
+      "title": "Día 1 – Cuádriceps + Glúteos + Gemelos",
+      "warmup": [
+        {"e": "Sentadilla aerea sobre banco", "s": "2", "r": "8", "d": "60 seg"},
+        {"e": "Abducción de cadera", "s": "2", "r": "10 PL", "d": "60 seg"},
+        {"e": "Elevación de talones", "s": "2", "r": "12", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Prensa", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "carga muy liviana, rango parcial sin dolor, pies al centro"},
+            {"e": "Sillón cuádriceps", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "extensión controlada, evitar hiperextensión de rodilla"},
+            {"e": "Sentadilla sobre banco", "type": "normal", "s": "2", "r": "10", "d": "90", "i": "apoyarse al bajar, sin flexión profunda de cadera"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Patada de gluteo con tobillera", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "de pie apoyada en barra, movimiento lento y controlado"},
+            {"e": "Abducción de cadera", "type": "normal", "s": "3", "r": "12 PL", "d": "90", "i": "de pie o máquina, sin inclinación de tronco"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Gemelos",
+          "cfg": {},
+          "exs": [
+            {"e": "Elevación de talones", "type": "normal", "s": "3", "r": "15 PL", "d": "60", "i": "apoyada en barra o pared, bilateral, movimiento lento"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Pecho + Hombros + Tríceps + Core Adaptado",
+      "warmup": [
+        {"e": "Vuelo posterior con banda", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Press hombros banda", "s": "2", "r": "8", "d": "60 seg"},
+        {"e": "Rotación con banda", "s": "2", "r": "8 PL", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Pecho",
+          "cfg": {},
+          "exs": [
+            {"e": "Press de banca barra", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "barra muy liviana o mancuernas, acostada en banco, sin arco lumbar"},
+            {"e": "Apertura en polea", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "de pie, carga mínima, codos ligeramente flexionados"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "Elevaciones laterales", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "sentada, mancuerna muy liviana, codo ligeramente flexionado, sin elevar más de 80°"},
+            {"e": "Vuelo posterior con banda", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "retracción escapular para corregir cifosis, movimiento lento"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Tríceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Ext. en polea triceps soga", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "de pie, carga liviana, codos pegados al cuerpo"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Rotación con banda", "type": "normal", "s": "3", "r": "10 PL", "d": "60", "i": "DE PIE: antirotación suave con banda a media altura, torso erguido, sin flexión de columna"},
+            {"e": "Pallof press con polea", "type": "normal", "s": "2", "r": "10 PL", "d": "60", "i": "DE PIE: brazos extendidos al frente, resistir la rotación, sin empujar con columna"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 3 – Isquiotibiales + Glúteos + Postural",
+      "warmup": [
+        {"e": "Patada de gluteo con tobillera", "s": "2", "r": "8 PL", "d": "60 seg"},
+        {"e": "Remo con banda", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Elevación de talones", "s": "2", "r": "12", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Sillón isquios", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "carga mínima, rango completo sin dolor, movimiento lento"},
+            {"e": "Peso muerto con mancuernas", "type": "normal", "s": "2", "r": "10", "d": "120", "i": "mancuerna muy liviana, descenso parcial (hasta rodillas), espalda neutra – evaluar tolerancia"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Puente de gluteos con mancuerna", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "ACOSTADA EN BANCO: espalda sobre banco, pies en suelo, puente de cadera sin hiperextensión lumbar"},
+            {"e": "Patada de gluteo banco", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "de pie apoyada, movimiento controlado, sin compensar con columna"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Remo con banda", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "sentada o de pie, codos atrás, retracción escapular – foco postural para cifosis"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 4 – Espalda + Bíceps + Postural + Core Adaptado",
+      "warmup": [
+        {"e": "Vuelo posterior con banda", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Remo con banda", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Elevaciones laterales", "s": "2", "r": "8", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Jalon cerrado", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "carga mínima, tirón lento, codos hacia caderas – muy beneficioso para cifosis"},
+            {"e": "Remo con polea", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "sentada, espalda erguida, retracción escapular al final"},
+            {"e": "Vuelo posterior con banda", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "brazos rectos o ligeramente flexionados, movimiento lento y controlado"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Bíceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Curl de biceps con manc", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "sentada, mancuerna liviana, sin balanceo de tronco – cuidar columna cervical"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Rotación con banda", "type": "normal", "s": "3", "r": "10 PL", "d": "60", "i": "DE PIE: banda a altura de pecho, rotación controlada del tronco, sin compensar con columna lumbar"},
+            {"e": "Elevación de talones", "type": "normal", "s": "2", "r": "12", "d": "60", "i": "DE PIE: activa core suave al elevar, mantener postura erguida – cierre postural"}
+          ]
+        }
+      ]
+    }
+  ]
+}

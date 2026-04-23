@@ -1,0 +1,100 @@
+{
+  "alumno": "Stefi Romanini",
+  "objetivo": "Fuerza e hipertrofia – atleta avanzada. 2 días semanales (Martes y Jueves). Progresión de carga, trabajo explosivo y estabilidad unilateral.",
+  "days": [
+    {
+      "title": "Martes – Piernas + Tirón + Potencia",
+      "warmup": [
+        {"e": "Peso muerto con barra (técnico)", "s": "2", "r": "5", "d": "90 seg"},
+        {"e": "Estocadas con rotacion", "s": "2", "r": "8 PL", "d": "60 seg"},
+        {"e": "Jalón ancho en polea", "s": "2", "r": "10", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Fuerza – Piernas",
+          "cfg": {},
+          "exs": [
+            {"e": "Prensa", "type": "normal", "s": "4", "r": "12//6", "d": "180", "i": "pies al ancho de hombros, progresión de carga por serie"},
+            {"e": "Peso muerto rumano con barra", "type": "normal", "s": "4", "r": "10//6", "d": "150", "i": "espalda neutra, llegar a tensión de isquios"},
+            {"e": "Zancada caminando con barra", "type": "normal", "s": "3", "r": "10 PL", "d": "120", "i": "barra en espalda, torso erguido, paso largo"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Fuerza – Tirón",
+          "cfg": {},
+          "exs": [
+            {"e": "Remo con polea una mano", "type": "normal", "s": "4", "r": "10 PL", "d": "120", "i": "codo atrás, retracción escapular fuerte"},
+            {"e": "Dominadas lastradas", "type": "normal", "s": "3", "r": "6//4", "d": "120", "i": "agarre prono, cadena o chaleco; si no, jalón ancho al fallo"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Potencia",
+          "cfg": {},
+          "exs": [
+            {"e": "Push Press con barra", "type": "normal", "s": "4", "r": "5", "d": "150", "i": "impulso de piernas para generar potencia, bloqueo arriba"},
+            {"e": "Saltos al cajón", "type": "normal", "s": "4", "r": "5", "d": "120", "i": "máxima altura, aterrizaje suave, reset completo entre reps"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Estabilidad / Core",
+          "cfg": {},
+          "exs": [
+            {"e": "Turkish get-up", "type": "normal", "s": "3", "r": "3 PL", "d": "90", "i": "mancuerna liviana-media, lento y controlado en cada fase"},
+            {"e": "Plancha de arrastre", "type": "normal", "s": "3", "r": "12", "d": "75", "i": "columna neutra, sin rotar cadera"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Jueves – Torso + Empuje + Potencia",
+      "warmup": [
+        {"e": "Flexiones con pausa", "s": "2", "r": "8", "d": "60 seg"},
+        {"e": "Vuelo posterior con banda", "s": "2", "r": "12", "d": "60 seg"},
+        {"e": "Rotaciones con banda", "s": "2", "r": "10 PL", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Fuerza – Empuje",
+          "cfg": {},
+          "exs": [
+            {"e": "Press inclinado con barra", "type": "normal", "s": "4", "r": "10//6", "d": "150", "i": "inclinación 30°, progresión de carga, escápulas juntas"},
+            {"e": "Press Arnold", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "rotación completa, control en la bajada"},
+            {"e": "Fondos en paralelas lastrados", "type": "normal", "s": "3", "r": "8", "d": "120", "i": "torso levemente inclinado al frente, rango completo"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Fuerza – Tirón Vertical",
+          "cfg": {},
+          "exs": [
+            {"e": "Jalón cerrado", "type": "normal", "s": "4", "r": "10", "d": "120", "i": "codos hacia caderas, pausa en contracción"},
+            {"e": "Remo en maquina Hammer", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "carga alta, doble mano, explosivo al tirar"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Potencia",
+          "cfg": {},
+          "exs": [
+            {"e": "Snatch de potencia con barra", "type": "normal", "s": "4", "r": "3", "d": "180", "i": "técnica prioritaria, agarre ancho, tirón vertical explosivo"},
+            {"e": "Lanzamiento de pelota medicinal al muro", "type": "normal", "s": "4", "r": "8", "d": "90", "i": "lanzamiento de pecho o rotacional, máxima potencia"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Estabilidad / Core",
+          "cfg": {},
+          "exs": [
+            {"e": "Rollout con rueda de abdominales", "type": "normal", "s": "3", "r": "8", "d": "75", "i": "lumbar fija, extensión máxima sin arquear"},
+            {"e": "Pallof press con polea", "type": "normal", "s": "3", "r": "10 PL", "d": "60", "i": "antirotación, brazos extendidos, núcleo firme"}
+          ]
+        }
+      ]
+    }
+  ]
+}

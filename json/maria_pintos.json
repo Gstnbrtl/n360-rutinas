@@ -1,0 +1,100 @@
+{
+  "alumno": "María Pintos",
+  "objetivo": "Mejora de marcha y postura – fortalecer cuádriceps, core y espalda. Iniciar con 5 min de bicicleta previo a cada sesión. Artrosis – rango controlado, sin dolor. Sin ejercicios en el suelo.",
+  "days": [
+    {
+      "title": "Día 1 – Cuádriceps + Espalda Postural + Core",
+      "warmup": [
+        {"e": "Sentadilla aerea sobre banco", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Remo TRX", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Press hombros banda", "s": "2", "r": "10", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Sentadilla aerea sobre banco", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "apoyarse en banco al bajar, rango cómodo"},
+            {"e": "Sillón cuádriceps", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "carga mínima, sin dolor en rodilla"},
+            {"e": "Step Up bajo", "type": "normal", "s": "3", "r": "8 PL", "d": "120", "i": "escalón bajo, apoyo disponible"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Remo con banda", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "sentada o parada, codos atrás"},
+            {"e": "Vuelo posterior con banda", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "brazos rectos, movimiento lento"},
+            {"e": "Aperturas invertidas con banda", "type": "normal", "s": "2", "r": "10", "d": "90", "i": "retracción escapular"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "Press hombros banda", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "sentada, carga muy liviana"},
+            {"e": "Elevaciones laterales/frontales", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "mancuerna muy liviana, postura erguida"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Rotacion con banda", "type": "normal", "s": "3", "r": "12 PL", "d": "60", "i": "de pie o sentada, core activo"},
+            {"e": "Elevación de talones", "type": "normal", "s": "3", "r": "12 PL", "d": "60", "i": "apoyada en barra, bilateral – cierre postural"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Glúteos, Isquiotibiales + Postura + Gemelos",
+      "warmup": [
+        {"e": "Sentadilla aerea sobre banco", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Remo TRX", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Press hombros banda", "s": "2", "r": "10", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Patada de gluteo con tobillera", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": "de pie apoyada en barra, lento"},
+            {"e": "Abducción de cadera", "type": "normal", "s": "3", "r": "12 PL", "d": "90", "i": "de pie apoyada, movimiento controlado"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Sillon isquios", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "carga mínima, rango sin dolor"},
+            {"e": "Peso muerto con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "de pie, espalda neutra, descenso parcial"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Remo TRX", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "cuerpo inclinado, codos atrás"},
+            {"e": "Jalon cerrado", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "carga mínima, tirón lento"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Gemelos",
+          "cfg": {},
+          "exs": [
+            {"e": "Elevación de talones", "type": "normal", "s": "3", "r": "15 PL", "d": "60", "i": "apoyada en pared o barra, bilateral"},
+            {"e": "Rotacion con banda", "type": "normal", "s": "3", "r": "12 PL", "d": "60", "i": "de pie o sentada – cierre postural"}
+          ]
+        }
+      ]
+    }
+  ]
+}

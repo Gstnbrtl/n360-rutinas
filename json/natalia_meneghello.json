@@ -1,0 +1,163 @@
+{
+  "alumno": "Natalia Meneghello",
+  "objetivo": "Fuerza e hipertrofia tren inferior",
+  "days": [
+    {
+      "title": "Día 1 – Cuádriceps + Isquiotibiales + Core",
+      "warmup": [
+        {"e": "Sentadilla con barra liviana", "s": "2", "r": "15", "d": "60 seg"},
+        {"e": "Estocadas alternadas", "s": "2", "r": "8 c/l", "d": "60 seg"},
+        {"e": "Plancha dinamica", "s": "2", "r": "30 seg", "d": "45 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Sentadilla con barra",              "type": "normal", "s": "5", "r": "8",      "d": "150", "i": "Carga progresiva — descenso 3 seg"},
+            {"e": "Sentadilla Búlgara con mancuernas", "type": "normal", "s": "4", "r": "10 c/l", "d": "120", "i": ""},
+            {"e": "Subidas al banco con mancuernas",   "type": "normal", "s": "4", "r": "10 c/l", "d": "90",  "i": ""},
+            {"e": "Sentadilla isometrica pelota",      "type": "normal", "s": "3", "r": "40 seg", "d": "75",  "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Peso muerto con barra",          "type": "normal", "s": "4", "r": "8",  "d": "150", "i": "Espalda neutral — carga progresiva"},
+            {"e": "Peso Muerto rumano",              "type": "normal", "s": "3", "r": "12", "d": "120", "i": "Foco en estiramiento de isquios"},
+            {"e": "Puente de Isquios con corebag",  "type": "normal", "s": "3", "r": "12", "d": "90",  "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Puente de gluteos en altura",    "type": "normal", "s": "4", "r": "15",    "d": "90", "i": ""},
+            {"e": "Puente de gluteos a una pierna", "type": "normal", "s": "3", "r": "12 c/l","d": "75", "i": ""},
+            {"e": "Sentadilla sumo con barra",      "type": "normal", "s": "3", "r": "12",    "d": "90", "i": "Rodillas hacia afuera"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha frontal",              "type": "normal", "s": "4", "r": "45 seg", "d": "60", "i": ""},
+            {"e": "Rueda abdominal",              "type": "normal", "s": "3", "r": "10",     "d": "75", "i": "Desde rodillas"},
+            {"e": "Abdominales elevacion piernas","type": "normal", "s": "3", "r": "15",     "d": "60", "i": ""},
+            {"e": "Twist ruso",                   "type": "normal", "s": "3", "r": "20",     "d": "60", "i": "Con disco"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Glúteos + Aductores + Abdomen",
+      "warmup": [
+        {"e": "Puente de gluteos", "s": "2", "r": "20",   "d": "45 seg"},
+        {"e": "Sentadilla sumo",   "s": "2", "r": "12",   "d": "60 seg"},
+        {"e": "Bicho muerto",      "s": "2", "r": "10",   "d": "45 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Hip thrust con barra",           "type": "normal", "s": "5", "r": "10",     "d": "120", "i": "Maxima contraccion arriba"},
+            {"e": "Sentadilla sumo con barra",      "type": "normal", "s": "4", "r": "10",     "d": "120", "i": ""},
+            {"e": "Puente de gluteos en altura",    "type": "normal", "s": "4", "r": "15",     "d": "75",  "i": ""},
+            {"e": "Puente de gluteos a una pierna", "type": "normal", "s": "3", "r": "12 c/l", "d": "60",  "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Estocadas caminando con mancuernas", "type": "normal", "s": "4", "r": "12 pasos", "d": "90", "i": ""},
+            {"e": "Subidas al banco con mancuernas",    "type": "normal", "s": "4", "r": "10 c/l",   "d": "90", "i": ""},
+            {"e": "Estocada lateral con mancuernas",    "type": "normal", "s": "3", "r": "10 c/l",   "d": "75", "i": ""}
+          ]
+        },
+        {
+          "type": "amrap",
+          "muscle": "Core / Abdomen",
+          "cfg": {"time": "10", "rest": "2"},
+          "exs": [
+            {"e": "Abdominales cruzados",           "type": "amrap", "s": "", "r": "20", "d": "", "i": ""},
+            {"e": "Abdominales elevacion piernas",  "type": "amrap", "s": "", "r": "15", "d": "", "i": ""},
+            {"e": "Mountain climbers",              "type": "amrap", "s": "", "r": "20", "d": "", "i": ""},
+            {"e": "Plancha frontal dinamica",       "type": "amrap", "s": "", "r": "10", "d": "", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Hollow hold",        "type": "normal", "s": "4", "r": "30 seg", "d": "45", "i": ""},
+            {"e": "Escalador cruzado",  "type": "normal", "s": "3", "r": "20",     "d": "60", "i": "Lento y controlado"},
+            {"e": "Lumbares tipo cobra","type": "normal", "s": "3", "r": "15",     "d": "45", "i": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 3 – Fuerza y Potencia + Core Tabata",
+      "warmup": [
+        {"e": "Sentadilla con salto", "s": "3", "r": "8",     "d": "75 seg"},
+        {"e": "Estocadas explosivas", "s": "2", "r": "8 c/l", "d": "60 seg"},
+        {"e": "Plancha dinamica",     "s": "2", "r": "30 seg","d": "45 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Sentadilla con barra", "type": "normal", "s": "5", "r": "5",      "d": "180", "i": "Maximo peso — pausa abajo"},
+            {"e": "Sentadilla con salto", "type": "normal", "s": "4", "r": "8",      "d": "90",  "i": ""},
+            {"e": "Estocadas explosivas", "type": "normal", "s": "3", "r": "10 c/l", "d": "90",  "i": ""},
+            {"e": "Sentadilla copa",      "type": "normal", "s": "4", "r": "12",     "d": "75",  "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Peso muerto con barra",          "type": "normal", "s": "4", "r": "5",      "d": "180", "i": "Maximo peso — tecnica prioritaria"},
+            {"e": "Peso Muerto rumano",              "type": "normal", "s": "3", "r": "10",     "d": "120", "i": ""},
+            {"e": "Puente de gluteos a una pierna",  "type": "normal", "s": "4", "r": "12 c/l", "d": "90",  "i": ""}
+          ]
+        },
+        {
+          "type": "tabata",
+          "muscle": "Core / Abdomen",
+          "cfg": {"work": "20", "rest": "10", "rounds": "8", "brk": "60"},
+          "exs": [
+            {"e": "Mountain climbers",       "type": "tabata", "s": "", "r": "", "d": "", "i": ""},
+            {"e": "Escalador cruzado",       "type": "tabata", "s": "", "r": "", "d": "", "i": ""},
+            {"e": "Plancha frontal dinamica","type": "tabata", "s": "", "r": "", "d": "", "i": ""},
+            {"e": "Abdominales cruzados",    "type": "tabata", "s": "", "r": "", "d": "", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Rueda abdominal",              "type": "normal", "s": "4", "r": "12",     "d": "75", "i": ""},
+            {"e": "Abdominales elevacion piernas", "type": "normal", "s": "4", "r": "15",     "d": "60", "i": ""},
+            {"e": "Twist ruso",                   "type": "normal", "s": "3", "r": "20",     "d": "60", "i": "Con disco"},
+            {"e": "Plancha frontal",              "type": "normal", "s": "3", "r": "60 seg", "d": "60", "i": "Finalizador"}
+          ]
+        }
+      ]
+    }
+  ]
+}

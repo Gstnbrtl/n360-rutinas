@@ -1,0 +1,129 @@
+{
+  "alumno": "Maria Olivo",
+  "objetivo": "Fuerza y composición corporal",
+  "routineName": "Rutina Actualizada 2026",
+  "days": [
+    {
+      "title": "Día 1 – Empuje (Pecho, Hombros, Tríceps)",
+      "warmup": [
+        {"e": "Plancha Lateral Rotacion", "s": "2", "r": "30 seg", "d": "60 seg"},
+        {"e": "Press hombros barra liviana", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Desplantes con disco, rod arriba", "s": "2", "r": "6 PL", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal", "muscle": "Pecho", "cfg": {},
+          "exs": [
+            {"e": "Press de Banca", "type": "normal", "s": "4", "r": "12//6", "d": "150", "i": ""},
+            {"e": "Press inclinado con barra", "type": "normal", "s": "4", "r": "10", "d": "120", "i": ""},
+            {"e": "Apertura con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "Banco inclinado"},
+            {"e": "Fondos en paralelas", "type": "normal", "s": "3", "r": "10", "d": "90", "i": ""}
+          ]
+        },
+        {
+          "type": "normal", "muscle": "Hombros", "cfg": {},
+          "exs": [
+            {"e": "Press militar con barra", "type": "normal", "s": "4", "r": "10", "d": "120", "i": ""},
+            {"e": "Elevaciones laterales con mancuernas", "type": "normal", "s": "3", "r": "12", "d": "90", "i": ""},
+            {"e": "Elevaciones frontales con mancuernas", "type": "normal", "s": "3", "r": "12", "d": "90", "i": ""}
+          ]
+        },
+        {
+          "type": "normal", "muscle": "Tríceps", "cfg": {},
+          "exs": [
+            {"e": "Press frances con mancuernas", "type": "normal", "s": "4", "r": "10", "d": "120", "i": ""},
+            {"e": "Ext. en polea", "type": "normal", "s": "3", "r": "12", "d": "90", "i": ""},
+            {"e": "Empujes en TRX", "type": "normal", "s": "3", "r": "10", "d": "90", "i": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Tracción (Espalda, Bíceps, Core)",
+      "warmup": [
+        {"e": "Plancha Lateral Rotacion", "s": "2", "r": "30 seg", "d": "60 seg"},
+        {"e": "Press hombros barra liviana", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Desplantes con disco, rod arriba", "s": "2", "r": "6 PL", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal", "muscle": "Espalda", "cfg": {},
+          "exs": [
+            {"e": "Remo con barra", "type": "normal", "s": "4", "r": "12//6", "d": "150", "i": ""},
+            {"e": "Jalon ancho", "type": "normal", "s": "4", "r": "12//8", "d": "150", "i": "Alt. sem. Jalón cerrado"},
+            {"e": "Pullover con mancuerna", "type": "normal", "s": "3", "r": "12", "d": "90", "i": ""},
+            {"e": "Remo en polea baja", "type": "normal", "s": "3", "r": "12", "d": "90", "i": ""}
+          ]
+        },
+        {
+          "type": "normal", "muscle": "Bíceps", "cfg": {},
+          "exs": [
+            {"e": "Curl de biceps con barra", "type": "normal", "s": "4", "r": "12", "d": "120", "i": ""},
+            {"e": "Curl Martillo alternado", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "Alt. sem. Curl en banco inclinado"}
+          ]
+        },
+        {
+          "type": "normal", "muscle": "Core / Abdomen", "cfg": {},
+          "exs": [
+            {"e": "Abdominales cortos disco", "type": "normal", "s": "3", "r": "20", "d": "60", "i": "Subir paulatinamente el peso"},
+            {"e": "Plancha pies elevados", "type": "normal", "s": "3", "r": "20 seg PL", "d": "60", "i": "Alternar elevación de brazo"},
+            {"e": "Abd. cruzados paso disco", "type": "normal", "s": "3", "r": "20", "d": "60", "i": "Mancuerna liviana"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 3 – Cuádriceps y Aductores",
+      "warmup": [
+        {"e": "Plancha Lateral Rotacion", "s": "2", "r": "30 seg", "d": "60 seg"},
+        {"e": "Press hombros barra liviana", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Desplantes con disco, rod arriba", "s": "2", "r": "6 PL", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal", "muscle": "Cuádriceps", "cfg": {},
+          "exs": [
+            {"e": "Sentadilla con barra", "type": "normal", "s": "4", "r": "12//6", "d": "150", "i": ""},
+            {"e": "Prensa", "type": "normal", "s": "4", "r": "12//8", "d": "150", "i": "Alt. sem. subidas al cajón"},
+            {"e": "Sillon cuadriceps", "type": "normal", "s": "3", "r": "12", "d": "90", "i": ""},
+            {"e": "Sentadilla Sumo", "type": "normal", "s": "4", "r": "10", "d": "120", "i": "Alt. sem. estocada lateral"}
+          ]
+        },
+        {
+          "type": "normal", "muscle": "Aductores", "cfg": {},
+          "exs": [
+            {"e": "Abducciones con banda", "type": "normal", "s": "3", "r": "12 PL", "d": "60", "i": "Alt. con tobillera"},
+            {"e": "Elevaciones sobre cajon (Gem)", "type": "normal", "s": "3", "r": "15 PL", "d": "60", "i": "Agregar disco de peso"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 4 – Isquios y Glúteos",
+      "warmup": [
+        {"e": "Plancha Lateral Rotacion", "s": "2", "r": "30 seg", "d": "60 seg"},
+        {"e": "Press hombros barra liviana", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Desplantes con disco, rod arriba", "s": "2", "r": "6 PL", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal", "muscle": "Isquiotibiales", "cfg": {},
+          "exs": [
+            {"e": "Peso muerto con barra", "type": "normal", "s": "4", "r": "12//6", "d": "150", "i": "Alt. sem. mancuerna una pierna"},
+            {"e": "Sillon de isquios", "type": "normal", "s": "4", "r": "10", "d": "120", "i": ""},
+            {"e": "Estocada isometrica con barra", "type": "normal", "s": "3", "r": "20 seg", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal", "muscle": "Glúteos", "cfg": {},
+          "exs": [
+            {"e": "Hip Thrust", "type": "normal", "s": "4", "r": "12//6", "d": "150", "i": ""},
+            {"e": "Sentadilla Bulgara", "type": "normal", "s": "4", "r": "8 PL", "d": "150", "i": ""},
+            {"e": "Patada de gluteo", "type": "normal", "s": "3", "r": "10 PL", "d": "120", "i": "Probar variedades"},
+            {"e": "Thrusters con barra o manc", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "alumno": "Silvia Corchi",
+  "objetivo": "Descenso de peso y fuerza – rodilla con cuidado (menisco)",
+  "days": [
+    {
+      "title": "Día 1 – Cuádriceps, Aductores y Gemelos",
+      "warmup": [
+        {"e": "Apertura con banda", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Remo TRX", "s": "2", "r": "12", "d": "60 seg"},
+        {"e": "Puente de gluteos s/pelota", "s": "2", "r": "10 rep", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Prensa", "type": "normal", "s": "3", "r": "12", "d": "150", "i": "rango controlado"},
+            {"e": "Sillón cuádriceps", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "rango controlado"},
+            {"e": "Sentadilla isométrica pelota", "type": "normal", "s": "3", "r": "20 seg", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Aductores",
+          "cfg": {},
+          "exs": [
+            {"e": "Cangrejo", "type": "normal", "s": "3", "r": "15", "d": "120", "i": ""},
+            {"e": "Aducción con tobillera", "type": "normal", "s": "3", "r": "10 PL", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Gemelos",
+          "cfg": {},
+          "exs": [
+            {"e": "Elevación de talones", "type": "normal", "s": "3", "r": "15 PL", "d": "60", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Abdominales bicicleta", "type": "normal", "s": "3", "r": "15", "d": "60", "i": ""},
+            {"e": "Plancha frontal", "type": "normal", "s": "3", "r": "20 seg", "d": "60", "i": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Pecho, Hombros y Bíceps",
+      "warmup": [
+        {"e": "Apertura con banda", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Remo TRX", "s": "2", "r": "12", "d": "60 seg"},
+        {"e": "Puente de gluteos s/pelota", "s": "2", "r": "10 rep", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Pecho",
+          "cfg": {},
+          "exs": [
+            {"e": "Press con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""},
+            {"e": "Pall off empuje", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "Press militar con manc", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""},
+            {"e": "Elevaciones laterales/frontales", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Bíceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Curl de biceps martillo", "type": "normal", "s": "3", "r": "12", "d": "120", "i": ""},
+            {"e": "Curl de biceps con manc", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha frontal", "type": "normal", "s": "3", "r": "20 seg", "d": "60", "i": ""},
+            {"e": "Rotacion con banda", "type": "normal", "s": "3", "r": "15", "d": "60", "i": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 3 – Glúteos, Isquiotibiales y Abductores",
+      "warmup": [
+        {"e": "Apertura con banda", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Remo TRX", "s": "2", "r": "12", "d": "60 seg"},
+        {"e": "Puente de gluteos s/pelota", "s": "2", "r": "10 rep", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Puente de Gluteos corebag", "type": "normal", "s": "3", "r": "12", "d": "120", "i": ""},
+            {"e": "Patada de gluteo con tobillera", "type": "normal", "s": "3", "r": "10 PL", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Sillon isquios", "type": "normal", "s": "4", "r": "10", "d": "120", "i": ""},
+            {"e": "Peso muerto con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "rango controlado"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Abductores",
+          "cfg": {},
+          "exs": [
+            {"e": "Abducciones con banda", "type": "normal", "s": "3", "r": "15", "d": "90", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Rotacion con banda", "type": "normal", "s": "3", "r": "20", "d": "120", "i": ""},
+            {"e": "Plancha frontal", "type": "normal", "s": "3", "r": "20 seg", "d": "60", "i": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 4 – Espalda y Tríceps",
+      "warmup": [
+        {"e": "Apertura con banda", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Remo TRX", "s": "2", "r": "12", "d": "60 seg"},
+        {"e": "Puente de gluteos s/pelota", "s": "2", "r": "10 rep", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Remo con polea", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""},
+            {"e": "Jalon cerrado", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""},
+            {"e": "Remo con mancuernas banco", "type": "normal", "s": "3", "r": "10 PL", "d": "90", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Tríceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Extension triceps polea", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""},
+            {"e": "Press frances con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha frontal", "type": "normal", "s": "3", "r": "20 seg", "d": "60", "i": ""},
+            {"e": "Plancha rotacion de cadera", "type": "normal", "s": "3", "r": "15 seg PL", "d": "60", "i": ""}
+          ]
+        }
+      ]
+    }
+  ]
+}
