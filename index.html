@@ -2990,7 +2990,13 @@ function loadFromStorage(){
 let extraData = {};
 let clFiltroActivo = 'todos';
 function loadExtra(){ try{ extraData = JSON.parse(localStorage.getItem('n360_clientes_extra')||'{}'); }catch(e){ extraData={}; } }
-function saveExtra(){ localStorage.setItem('n360_clientes_extra', JSON.stringify(extraData)); }
+function saveExtra(){ localStorage.setItem('n360_clientes_extra', JSON.stringify(extraData)); saveExtraToCloud(); }
+async function saveExtraToCloud(){
+  if(!currentUser) return;
+  try{
+    await supa.from('db_overrides').update({clientes_extra:extraData, updated_at:new Date().toISOString()}).eq('user_id',currentUser.id);
+  }catch(e){ console.warn('saveExtraToCloud error:',e); }
+}
 function getEstadoInfo(estado, vencimiento){
   const today = new Date(); today.setHours(0,0,0,0);
   if(vencimiento){
@@ -6485,6 +6491,12 @@ async function loadAllFromCloud(){
       if(dbo.ex_descriptions && Object.keys(dbo.ex_descriptions).length > 0){ exDescriptions = dbo.ex_descriptions; localStorage.setItem('n360_ex_desc', JSON.stringify(exDescriptions)); }
       // Solo cargamos ex_videos de la nube si tiene datos (objeto no vacío)
       if(dbo.blog_posts && Array.isArray(dbo.blog_posts)) blogPosts = dbo.blog_posts;
+      if(dbo.clientes_extra && Object.keys(dbo.clientes_extra).length > 0){
+        extraData = dbo.clientes_extra;
+        localStorage.setItem('n360_clientes_extra', JSON.stringify(extraData));
+      } else if(Object.keys(extraData).length > 0){
+        saveExtraToCloud();
+      }
       if(dbo.ex_videos && Object.keys(dbo.ex_videos).length > 0){
         exVideos = dbo.ex_videos;
         localStorage.setItem('n360_ex_videos', JSON.stringify(exVideos));
