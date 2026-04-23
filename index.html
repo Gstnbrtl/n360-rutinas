@@ -6169,7 +6169,12 @@ function portalRenderDay(idx){
       html += '<div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.65rem;padding:.5rem .75rem;background:var(--surface2);border-radius:9px;border:1px solid var(--border)">';
       html += '<div style="width:4px;height:1.2rem;background:' + accent + ';border-radius:3px;flex-shrink:0"></div>';
       html += '<span style="font-family:var(--font-cond);font-size:.95rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:' + accent + '">' + (bl.muscle||bl.type||'') + '</span>';
-      if(bl.type==='amrap' && bl.cfg && bl.cfg.time) html += '<span style="font-size:.78rem;color:var(--gray);margin-left:.2rem">· ' + bl.cfg.time + ' min AMRAP</span>';
+      if(bl.type==='amrap' && bl.cfg && bl.cfg.time){
+        html += '<span style="font-size:.78rem;color:var(--gray);margin-left:.2rem">· ' + bl.cfg.time + ' min AMRAP</span>';
+        var _acfg = JSON.stringify(bl.cfg||{}).replace(/'/g,"\'");
+        var _aex  = JSON.stringify((bl.exs||[]).map(function(e){return e.e||'';}).filter(Boolean)).replace(/'/g,"\'");
+        html += '<button onclick=\'openPortalAmrap('+_acfg+','+_aex+')\'  style=\"margin-left:auto;padding:.28rem .75rem;background:rgba(232,160,32,.15);color:#E8A020;border:1px solid rgba(232,160,32,.35);border-radius:20px;font-family:var(--font-cond);font-size:.78rem;font-weight:700;letter-spacing:.06em;cursor:pointer;white-space:nowrap\">⏱ TIMER</button>';
+      }
       if(bl.type==='tabata' && bl.cfg) html += '<span style="font-size:.78rem;color:var(--gray);margin-left:.2rem">· ' + (bl.cfg.rounds||8) + ' rondas ' + (bl.cfg.work||20) + '/' + (bl.cfg.rest||10) + 's</span>';
       if(bl.type==='tabata'){
         var _tcfg = JSON.stringify(bl.cfg||{}).replace(/'/g,"\\'");
@@ -6556,20 +6561,21 @@ async function initAuth(){
 // ═══════════════════════════════════════════════════════════
 
 var _tab = {
-  workSec:0, restSec:0, totalRounds:0, exercises:[],
+  workSec:0, restSec:0, brkSec:0, totalRounds:0, exercises:[],
   round:0, exIdx:0, phase:'prep', timeLeft:3,
-  running:false, interval:null, prepSec:3,
-  _audioCtx: null
+  running:false, interval:null, prepSec:3
 };
 
 function openPortalTabata(cfg, exNames){
   var work   = parseInt(cfg.work)   || 20;
   var rest   = parseInt(cfg.rest)   || 10;
   var rounds = parseInt(cfg.rounds) || 8;
+  var brk    = cfg.brk ? parseInt(cfg.brk) : 0;  // descanso entre rondas (seg)
   var exercises = (exNames && exNames.length) ? exNames : ['—'];
 
   _tab.workSec     = work;
   _tab.restSec     = rest;
+  _tab.brkSec      = brk;
   _tab.totalRounds = rounds;
   _tab.exercises   = exercises;
   _tabataReset(true);
@@ -6650,12 +6656,25 @@ function _tabataAdvancePhase(){
       _tabataStop();
       _tabataBeep('done');
     } else {
-      _tab.round++;
-      _tab.exIdx = (_tab.exIdx + 1) % _tab.exercises.length;
-      _tab.phase = 'work';
-      _tab.timeLeft = _tab.workSec;
-      _tabataBeep('start');
+      // show roundend screen if brkSec configured, else go straight to next work
+      if(_tab.brkSec > 0){
+        _tab.phase   = 'roundend';
+        _tab.timeLeft= _tab.brkSec;
+        _tabataBeep('rest');
+      } else {
+        _tab.round++;
+        _tab.exIdx = (_tab.exIdx + 1) % _tab.exercises.length;
+        _tab.phase = 'work';
+        _tab.timeLeft = _tab.workSec;
+        _tabataBeep('start');
+      }
     }
+  } else if(_tab.phase === 'roundend'){
+    _tab.round++;
+    _tab.exIdx = (_tab.exIdx + 1) % _tab.exercises.length;
+    _tab.phase = 'work';
+    _tab.timeLeft = _tab.workSec;
+    _tabataBeep('start');
   }
 }
 
@@ -6710,6 +6729,21 @@ function _tabataRenderUI(){
     count.textContent    = _tab.timeLeft;
     if(btn) btn.textContent = 'PAUSA';
 
+  } else if(_tab.phase === 'roundend'){
+    el.style.background  = '#060A0F';
+    bg.style.background  = 'rgba(77,168,255,.13)';
+    bg.style.opacity     = '1';
+    count.style.color    = '#4DA8FF';
+    label.style.color    = '#4DA8FF';
+    label.textContent    = '✓ RONDA ' + _tab.round + ' COMPLETADA';
+    var faltan = _tab.totalRounds - _tab.round;
+    round.textContent    = faltan > 0 ? ('FALTAN ' + faltan + ' RONDA' + (faltan>1?'S':'')) : 'ÚLTIMA RONDA';
+    exName.textContent   = '';
+    var nextEx2 = _tab.exercises[(_tab.exIdx+1) % _tab.exercises.length];
+    nextUp.textContent   = 'SIGUIENTE: ' + nextEx2;
+    count.textContent    = _tab.timeLeft;
+    if(btn) btn.textContent = 'PAUSA';
+
   } else if(_tab.phase === 'done'){
     el.style.background  = '#09090F';
     bg.style.background  = 'rgba(168,85,247,.15)';
@@ -6731,9 +6765,9 @@ function _tabataRenderDots(){
   el.innerHTML = '';
   for(var i=0; i<_tab.totalRounds; i++){
     var d = document.createElement('div');
-    var done   = _tab.phase!='prep' && i < _tab.round - (_tab.phase==='rest'||_tab.phase==='done' ? 0 : 1);
+    var done   = _tab.phase!='prep' && i < _tab.round - (['rest','roundend','done'].includes(_tab.phase) ? 0 : 1);
     var active = _tab.phase==='work' && i === _tab.round - 1;
-    var restAct= _tab.phase==='rest' && i === _tab.round - 1;
+    var restAct= (_tab.phase==='rest'||_tab.phase==='roundend') && i === _tab.round - 1;
     d.style.cssText = 'width:' + (active?'24px':'9px') + ';height:9px;border-radius:9px;transition:all .25s;' +
       'background:' + (active ? '#FF7C35' : restAct ? '#4ade80' : done ? 'rgba(255,255,255,.5)' : 'rgba(255,255,255,.15)');
     el.appendChild(d);
@@ -6757,6 +6791,104 @@ function _tabataBeep(type){
     else if(type==='done'){ tone(659,.1,0,.3); tone(784,.1,.12,.3); tone(1046,.35,.25,.3); }
   }catch(e){}
 }
+
+// ═══════════════════════════════════════════════════════════
+// PORTAL AMRAP TIMER
+// ═══════════════════════════════════════════════════════════
+
+var _amrap = {
+  totalSec:0, timeLeft:0, exercises:[], running:false, interval:null
+};
+
+function openPortalAmrap(cfg, exNames){
+  var mins   = parseFloat(cfg.time) || 10;
+  var total  = Math.round(mins * 60);
+  _amrap.totalSec  = total;
+  _amrap.timeLeft  = total;
+  _amrap.exercises = (exNames && exNames.length) ? exNames : ['—'];
+  _amrap.running   = false;
+  clearInterval(_amrap.interval);
+
+  // Reuse the same tabata modal in amrap mode
+  var el = document.getElementById('ovPortalTabata');
+  el.style.display = 'flex';
+  el.setAttribute('data-mode','amrap');
+  el.style.background = '#09090F';
+
+  var bg = document.getElementById('tabBgLayer');
+  bg.style.background = 'rgba(232,160,32,.12)';
+  bg.style.opacity    = '1';
+
+  document.getElementById('tabPhaseLabel').style.color   = '#E8A020';
+  document.getElementById('tabPhaseLabel').textContent   = 'AMRAP';
+  document.getElementById('tabRound').style.color        = 'rgba(255,255,255,.3)';
+  document.getElementById('tabRound').textContent        = (cfg.time||'10') + ' MIN';
+  document.getElementById('tabCount').style.color        = '#E8A020';
+  document.getElementById('tabCount').textContent        = _amrapFmt(total);
+
+  // Build exercise list html
+  var listHtml = _amrap.exercises.map(function(e,i){
+    return '<div style="padding:.35rem 0;border-bottom:1px solid rgba(255,255,255,.07);font-family:var(--font-cond);font-size:1.05rem;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:.6rem">' +
+           '<span style="font-family:var(--font-display);font-size:.95rem;color:#E8A020">' + (i+1) + '</span>' +
+           e + '</div>';
+  }).join('');
+  document.getElementById('tabExName').innerHTML = '<div style="width:100%;max-height:40vh;overflow-y:auto;text-align:left">' + listHtml + '</div>';
+  document.getElementById('tabNextUp').textContent = '';
+
+  // Config row
+  document.getElementById('tabCfgWork').textContent   = cfg.time||'10';
+  document.getElementById('tabCfgRest').textContent   = cfg.rest||'2';
+  document.getElementById('tabCfgRounds').textContent = '∞';
+  document.getElementById('tabDots').innerHTML = '';
+
+  var btn = document.getElementById('tabBtnStart');
+  if(btn){ btn.textContent = 'INICIAR'; btn.onclick = _amrapToggle; }
+  document.getElementById('tabConfigRow').children[0].lastElementChild.textContent = 'TIEMPO';
+  document.getElementById('tabConfigRow').children[1].lastElementChild.textContent = 'DESCANSO';
+  document.getElementById('tabConfigRow').children[2].lastElementChild.textContent = 'VUELTAS';
+}
+
+function _amrapFmt(s){
+  var m = Math.floor(s/60);
+  var sec = s % 60;
+  return m + ':' + (sec<10?'0':'') + sec;
+}
+
+function _amrapToggle(){
+  if(_amrap.running){
+    _amrap.running = false;
+    clearInterval(_amrap.interval);
+    document.getElementById('tabBtnStart').textContent = 'CONTINUAR';
+  } else {
+    if(_amrap.timeLeft <= 0){ _amrap.timeLeft = _amrap.totalSec; }
+    _amrap.running = true;
+    document.getElementById('tabBtnStart').textContent = 'PAUSA';
+    _amrap.interval = setInterval(function(){
+      _amrap.timeLeft--;
+      document.getElementById('tabCount').textContent = _amrapFmt(_amrap.timeLeft);
+      // last 10 seconds: turn red + beep
+      if(_amrap.timeLeft <= 10 && _amrap.timeLeft > 0){
+        document.getElementById('tabCount').style.color = '#FF3B30';
+        _tabataBeep('rest');
+      }
+      if(_amrap.timeLeft <= 0){
+        clearInterval(_amrap.interval);
+        _amrap.running = false;
+        document.getElementById('ovPortalTabata').style.background = '#090409';
+        document.getElementById('tabBgLayer').style.background = 'rgba(168,85,247,.18)';
+        document.getElementById('tabPhaseLabel').style.color = '#A855F7';
+        document.getElementById('tabPhaseLabel').textContent = '¡TIEMPO!';
+        document.getElementById('tabCount').style.color = '#A855F7';
+        document.getElementById('tabCount').textContent = '✓';
+        document.getElementById('tabRound').textContent = 'AMRAP COMPLETADO';
+        document.getElementById('tabBtnStart').textContent = 'REPETIR';
+        document.getElementById('tabBtnStart').onclick = function(){ openPortalAmrap(_amrap._cfg, _amrap.exercises); };
+        _tabataBeep('done');
+      }
+    }, 1000);
+  }
+}
+
 
 </script>
 
