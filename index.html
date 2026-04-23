@@ -6474,7 +6474,7 @@ async function saveCustomExercisesToCloud(){
   }catch(e){}
 }
 
-async async function saveDBOverridesToCloud(){
+async function saveDBOverridesToCloud(){
   if(!currentUser) return;
   try{
     const ciKeys = ['CI – Tren Inferior','CI – Tren Superior','CI – Core','CI – Full Body / Aeróbico'];
