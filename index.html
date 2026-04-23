@@ -2581,7 +2581,7 @@ function _renderDashStats(){
     const ex=extraData[cid]||{};
     const info=getEstadoInfo(ex.estado,ex.vencimiento);
     if(info.key==='overdue'||info.key==='vencido') vencidos++;
-    else if(info.key==='al_dia') alDia++;
+    else if(info.key==='activo') alDia++;
     totalRoutines+=(clients[cid].routines||[]).length;
   });
   const pending=total-alDia-vencidos;
