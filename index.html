@@ -5440,6 +5440,7 @@ async function savePortalLogToCloud(nombre){
     anotacion:     entry.anotacion || '',
     updated_at:    new Date().toISOString()
   }, { onConflict: 'client_id,routine_id,exercise_name' });
+  if(error) console.error("[client_logs upsert error]", JSON.stringify(error));
   showPortalSync(!error);
 }
 function savePortalPeso(nombre, valor){
