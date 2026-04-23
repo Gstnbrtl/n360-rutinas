@@ -3089,11 +3089,6 @@ function renderClients(){
       </td>
     </tr>`;
   }).join('');
-  // Populate rich HTML bodies safely after render
-  sorted.forEach(function(p){
-    var el2 = document.getElementById('bfull_'+p.id);
-    if(el2) el2.innerHTML = p.body || '';
-  });
 }
 
 async function deleteClient(cid){
