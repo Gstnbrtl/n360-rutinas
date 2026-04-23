@@ -151,6 +151,14 @@ Block types:
 
 Max 4 exercises per block. Fields: `e`=name, `s`=series, `r`=reps, `d`=rest (seconds or "seg"), `i`=notes. Exercises must derive from real DB entries (slight name adjustments allowed, e.g. "con barra liviana").
 
+## Git workflow
+
+Hooks configured in `.claude/settings.json` run automatically:
+- **SessionStart**: `git pull origin main` — pulls latest changes on every session start.
+- **Stop**: `git add -A && git commit && git push origin main` — auto-saves all changes when the session ends.
+
+No manual git commands needed between sessions. To work from another machine: `git clone https://github.com/Gstnbrtl/n360-rutinas.git`.
+
 ## Supabase
 ```
 URL: https://zhdkyuytpudvyhjuqqre.supabase.co

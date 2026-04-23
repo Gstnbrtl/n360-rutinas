@@ -2509,7 +2509,7 @@ function addBlock(d, type='normal', focus=true){
       <label>Trabajo</label><input id="tb_work_${bid}" value="20 seg" style="width:80px">
       <label>Descanso</label><input id="tb_rest_${bid}" value="10 seg" style="width:80px">
       <label>Rondas</label><input id="tb_rounds_${bid}" value="8" style="width:60px">
-      <label>Descanso entre ejercicios</label><input id="tb_break_${bid}" value="1 min" style="width:80px">
+      <label>Descanso entre rondas</label><input id="tb_break_${bid}" value="1 min" style="width:80px">
     </div>`;
   }
 
@@ -6741,19 +6741,26 @@ function _tabataAdvancePhase(){
     _tab.timeLeft= _tab.restSec;
     _tabataBeep('rest');
   } else if(_tab.phase === 'rest'){
-    if(_tab.round >= _tab.totalRounds){
-      _tab.phase = 'done';
-      _tabataStop();
-      _tabataBeep('done');
+    var nextExIdx = _tab.exIdx + 1;
+    if(nextExIdx < _tab.exercises.length){
+      // more exercises in this round → continue circuit
+      _tab.exIdx = nextExIdx;
+      _tab.phase = 'work';
+      _tab.timeLeft = _tab.workSec;
+      _tabataBeep('start');
     } else {
-      // show roundend screen if brkSec configured, else go straight to next work
-      if(_tab.brkSec > 0){
+      // all exercises done → round complete
+      if(_tab.round >= _tab.totalRounds){
+        _tab.phase = 'done';
+        _tabataStop();
+        _tabataBeep('done');
+      } else if(_tab.brkSec > 0){
         _tab.phase   = 'roundend';
         _tab.timeLeft= _tab.brkSec;
         _tabataBeep('rest');
       } else {
         _tab.round++;
-        _tab.exIdx = (_tab.exIdx + 1) % _tab.exercises.length;
+        _tab.exIdx = 0;
         _tab.phase = 'work';
         _tab.timeLeft = _tab.workSec;
         _tabataBeep('start');
@@ -6761,7 +6768,7 @@ function _tabataAdvancePhase(){
     }
   } else if(_tab.phase === 'roundend'){
     _tab.round++;
-    _tab.exIdx = (_tab.exIdx + 1) % _tab.exercises.length;
+    _tab.exIdx = 0;
     _tab.phase = 'work';
     _tab.timeLeft = _tab.workSec;
     _tabataBeep('start');
@@ -6800,8 +6807,8 @@ function _tabataRenderUI(){
     label.textContent    = 'TRABAJO';
     round.textContent    = 'RONDA ' + _tab.round + ' / ' + _tab.totalRounds;
     exName.textContent   = _tab.exercises[_tab.exIdx] || '';
-    var nextEx = _tab.exercises[(_tab.exIdx+1) % _tab.exercises.length];
-    nextUp.textContent   = _tab.totalRounds > _tab.round ? ('PRÓXIMO: ' + nextEx) : '';
+    var nextEx = (_tab.exIdx + 1 < _tab.exercises.length) ? ('PRÓXIMO: ' + _tab.exercises[_tab.exIdx + 1]) : (_tab.round < _tab.totalRounds ? 'FIN DE RONDA' : 'ÚLTIMO EJERCICIO');
+    nextUp.textContent   = nextEx;
     count.textContent    = _tab.timeLeft;
     if(btn) btn.textContent = 'PAUSA';
 
@@ -6813,9 +6820,17 @@ function _tabataRenderUI(){
     label.style.color    = '#4ade80';
     label.textContent    = 'DESCANSO';
     round.textContent    = 'RONDA ' + _tab.round + ' / ' + _tab.totalRounds;
-    var restNext = _tab.exercises[(_tab.exIdx+1) % _tab.exercises.length];
     exName.textContent   = '';
-    nextUp.textContent   = _tab.round < _tab.totalRounds ? ('SIGUIENTE: ' + restNext) : 'ÚLTIMA RONDA';
+    var restNextIdx = _tab.exIdx + 1;
+    var restNextTxt;
+    if(restNextIdx < _tab.exercises.length){
+      restNextTxt = 'SIGUIENTE: ' + _tab.exercises[restNextIdx];
+    } else if(_tab.round < _tab.totalRounds){
+      restNextTxt = _tab.brkSec > 0 ? ('DESCANSO ' + _tab.brkSec + 's entre rondas') : 'PRÓXIMA RONDA';
+    } else {
+      restNextTxt = 'ÚLTIMA RONDA COMPLETADA';
+    }
+    nextUp.textContent   = restNextTxt;
     count.textContent    = _tab.timeLeft;
     if(btn) btn.textContent = 'PAUSA';
 
@@ -6825,12 +6840,11 @@ function _tabataRenderUI(){
     bg.style.opacity     = '1';
     count.style.color    = '#4DA8FF';
     label.style.color    = '#4DA8FF';
-    label.textContent    = '✓ RONDA ' + _tab.round + ' COMPLETADA';
+    label.textContent    = 'DESCANSO RONDA ' + _tab.round;
     var faltan = _tab.totalRounds - _tab.round;
     round.textContent    = faltan > 0 ? ('FALTAN ' + faltan + ' RONDA' + (faltan>1?'S':'')) : 'ÚLTIMA RONDA';
     exName.textContent   = '';
-    var nextEx2 = _tab.exercises[(_tab.exIdx+1) % _tab.exercises.length];
-    nextUp.textContent   = 'SIGUIENTE: ' + nextEx2;
+    nextUp.textContent   = 'PRÓXIMA RONDA: ' + _tab.exercises[0];
     count.textContent    = _tab.timeLeft;
     if(btn) btn.textContent = 'PAUSA';
 
