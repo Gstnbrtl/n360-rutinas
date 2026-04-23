@@ -6171,6 +6171,11 @@ function portalRenderDay(idx){
       html += '<span style="font-family:var(--font-cond);font-size:.95rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:' + accent + '">' + (bl.muscle||bl.type||'') + '</span>';
       if(bl.type==='amrap' && bl.cfg && bl.cfg.time) html += '<span style="font-size:.78rem;color:var(--gray);margin-left:.2rem">· ' + bl.cfg.time + ' min AMRAP</span>';
       if(bl.type==='tabata' && bl.cfg) html += '<span style="font-size:.78rem;color:var(--gray);margin-left:.2rem">· ' + (bl.cfg.rounds||8) + ' rondas ' + (bl.cfg.work||20) + '/' + (bl.cfg.rest||10) + 's</span>';
+      if(bl.type==='tabata'){
+        var _tcfg = JSON.stringify(bl.cfg||{}).replace(/'/g,"\\'");
+        var _tex  = JSON.stringify((bl.exs||[]).map(function(e){return e.e||'';}).filter(Boolean)).replace(/'/g,"\\'");
+        html += '<button onclick=\'openPortalTabata('+_tcfg+','+_tex+')\'  style=\"margin-left:auto;padding:.28rem .75rem;background:rgba(168,85,247,.15);color:#A855F7;border:1px solid rgba(168,85,247,.35);border-radius:20px;font-family:var(--font-cond);font-size:.78rem;font-weight:700;letter-spacing:.06em;cursor:pointer;white-space:nowrap\">⏱ TIMER</button>';
+      }
       html += '</div>';
       // Ejercicios
       (bl.exs||[]).forEach(function(ex){
@@ -6544,6 +6549,215 @@ async function initAuth(){
   // else overlay stays visible
 }
 
+
+
+// ═══════════════════════════════════════════════════════════
+// PORTAL TABATA TIMER
+// ═══════════════════════════════════════════════════════════
+
+var _tab = {
+  workSec:0, restSec:0, totalRounds:0, exercises:[],
+  round:0, exIdx:0, phase:'prep', timeLeft:3,
+  running:false, interval:null, prepSec:3,
+  _audioCtx: null
+};
+
+function openPortalTabata(cfg, exNames){
+  var work   = parseInt(cfg.work)   || 20;
+  var rest   = parseInt(cfg.rest)   || 10;
+  var rounds = parseInt(cfg.rounds) || 8;
+  var exercises = (exNames && exNames.length) ? exNames : ['—'];
+
+  _tab.workSec     = work;
+  _tab.restSec     = rest;
+  _tab.totalRounds = rounds;
+  _tab.exercises   = exercises;
+  _tabataReset(true);
+
+  var el = document.getElementById('ovPortalTabata');
+  el.style.display = 'flex';
+  el.style.background = '#09090F';
+  document.getElementById('tabCfgWork').textContent   = work;
+  document.getElementById('tabCfgRest').textContent   = rest;
+  document.getElementById('tabCfgRounds').textContent = rounds;
+  _tabataRenderDots();
+}
+
+function closePortalTabata(){
+  _tabataStop();
+  document.getElementById('ovPortalTabata').style.display = 'none';
+}
+
+function _tabataReset(silent){
+  _tabataStop();
+  _tab.round   = 0;
+  _tab.exIdx   = 0;
+  _tab.phase   = 'prep';
+  _tab.timeLeft= _tab.prepSec;
+  _tabataRenderUI();
+  if(!silent) _tabataRenderDots();
+}
+
+function _tabataStop(){
+  _tab.running = false;
+  clearInterval(_tab.interval);
+  _tab.interval = null;
+  var btn = document.getElementById('tabBtnStart');
+  if(btn) btn.textContent = _tab.phase==='done' ? 'REPETIR' : 'INICIAR';
+}
+
+function _tabataToggle(){
+  if(_tab.phase === 'done'){ _tabataReset(); return; }
+  if(_tab.running){
+    _tabataStop();
+  } else {
+    _tab.running = true;
+    document.getElementById('tabBtnStart').textContent = 'PAUSA';
+    _tab.interval = setInterval(_tabataTick, 1000);
+  }
+}
+
+function _tabataSkip(){
+  if(_tab.phase === 'done') return;
+  _tabataAdvancePhase();
+  _tabataRenderUI();
+  _tabataRenderDots();
+}
+
+function _tabataTick(){
+  _tab.timeLeft--;
+  if(_tab.timeLeft <= 0){
+    _tabataAdvancePhase();
+  }
+  _tabataRenderUI();
+  _tabataRenderDots();
+}
+
+function _tabataAdvancePhase(){
+  if(_tab.phase === 'prep'){
+    _tab.phase   = 'work';
+    _tab.round   = 1;
+    _tab.exIdx   = 0;
+    _tab.timeLeft= _tab.workSec;
+    _tabataBeep('start');
+  } else if(_tab.phase === 'work'){
+    _tab.phase   = 'rest';
+    _tab.timeLeft= _tab.restSec;
+    _tabataBeep('rest');
+  } else if(_tab.phase === 'rest'){
+    if(_tab.round >= _tab.totalRounds){
+      _tab.phase = 'done';
+      _tabataStop();
+      _tabataBeep('done');
+    } else {
+      _tab.round++;
+      _tab.exIdx = (_tab.exIdx + 1) % _tab.exercises.length;
+      _tab.phase = 'work';
+      _tab.timeLeft = _tab.workSec;
+      _tabataBeep('start');
+    }
+  }
+}
+
+function _tabataRenderUI(){
+  var el     = document.getElementById('ovPortalTabata');
+  var bg     = document.getElementById('tabBgLayer');
+  var count  = document.getElementById('tabCount');
+  var label  = document.getElementById('tabPhaseLabel');
+  var round  = document.getElementById('tabRound');
+  var exName = document.getElementById('tabExName');
+  var nextUp = document.getElementById('tabNextUp');
+  var btn    = document.getElementById('tabBtnStart');
+
+  if(_tab.phase === 'prep'){
+    el.style.background  = '#09090F';
+    bg.style.background  = 'rgba(77,168,255,.12)';
+    bg.style.opacity     = '1';
+    count.style.color    = 'rgba(255,255,255,.9)';
+    label.style.color    = '#4DA8FF';
+    label.textContent    = 'PREPARATE';
+    round.textContent    = '';
+    exName.textContent   = _tab.exercises[0] || '';
+    nextUp.textContent   = '';
+    count.textContent    = _tab.timeLeft;
+    if(btn) btn.textContent = _tab.running ? 'PAUSA' : 'INICIAR';
+
+  } else if(_tab.phase === 'work'){
+    el.style.background  = '#0A0506';
+    bg.style.background  = 'rgba(232,98,26,.18)';
+    bg.style.opacity     = '1';
+    count.style.color    = '#FF7C35';
+    label.style.color    = '#FF7C35';
+    label.textContent    = 'TRABAJO';
+    round.textContent    = 'RONDA ' + _tab.round + ' / ' + _tab.totalRounds;
+    exName.textContent   = _tab.exercises[_tab.exIdx] || '';
+    var nextEx = _tab.exercises[(_tab.exIdx+1) % _tab.exercises.length];
+    nextUp.textContent   = _tab.totalRounds > _tab.round ? ('PRÓXIMO: ' + nextEx) : '';
+    count.textContent    = _tab.timeLeft;
+    if(btn) btn.textContent = 'PAUSA';
+
+  } else if(_tab.phase === 'rest'){
+    el.style.background  = '#040A06';
+    bg.style.background  = 'rgba(34,197,94,.15)';
+    bg.style.opacity     = '1';
+    count.style.color    = '#4ade80';
+    label.style.color    = '#4ade80';
+    label.textContent    = 'DESCANSO';
+    round.textContent    = 'RONDA ' + _tab.round + ' / ' + _tab.totalRounds;
+    var restNext = _tab.exercises[(_tab.exIdx+1) % _tab.exercises.length];
+    exName.textContent   = '';
+    nextUp.textContent   = _tab.round < _tab.totalRounds ? ('SIGUIENTE: ' + restNext) : 'ÚLTIMA RONDA';
+    count.textContent    = _tab.timeLeft;
+    if(btn) btn.textContent = 'PAUSA';
+
+  } else if(_tab.phase === 'done'){
+    el.style.background  = '#09090F';
+    bg.style.background  = 'rgba(168,85,247,.15)';
+    bg.style.opacity     = '1';
+    count.style.color    = '#A855F7';
+    label.style.color    = '#A855F7';
+    label.textContent    = '¡COMPLETADO!';
+    round.textContent    = _tab.totalRounds + ' rondas terminadas';
+    exName.textContent   = '';
+    nextUp.textContent   = '';
+    count.textContent    = '✓';
+    if(btn) btn.textContent = 'REPETIR';
+  }
+}
+
+function _tabataRenderDots(){
+  var el = document.getElementById('tabDots');
+  if(!el) return;
+  el.innerHTML = '';
+  for(var i=0; i<_tab.totalRounds; i++){
+    var d = document.createElement('div');
+    var done   = _tab.phase!='prep' && i < _tab.round - (_tab.phase==='rest'||_tab.phase==='done' ? 0 : 1);
+    var active = _tab.phase==='work' && i === _tab.round - 1;
+    var restAct= _tab.phase==='rest' && i === _tab.round - 1;
+    d.style.cssText = 'width:' + (active?'24px':'9px') + ';height:9px;border-radius:9px;transition:all .25s;' +
+      'background:' + (active ? '#FF7C35' : restAct ? '#4ade80' : done ? 'rgba(255,255,255,.5)' : 'rgba(255,255,255,.15)');
+    el.appendChild(d);
+  }
+}
+
+function _tabataBeep(type){
+  try{
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    function tone(freq, dur, delay, vol){
+      var o=ctx.createOscillator(), g=ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.value=freq; g.gain.value=vol||.25;
+      o.start(ctx.currentTime+(delay||0));
+      o.stop(ctx.currentTime+(delay||0)+dur);
+      g.gain.setValueAtTime(vol||.25, ctx.currentTime+(delay||0));
+      g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime+(delay||0)+dur);
+    }
+    if(type==='start'){ tone(880,.12,0,.3); tone(1046,.18,.14,.25); }
+    else if(type==='rest'){ tone(440,.25,0,.2); }
+    else if(type==='done'){ tone(659,.1,0,.3); tone(784,.1,.12,.3); tone(1046,.35,.25,.3); }
+  }catch(e){}
+}
+
 </script>
 
 <!-- CIRCUITO BIBLIOTECA MODAL -->
@@ -6841,6 +7055,47 @@ async function initAuth(){
       <button class="btn btn-sm" style="background:transparent;border-color:var(--border2);color:var(--gray)" onclick="closeImportModal()">Cancelar</button>
       <button id="importConfirmBtn" class="btn btn-sm" style="background:var(--blue);border-color:var(--blue);opacity:.4;pointer-events:none" onclick="confirmImport()">&#8659; Importar</button>
     </div>
+  </div>
+</div>
+
+
+<!-- ═══ PORTAL TABATA TIMER MODAL ═══════════════════════════════════════════ -->
+<div id="ovPortalTabata" style="display:none;position:fixed;inset:0;z-index:10005;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:background .5s ease">
+
+  <!-- Background color layer -->
+  <div id="tabBgLayer" style="position:absolute;inset:0;opacity:0;transition:opacity .5s,background .5s"></div>
+
+  <!-- Top bar -->
+  <div style="position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.3rem;z-index:2">
+    <div style="display:flex;flex-direction:column;gap:.1rem">
+      <span id="tabPhaseLabel" style="font-family:var(--font-cond);font-size:1rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)">PREPARATE</span>
+      <span id="tabRound" style="font-family:var(--font-cond);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.3)">RONDA 1 / 8</span>
+    </div>
+    <button onclick="closePortalTabata()" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);width:2.6rem;height:2.6rem;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+  </div>
+
+  <!-- Main countdown -->
+  <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 1.5rem">
+    <div id="tabCount" style="font-family:var(--font-display);font-size:clamp(110px,28vw,190px);line-height:.9;color:#fff;letter-spacing:-.01em;transition:color .4s;text-shadow:0 4px 40px rgba(0,0,0,.5)">3</div>
+    <div id="tabExName" style="font-family:var(--font-cond);font-size:clamp(1.3rem,4vw,1.9rem);font-weight:700;color:#fff;margin-top:.75rem;min-height:2.2rem;letter-spacing:.04em;text-shadow:0 2px 12px rgba(0,0,0,.5)"></div>
+    <div id="tabNextUp" style="font-family:var(--font-cond);font-size:.88rem;color:rgba(255,255,255,.35);letter-spacing:.06em;margin-top:.5rem;min-height:1.4rem"></div>
+  </div>
+
+  <!-- Progress dots (rounds) -->
+  <div id="tabDots" style="position:relative;z-index:2;display:flex;gap:.45rem;margin-top:2rem;flex-wrap:wrap;justify-content:center;max-width:300px"></div>
+
+  <!-- Controls -->
+  <div style="position:relative;z-index:2;display:flex;gap:.9rem;margin-top:2.5rem;align-items:center">
+    <button onclick="_tabataReset()" style="width:3.2rem;height:3.2rem;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:rgba(255,255,255,.6);font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center" title="Reiniciar">↺</button>
+    <button id="tabBtnStart" onclick="_tabataToggle()" style="padding:1rem 3rem;border-radius:50px;border:none;font-family:var(--font-cond);font-size:1.25rem;font-weight:700;letter-spacing:.1em;cursor:pointer;background:#fff;color:#09090F;text-transform:uppercase;box-shadow:0 6px 30px rgba(0,0,0,.4);transition:transform .1s,box-shadow .1s" onmousedown="this.style.transform='scale(.97)'" onmouseup="this.style.transform=''">INICIAR</button>
+    <button onclick="_tabataSkip()" style="width:3.2rem;height:3.2rem;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:rgba(255,255,255,.6);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center" title="Saltar fase">⏭</button>
+  </div>
+
+  <!-- Work/Rest config display -->
+  <div id="tabConfigRow" style="position:absolute;bottom:1.5rem;left:0;right:0;display:flex;justify-content:center;gap:2rem;z-index:2">
+    <div style="text-align:center"><div style="font-family:var(--font-display);font-size:1.4rem;color:#fff" id="tabCfgWork">20</div><div style="font-family:var(--font-cond);font-size:.65rem;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase">TRABAJO</div></div>
+    <div style="text-align:center"><div style="font-family:var(--font-display);font-size:1.4rem;color:#fff" id="tabCfgRest">10</div><div style="font-family:var(--font-cond);font-size:.65rem;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase">DESCANSO</div></div>
+    <div style="text-align:center"><div style="font-family:var(--font-display);font-size:1.4rem;color:#fff" id="tabCfgRounds">8</div><div style="font-family:var(--font-cond);font-size:.65rem;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase">RONDAS</div></div>
   </div>
 </div>
 
