@@ -1224,6 +1224,32 @@ select option{background:var(--surface);color:var(--text)}
       </button>
     </div>
   </div>
+
+  <!-- ═══ INFOGRAPHIC DRAWER ════════════════════════════════════ -->
+  <div id="pwInfDrawer" style="display:none;position:absolute;bottom:0;left:0;right:0;z-index:5;flex-direction:column;pointer-events:none">
+    <!-- Handle pill -->
+    <div id="pwInfHandle"
+      style="pointer-events:auto;background:rgba(12,12,24,.85);backdrop-filter:blur(10px);
+             border-top:1px solid rgba(255,255,255,.13);padding:.55rem 1.5rem .45rem;
+             display:flex;align-items:center;justify-content:center;gap:.55rem;cursor:pointer;
+             touch-action:manipulation;user-select:none;-webkit-user-select:none"
+      onclick="togglePwInfDrawer()">
+      <span style="width:36px;height:3px;border-radius:3px;background:rgba(255,255,255,.3);display:block;flex-shrink:0"></span>
+      <span style="font-family:var(--font-cond);font-size:.75rem;letter-spacing:.14em;color:rgba(255,255,255,.55);text-transform:uppercase">Ver infograf&#237;a</span>
+      <span id="pwInfArrow" style="color:rgba(255,255,255,.5);font-size:.9rem;line-height:1;transition:transform .3s">&#8679;</span>
+    </div>
+    <!-- Image panel -->
+    <div id="pwInfPanel" style="pointer-events:auto;display:none;background:rgba(8,8,20,.97);
+           max-height:68vh;overflow-y:auto;text-align:center;padding:1rem 1rem 1.5rem">
+      <button onclick="closePwInfDrawer()"
+        style="float:right;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
+               color:rgba(255,255,255,.6);width:2rem;height:2rem;border-radius:50%;font-size:1rem;
+               cursor:pointer;margin-bottom:.5rem;display:flex;align-items:center;justify-content:center">&#10005;</button>
+      <div style="clear:both"></div>
+      <img id="pwInfImg" src="" alt="Infograf&#237;a"
+        style="max-width:100%;border-radius:12px;object-fit:contain;display:block;margin:0 auto">
+    </div>
+  </div>
 </div>
 
 <style>
@@ -1435,6 +1461,10 @@ select option{background:var(--surface);color:var(--text)}
         <select id="efVideo" style="width:100%;padding:.6rem .75rem;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-family:var(--font-body);font-size:.95rem;cursor:pointer">
           <option value="">— Sin video —</option>
         </select></div>
+      <div><label>&#128247; Imagen / Infograf&#237;a (URL)</label>
+        <input type="url" id="efImgUrl" placeholder="https://... (pegar link de imagen o GIF infogr&#225;fico)"
+          style="width:100%;padding:.6rem .75rem;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-family:var(--font-body);font-size:.9rem;box-sizing:border-box">
+      </div>
       <div><label>&#128221; Descripci&#xF3;n / Consejos <span style="font-weight:400;color:var(--gray);font-size:.78rem">(editable &#x2014; se muestra al cliente en el modal de video)</span></label>
         <textarea id="efDescTxt" rows="6" placeholder="T&#xE9;cnica, cuidados, consejos de hipertrofia, tonificaci&#xF3;n..." style="width:100%;padding:.75rem;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-family:var(--font-body);font-size:.88rem;resize:vertical;box-sizing:border-box;outline:none;line-height:1.5" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border2)'"></textarea></div>
     </div>
@@ -1576,6 +1606,7 @@ function getExDescription(name){
   return builtin || '';
 }
 function getExVideo(name){return(name&&exVideos[name.trim()])||'';}
+function getExImage(name){return(name&&exVideos['__img__:'+(name.trim())])||'';}
 var VIDEOS_BASE='https://raw.githubusercontent.com/Gstnbrtl/n360-rutinas/main/Videos%20de%20ejercicios/';
 const EX_INFO = {
   'Sentadilla con barra': 'Ejercicio rey del tren inferior. Trabaja cuádriceps, glúteos, isquiotibiales y core como unidad. Colocá la barra sobre los trapecios (no en el cuello), pies a la anchura de hombros con puntas ligeramente hacia afuera. Bajá controlando que las rodillas sigan la dirección de los pies, sin colapsar hacia adentro. La espalda baja debe mantenerse neutra durante todo el movimiento. Bajá hasta paralelo o más, según movilidad de cadera y tobillos.',
@@ -3624,6 +3655,8 @@ async function editExercise(muscle, idx, isCustom, isWarmup){
   document.getElementById('efDesc').value=ex.d||'';
   document.getElementById('efObs').value=ex.o||'';
   populateGifSelect(getExVideo(ex.e||''));
+  var _exImgEl=document.getElementById('efImgUrl');
+  if(_exImgEl) _exImgEl.value=exVideos['__img__:'+(ex.e||'')]||'';
   document.getElementById('efDescTxt').value = getExDescription(ex.e||'');
   document.getElementById('efSaveBtn').textContent='✓ Actualizar';
   openModal('ovExForm');
@@ -3637,6 +3670,8 @@ function saveExercise(){
   if(!muscle){showToast('⚠ Seleccioná el grupo muscular');return;}
 
   const vUrl=(document.getElementById('efVideo').value||'').trim();
+  var _imgUrlEl=document.getElementById('efImgUrl');
+  const imgUrl=(_imgUrlEl?(_imgUrlEl.value||''):'').trim();
 
   if(editingExKey&&editingExKey.isWarmup){
     // ── Editar calentamiento ──
@@ -3648,6 +3683,7 @@ function saveExercise(){
       d:document.getElementById('efDesc').value.trim()
     };
     if(vUrl) exVideos[nombre]=vUrl; else delete exVideos[nombre];
+    var _imgK='__img__:'+nombre; if(imgUrl) exVideos[_imgK]=imgUrl; else delete exVideos[_imgK];
     saveExVideos();
     const _desc=(document.getElementById('efDescTxt').value||'').trim();
     if(_desc) exDescriptions[nombre]=_desc; else delete exDescriptions[nombre];
@@ -3672,6 +3708,7 @@ function saveExercise(){
       };
     }
     if(vUrl) exVideos[nombre]=vUrl; else delete exVideos[nombre];
+    var _imgK='__img__:'+nombre; if(imgUrl) exVideos[_imgK]=imgUrl; else delete exVideos[_imgK];
     saveExVideos();
     const _desc=(document.getElementById('efDescTxt').value||'').trim();
     if(_desc) exDescriptions[nombre]=_desc; else delete exDescriptions[nombre];
@@ -3693,6 +3730,7 @@ function saveExercise(){
       };
     }
     if(vUrl) exVideos[nombre]=vUrl; else delete exVideos[nombre];
+    var _imgK='__img__:'+nombre; if(imgUrl) exVideos[_imgK]=imgUrl; else delete exVideos[_imgK];
     saveExVideos();
     const _desc=(document.getElementById('efDescTxt').value||'').trim();
     if(_desc) exDescriptions[nombre]=_desc; else delete exDescriptions[nombre];
@@ -3717,6 +3755,7 @@ function saveExercise(){
       custom:true
     });
     if(vUrl) exVideos[nombre]=vUrl; else delete exVideos[nombre];
+    var _imgK='__img__:'+nombre; if(imgUrl) exVideos[_imgK]=imgUrl; else delete exVideos[_imgK];
     saveExVideos();
     const _desc=(document.getElementById('efDescTxt').value||'').trim();
     if(_desc) exDescriptions[nombre]=_desc; else delete exDescriptions[nombre];
@@ -6068,6 +6107,8 @@ function _renderPortalWorkout(){
   var nextBtn = document.getElementById('pwBtnNext');
   nextBtn.textContent = isLast ? 'Finalizar ✓' : 'Siguiente →';
   nextBtn.style.background = isLast ? 'var(--green)' : item.accent;
+  // Infographic drawer
+  updatePwInfDrawer();
 }
 
 function portalWorkoutNav(dir){
@@ -6077,7 +6118,43 @@ function portalWorkoutNav(dir){
   document.getElementById('ovPortalWorkout').scrollTop = 0;
 }
 
+
+var _pwInfOpen = false;
+
+function togglePwInfDrawer(){
+  _pwInfOpen = !_pwInfOpen;
+  var panel = document.getElementById('pwInfPanel');
+  var arrow = document.getElementById('pwInfArrow');
+  if(panel) panel.style.display = _pwInfOpen ? 'block' : 'none';
+  if(arrow) arrow.style.transform = _pwInfOpen ? 'rotate(180deg)' : '';
+}
+
+function closePwInfDrawer(){
+  _pwInfOpen = false;
+  var panel = document.getElementById('pwInfPanel');
+  var arrow = document.getElementById('pwInfArrow');
+  if(panel) panel.style.display = 'none';
+  if(arrow) arrow.style.transform = '';
+}
+
+function updatePwInfDrawer(){
+  var item = _pwList && _pwList[_pwIdx];
+  var imgUrl = item ? getExImage(item.name) : '';
+  var drawer = document.getElementById('pwInfDrawer');
+  if(!drawer) return;
+  if(imgUrl){
+    drawer.style.display = 'flex';
+    var img = document.getElementById('pwInfImg');
+    if(img) img.src = imgUrl;
+    closePwInfDrawer(); // always collapse when switching exercises
+  } else {
+    drawer.style.display = 'none';
+    closePwInfDrawer();
+  }
+}
+
 function closePortalWorkout(){
+  closePwInfDrawer();
   document.getElementById('ovPortalWorkout').style.display = 'none';
 }
 function openPwVideo(){
