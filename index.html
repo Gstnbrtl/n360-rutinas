@@ -1461,6 +1461,7 @@ select option{background:var(--surface);color:var(--text)}
 </div>
 
 <div class="toast" id="toast"></div>
+<div id="portalSyncPill"></div>
 
 <script>
 // ════════════════════════════════════
@@ -5418,11 +5419,20 @@ async function loadPortalPesosFromCloud(){
   });
   localStorage.setItem(_pesosKey(), JSON.stringify(_portalPesos));
 }
+
+function showPortalSync(ok){
+  const pill = document.getElementById('portalSyncPill');
+  if(!pill) return;
+  pill.textContent = ok ? '☁ Guardado' : '⚠ Sin conexión';
+  pill.className = ok ? 'ok show' : 'err show';
+  clearTimeout(pill._t);
+  pill._t = setTimeout(()=>{ pill.classList.remove('show'); }, ok ? 2200 : 3500);
+}
 async function savePortalLogToCloud(nombre){
   if(!_portalClientId || !_portalRoutineId) return;
   const key = nombre.trim().toLowerCase();
   const entry = _portalPesos[key] || {};
-  await supa.from('client_logs').upsert({
+  const {error} = await supa.from('client_logs').upsert({
     client_id:     _portalClientId,
     routine_id:    _portalRoutineId,
     exercise_name: nombre.trim(),
@@ -5430,6 +5440,7 @@ async function savePortalLogToCloud(nombre){
     anotacion:     entry.anotacion || '',
     updated_at:    new Date().toISOString()
   }, { onConflict: 'client_id,routine_id,exercise_name' });
+  showPortalSync(!error);
 }
 function savePortalPeso(nombre, valor){
   const key = nombre.trim().toLowerCase();
@@ -6687,7 +6698,28 @@ async function initAuth(){
   </div>
   <style>
     @keyframes plsDot { 0%,80%,100%{transform:scale(.6);opacity:.3} 40%{transform:scale(1);opacity:1} }
-  </style>
+  
+/* ── PORTAL SYNC INDICATOR ──────────────────────────────── */
+#portalSyncPill{
+  position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%) translateY(20px);
+  display:flex;align-items:center;gap:.45rem;
+  padding:.42rem 1rem;border-radius:50px;
+  font-family:var(--font-cond);font-size:.8rem;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:9999;
+  background:rgba(30,31,42,.92);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.12);color:var(--text);
+}
+#portalSyncPill.ok{
+  border-color:rgba(34,197,94,.4);color:#4ade80;
+  background:rgba(20,40,25,.92);
+}
+#portalSyncPill.err{
+  border-color:rgba(255,59,48,.4);color:#ff6b6b;
+  background:rgba(40,15,15,.92);
+}
+#portalSyncPill.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
 </div>
 <!-- BLOG ADMIN MODAL                                                -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
