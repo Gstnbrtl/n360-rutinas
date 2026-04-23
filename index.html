@@ -6259,7 +6259,7 @@ function portalRenderDay(idx){
       if(bl.type==='amrap' && bl.cfg && bl.cfg.time){
         html += '<span style="font-size:.78rem;color:var(--gray);margin-left:.2rem">· ' + bl.cfg.time + ' min AMRAP</span>';
         var _acfg = JSON.stringify(bl.cfg||{}).replace(/'/g,"\'");
-        var _aex  = JSON.stringify((bl.exs||[]).map(function(e){return e.e||'';}).filter(Boolean)).replace(/'/g,"\'");
+        var _aex  = JSON.stringify((bl.exs||[]).filter(function(e){return e.e;}).map(function(e){return {e:e.e,r:e.r||''};})).replace(/'/g,"\'");
         html += '<button onclick=\'openPortalAmrap('+_acfg+','+_aex+')\'  style=\"margin-left:auto;padding:.28rem .75rem;background:rgba(232,160,32,.15);color:#E8A020;border:1px solid rgba(232,160,32,.35);border-radius:20px;font-family:var(--font-cond);font-size:.78rem;font-weight:700;letter-spacing:.06em;cursor:pointer;white-space:nowrap\">⏱ TIMER</button>';
       }
       if(bl.type==='tabata' && bl.cfg) html += '<span style="font-size:.78rem;color:var(--gray);margin-left:.2rem">· ' + (bl.cfg.rounds||8) + ' rondas ' + (bl.cfg.work||20) + '/' + (bl.cfg.rest||10) + 's</span>';
@@ -6939,9 +6939,13 @@ function openPortalAmrap(cfg, exNames){
 
   // Build exercise list html
   var listHtml = _amrap.exercises.map(function(e,i){
+    var nombre = typeof e === 'object' ? (e.e||'') : e;
+    var reps   = typeof e === 'object' ? (e.r||'') : '';
     return '<div style="padding:.35rem 0;border-bottom:1px solid rgba(255,255,255,.07);font-family:var(--font-cond);font-size:1.05rem;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:.6rem">' +
            '<span style="font-family:var(--font-display);font-size:.95rem;color:#E8A020">' + (i+1) + '</span>' +
-           e + '</div>';
+           '<span style="flex:1">' + nombre + '</span>' +
+           (reps ? '<span style="font-weight:700;color:#E8A020;white-space:nowrap">' + reps + '</span>' : '') +
+           '</div>';
   }).join('');
   document.getElementById('tabExName').innerHTML = '<div style="width:100%;max-height:40vh;overflow-y:auto;text-align:left">' + listHtml + '</div>';
   document.getElementById('tabNextUp').textContent = '';
