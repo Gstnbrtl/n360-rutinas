@@ -1199,13 +1199,13 @@ select option{background:var(--surface);color:var(--text)}
     <span id="pwBlockLabel" style="font-family:var(--font-cond);font-size:.85rem;text-transform:uppercase;letter-spacing:.18em;margin-bottom:.6rem;display:block">CALENTAMIENTO</span>
 
     <!-- Exercise name -->
-    <div id="pwName" style="font-family:var(--font-display);font-size:3rem;color:#fff;line-height:1.05;margin-bottom:2rem;text-shadow:0 2px 12px rgba(0,0,0,.8)">Ejercicio</div>
+    <div id="pwName" style="font-family:var(--font-display);font-size:3rem;color:#fff;line-height:1.05;margin-bottom:2rem;text-shadow:0 2px 12px rgba(0,0,0,.8);padding-right:3.2rem">Ejercicio</div>
 
     <!-- Stats -->
     <div id="pwStats" style="display:flex;gap:2.5rem;margin-bottom:2rem;flex-wrap:wrap"></div>
 
     <!-- Notes / Description -->
-    <div id="pwNotes" style="background:rgba(255,255,255,.09);border-radius:12px;padding:1rem 1.2rem;margin-bottom:2rem;font-size:.95rem;font-family:var(--font-body);line-height:1.6;display:none"></div>
+    <div id="pwNotes" style="background:rgba(255,255,255,.09);border-radius:12px;padding:1rem 1.2rem 1rem 1.2rem;margin-bottom:2rem;font-size:.95rem;font-family:var(--font-body);line-height:1.6;display:none"></div>
 
     <!-- Video button -->
     <button id="pwVideoBtn" onclick="openPwVideo()" style="display:none;width:100%;margin-bottom:.75rem;padding:.75rem;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.25);color:#fff;border-radius:12px;font-family:var(--font-cond);font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:.06em;text-align:center">
@@ -1230,15 +1230,16 @@ select option{background:var(--surface);color:var(--text)}
   <div id="pwInfTab" onclick="togglePwInfDrawer()"
     style="display:none;position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:6;
            cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none">
-    <div style="background:rgba(255,255,255,.13);backdrop-filter:blur(8px);
-                border:1px solid rgba(255,255,255,.18);border-right:none;
-                border-radius:10px 0 0 10px;padding:.7rem .55rem;
-                display:flex;flex-direction:column;align-items:center;gap:.35rem">
-      <span style="font-size:1.1rem">&#128247;</span>
-      <span style="font-family:var(--font-cond);font-size:.6rem;letter-spacing:.1em;
-                   color:rgba(255,255,255,.6);text-transform:uppercase;writing-mode:vertical-rl;
-                   transform:rotate(180deg)">Info</span>
-      <span id="pwInfArrow" style="color:rgba(255,255,255,.55);font-size:.85rem;transition:transform .3s">&#10094;</span>
+    <div style="background:rgba(232,98,26,.22);backdrop-filter:blur(10px);
+                border:1.5px solid rgba(232,98,26,.5);border-right:none;
+                border-radius:14px 0 0 14px;padding:1.1rem .65rem;
+                display:flex;flex-direction:column;align-items:center;gap:.55rem;
+                box-shadow:-3px 0 18px rgba(232,98,26,.2)">
+      <span style="font-size:1.3rem">&#128247;</span>
+      <span style="font-family:var(--font-cond);font-size:.65rem;letter-spacing:.12em;
+                   color:rgba(255,255,255,.75);text-transform:uppercase;writing-mode:vertical-rl;
+                   transform:rotate(180deg);font-weight:700">Info</span>
+      <span id="pwInfArrow" style="color:rgba(255,200,150,.8);font-size:.95rem;transition:transform .3s">&#10094;</span>
     </div>
   </div>
   <!-- Slide panel (comes from right) -->
