@@ -1199,20 +1199,36 @@ select option{background:var(--surface);color:var(--text)}
     <div style="position:relative">
       <span id="pwBlockLabel" style="font-family:var(--font-cond);font-size:.85rem;text-transform:uppercase;letter-spacing:.18em;margin-bottom:.6rem;display:block">CALENTAMIENTO</span>
       <div id="pwName" style="font-family:var(--font-display);font-size:3rem;color:#fff;line-height:1.05;margin-bottom:2rem;text-shadow:0 2px 12px rgba(0,0,0,.8);padding-right:4rem">Ejercicio</div>
-      <!-- Info tab anchored to title -->
-      <div id="pwInfTabInner" onclick="togglePwInfDrawer()"
-        style="display:none;position:absolute;right:-1.25rem;top:0;cursor:pointer;
-               touch-action:manipulation;user-select:none;-webkit-user-select:none">
-        <div style="background:rgba(232,98,26,.25);backdrop-filter:blur(10px);
-                    border:1.5px solid rgba(232,98,26,.6);border-right:none;
-                    border-radius:14px 0 0 14px;padding:1rem .65rem;
-                    display:flex;flex-direction:column;align-items:center;gap:.5rem;
-                    box-shadow:-3px 0 18px rgba(232,98,26,.25)">
-          <span style="font-size:1.25rem">&#128247;</span>
-          <span style="font-family:var(--font-cond);font-size:.65rem;letter-spacing:.12em;
-                       color:rgba(255,255,255,.8);text-transform:uppercase;writing-mode:vertical-rl;
-                       transform:rotate(180deg);font-weight:700">Info</span>
-          <span id="pwInfArrow" style="color:rgba(255,200,150,.9);font-size:.9rem;transition:transform .3s">&#10094;</span>
+      <!-- Side tabs: Info + Video stacked -->
+      <div style="position:absolute;right:-1.25rem;top:0;display:flex;flex-direction:column;gap:.35rem">
+        <!-- Info tab -->
+        <div id="pwInfTabInner" onclick="togglePwInfDrawer()"
+          style="display:none;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none">
+          <div style="background:rgba(232,98,26,.25);backdrop-filter:blur(10px);
+                      border:1.5px solid rgba(232,98,26,.6);border-right:none;
+                      border-radius:14px 0 0 14px;padding:1rem .65rem;
+                      display:flex;flex-direction:column;align-items:center;gap:.5rem;
+                      box-shadow:-3px 0 18px rgba(232,98,26,.25)">
+            <span style="font-size:1.25rem">&#128247;</span>
+            <span style="font-family:var(--font-cond);font-size:.65rem;letter-spacing:.12em;
+                         color:rgba(255,255,255,.8);text-transform:uppercase;writing-mode:vertical-rl;
+                         transform:rotate(180deg);font-weight:700">Info</span>
+            <span id="pwInfArrow" style="color:rgba(255,200,150,.9);font-size:.9rem;transition:transform .3s">&#10094;</span>
+          </div>
+        </div>
+        <!-- Video tab -->
+        <div id="pwVidTabInner" onclick="openPwVideo()"
+          style="display:none;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none">
+          <div style="background:rgba(232,98,26,.25);backdrop-filter:blur(10px);
+                      border:1.5px solid rgba(232,98,26,.6);border-right:none;
+                      border-radius:14px 0 0 14px;padding:1rem .65rem;
+                      display:flex;flex-direction:column;align-items:center;gap:.5rem;
+                      box-shadow:-3px 0 18px rgba(232,98,26,.25)">
+            <span style="font-size:1.25rem">&#9654;</span>
+            <span style="font-family:var(--font-cond);font-size:.65rem;letter-spacing:.12em;
+                         color:rgba(255,255,255,.8);text-transform:uppercase;writing-mode:vertical-rl;
+                         transform:rotate(180deg);font-weight:700">Video</span>
+          </div>
         </div>
       </div>
     </div>
@@ -6116,7 +6132,7 @@ function _renderPortalWorkout(){
   notesEl.innerHTML = notesHtml;
   notesEl.style.display = notesHtml ? '' : 'none';
   // Video button
-  var pwVidBtn = document.getElementById('pwVideoBtn');
+  var pwVidBtn = null; // replaced by pwVidTabInner side tab
   if(pwVidBtn) pwVidBtn.style.display = getExVideo(item.name) ? '' : 'none';
   // Prev button
   document.getElementById('pwBtnPrev').style.opacity = _pwIdx===0 ? '.3' : '1';
@@ -6169,19 +6185,27 @@ function closePwInfDrawer(){
 
 function updatePwInfDrawer(){
   var item = _pwList && _pwList[_pwIdx];
+  // Infographic tab
   var rawUrl = item ? getExImage(item.name) : '';
   var tab = document.getElementById('pwInfTabInner');
-  if(!tab) return;
-  if(rawUrl){
-    tab.style.display = 'block';
-    var img = document.getElementById('pwInfImg');
-    if(img) img.src = _resolveImgUrl(rawUrl);
-    var nameEl = document.getElementById('pwInfExName');
-    if(nameEl) nameEl.textContent = item.name;
-    closePwInfDrawer(); // collapse when switching exercises
-  } else {
-    tab.style.display = 'none';
-    closePwInfDrawer();
+  if(tab){
+    if(rawUrl){
+      tab.style.display = 'block';
+      var img = document.getElementById('pwInfImg');
+      if(img) img.src = _resolveImgUrl(rawUrl);
+      var nameEl = document.getElementById('pwInfExName');
+      if(nameEl) nameEl.textContent = item ? item.name : '';
+      closePwInfDrawer();
+    } else {
+      tab.style.display = 'none';
+      closePwInfDrawer();
+    }
+  }
+  // Video tab
+  var vidTab = document.getElementById('pwVidTabInner');
+  if(vidTab){
+    var hasVideo = item && getExVideo(item.name);
+    vidTab.style.display = hasVideo ? 'block' : 'none';
   }
 }
 
