@@ -1,0 +1,64 @@
+{
+  "alumno": "Sabina Cerutti",
+  "objetivo": "Iniciación – fortalecimiento general, movilidad y equilibrio. 1 día semanal de sala + 2 días de Pilates.",
+  "days": [
+    {
+      "title": "Día 1 – Full Body Iniciación",
+      "warmup": [
+        {"e": "Bicicleta", "s": "1", "r": "5 min", "d": "—"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps / Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Sentarse y pararse del banco", "type": "normal", "s": "3", "r": "8", "d": "60", "i": "Apoyar talones, pararse firme y controlado"},
+            {"e": "Step up bajo sin peso", "type": "normal", "s": "2", "r": "8 c/pierna", "d": "60", "i": "Subir controlado, bajar lento"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Sillon isquios", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "Movimiento lento, sin rebote"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Remo con banda", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "Llevar codos atrás, pecho abierto"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Pecho",
+          "cfg": {},
+          "exs": [
+            {"e": "Press de pecho en pared", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "Cuerpo recto, abdomen firme"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Full Body / Funcional",
+          "cfg": {},
+          "exs": [
+            {"e": "Caminata con mancuernas", "type": "normal", "s": "3", "r": "20 metros", "d": "45", "i": "Espalda alta, pasos firmes"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Bicho muerto", "type": "normal", "s": "2", "r": "8 c/lado", "d": "30", "i": "No mover la cintura"},
+            {"e": "Equilibrio monopodal", "type": "normal", "s": "2", "r": "20 seg c/lado", "d": "30", "i": "Tener un apoyo cerca"}
+          ]
+        }
+      ]
+    }
+  ]
+}
