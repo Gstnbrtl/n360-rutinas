@@ -1,0 +1,159 @@
+{
+  "alumno": "Fabiana Pereyra",
+  "objetivo": "Hipertrofia",
+  "days": [
+    {
+      "title": "Día 1 – Piernas: Cuádriceps, Aductores, Gemelos",
+      "warmup": [
+        {"e": "Oblicuos de pie con disco", "s": "2", "r": "10", "d": "60"},
+        {"e": "Plancha frontal", "s": "2", "r": "12", "d": "60"},
+        {"e": "Bicho muerto con disco", "s": "2", "r": "20", "d": "60"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Thrusters cortos", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""},
+            {"e": "Desplante TRX", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""},
+            {"e": "Prensa", "type": "normal", "s": "3", "r": "10", "d": "150", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Aductores y Gemelos",
+          "cfg": {},
+          "exs": [
+            {"e": "Cangrejo", "type": "normal", "s": "3", "r": "12", "d": "60", "i": ""},
+            {"e": "Elevaciones de gemelos", "type": "normal", "s": "3", "r": "10", "d": "60", "i": "PL"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Hip thrust corebag", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Torso: Pecho, Hombros, Bíceps, Core",
+      "warmup": [
+        {"e": "Oblicuos de pie con disco", "s": "2", "r": "10", "d": "60"},
+        {"e": "Plancha frontal", "s": "2", "r": "12", "d": "60"},
+        {"e": "Bicho muerto con disco", "s": "2", "r": "20", "d": "60"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Pecho",
+          "cfg": {},
+          "exs": [
+            {"e": "Press con mancuernas en puente de glúteo", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""},
+            {"e": "Apertura con banda", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "Press militar con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""},
+            {"e": "Elevaciones frontales alternadas", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""},
+            {"e": "Pull face", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Bíceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Curl de bíceps barra Z", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 3 – Piernas: Isquiotibiales y Glúteos",
+      "warmup": [
+        {"e": "Oblicuos de pie con disco", "s": "2", "r": "10", "d": "60"},
+        {"e": "Plancha frontal", "s": "2", "r": "12", "d": "60"},
+        {"e": "Bicho muerto con disco", "s": "2", "r": "20", "d": "60"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Patada al cielo unilateral", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Sillón de isquios", "type": "normal", "s": "4", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Funcional",
+          "cfg": {},
+          "exs": [
+            {"e": "Sentadilla TRX", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""},
+            {"e": "Granjero en el lugar", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "Rodilla arriba"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core",
+          "cfg": {},
+          "exs": [
+            {"e": "Abdominales bicicleta con disco", "type": "normal", "s": "3", "r": "20", "d": "120", "i": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 4 – Torso: Espalda, Tríceps, Core",
+      "warmup": [
+        {"e": "Oblicuos de pie con disco", "s": "2", "r": "10", "d": "60"},
+        {"e": "Plancha frontal", "s": "2", "r": "12", "d": "60"},
+        {"e": "Bicho muerto con disco", "s": "2", "r": "20", "d": "60"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Remo con polea", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""},
+            {"e": "Jalón cerrado", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Tríceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Tríceps en polea con soga", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "PL"},
+            {"e": "Press francés unilateral", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha rodilla al pecho", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        }
+      ]
+    }
+  ]
+}
