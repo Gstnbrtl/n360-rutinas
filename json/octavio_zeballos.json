@@ -1,0 +1,36 @@
+{
+  "alumno": "Octavio Zeballos",
+  "objetivo": "Hipertrofia",
+  "days": [
+    {
+      "title": "Día 1 – Cuádriceps y Gemelos",
+      "warmup": [
+        {"e": "Bicicleta", "s": "1", "r": "10 min", "d": "0"},
+        {"e": "Movilidad articular", "s": "1", "r": "10 min", "d": "0"},
+        {"e": "Abdominales", "s": "1", "r": "10 min", "d": "0"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Sentadilla con barra", "type": "normal", "s": "4", "r": "10", "d": "120", "i": "70 kg"},
+            {"e": "Estocada con mancuernas", "type": "normal", "s": "4", "r": "10", "d": "120", "i": "15 kg"},
+            {"e": "Prensa", "type": "normal", "s": "4", "r": "10", "d": "120", "i": "150 kg"},
+            {"e": "Máquina de cuádriceps", "type": "normal", "s": "4", "r": "10", "d": "120", "i": "60 kg"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Gemelos",
+          "cfg": {},
+          "exs": [
+            {"e": "Gemelos en prensa", "type": "normal", "s": "4", "r": "10", "d": "90", "i": "250 kg"},
+            {"e": "Elevación de talones a una pierna", "type": "normal", "s": "4", "r": "12", "d": "90", "i": "Disco 10 kg – unilateral"}
+          ]
+        }
+      ]
+    }
+  ]
+}
