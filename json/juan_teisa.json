@@ -1,0 +1,159 @@
+{
+  "alumno": "Juan Teisa",
+  "objetivo": "Rendimiento deportivo - Fútbol",
+  "days": [
+    {
+      "title": "Día 1 – Tren Inferior A: Cuádriceps + Pliometría",
+      "warmup": [
+        {"e": "Plancha frontal", "s": "2", "r": "20 seg", "d": "30"},
+        {"e": "Bicho muerto", "s": "2", "r": "8", "d": "30"},
+        {"e": "Puente de glúteos", "s": "2", "r": "12", "d": "30"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Sentadilla aérea", "type": "normal", "s": "3", "r": "12", "d": "45", "i": "Bajar lento, subir rápido"},
+            {"e": "Desplante alternado", "type": "normal", "s": "3", "r": "8", "d": "45", "i": "c/lado, rodilla casi toca el piso"},
+            {"e": "Step up al cajón", "type": "normal", "s": "3", "r": "8", "d": "45", "i": "c/lado, empuje con talón"}
+          ]
+        },
+        {
+          "type": "varios",
+          "muscle": "Pliometría",
+          "cfg": {},
+          "exs": [
+            {"e": "Salto vertical con dos pies", "type": "normal", "s": "3", "r": "5", "d": "60", "i": "Aterrizaje suave, rodillas semiflexionadas"},
+            {"e": "Saltos laterales reactivos", "type": "normal", "s": "3", "r": "6", "d": "60", "i": "c/lado, rápido y liviano"}
+          ]
+        },
+        {
+          "type": "varios",
+          "muscle": "Coordinación",
+          "cfg": {},
+          "exs": [
+            {"e": "Skipping + carrera", "type": "normal", "s": "3", "r": "20m c/u", "d": "45", "i": "Rodillas bien altas en el skipping"},
+            {"e": "Escalera de coordinación", "type": "normal", "s": "3", "r": "2 pasadas", "d": "45", "i": "Paso simple primero, luego lateral"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Tren Superior A: Empuje + Tracción",
+      "warmup": [
+        {"e": "Plancha frontal toque de hombro", "s": "2", "r": "8", "d": "30"},
+        {"e": "Perro de caza", "s": "2", "r": "8", "d": "30"},
+        {"e": "Elevación de piernas", "s": "2", "r": "10", "d": "30"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Pecho y Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "Flexiones de rodillas", "type": "normal", "s": "3", "r": "8", "d": "45", "i": "Cuerpo recto, codos a 45°"},
+            {"e": "Press con mancuernas en banco", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "Muy liviano, aprender el movimiento"},
+            {"e": "Press militar con mancuernas", "type": "normal", "s": "2", "r": "10", "d": "45", "i": "Sentado, espalda apoyada"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Remo con mancuerna en banco", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "c/lado, codo bien arriba"},
+            {"e": "Jalón en polea", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "Peso muy suave, barra al pecho"}
+          ]
+        },
+        {
+          "type": "varios",
+          "muscle": "Potencia y Dinámico",
+          "cfg": {},
+          "exs": [
+            {"e": "Lanzamiento de balón medicinal", "type": "normal", "s": "3", "r": "8", "d": "45", "i": "Pelota liviana, desde el pecho"},
+            {"e": "Pase de pecho contra pared", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "Rápido y controlado"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 3 – Tren Inferior B: Isquios + Glúteos + Velocidad",
+      "warmup": [
+        {"e": "Plancha lateral con rotación", "s": "2", "r": "6", "d": "30"},
+        {"e": "Puente de glúteos", "s": "2", "r": "12", "d": "30"},
+        {"e": "Rodilla al pecho", "s": "2", "r": "8", "d": "30"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales y Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Peso muerto rumano con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "Muy liviano, espalda recta"},
+            {"e": "Hip thrust con corebag", "type": "normal", "s": "3", "r": "12", "d": "45", "i": "Contracción arriba 1 segundo"},
+            {"e": "Sillón de isquios", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "Peso suave, bajar lento"}
+          ]
+        },
+        {
+          "type": "varios",
+          "muscle": "Velocidad y Agilidad",
+          "cfg": {},
+          "exs": [
+            {"e": "Sprint 10m desde quieto", "type": "normal", "s": "4", "r": "10m", "d": "60", "i": "Salida explosiva, recuperación completa"},
+            {"e": "Sprint + cambio de dirección", "type": "normal", "s": "3", "r": "10+10m", "d": "60", "i": "Cono en el medio, cambio rápido"}
+          ]
+        },
+        {
+          "type": "varios",
+          "muscle": "Técnica Fútbol",
+          "cfg": {},
+          "exs": [
+            {"e": "Conducción + sprint final", "type": "normal", "s": "3", "r": "20m", "d": "45", "i": "Control del balón, rematar al final"},
+            {"e": "Salidas desde posiciones", "type": "normal", "s": "3", "r": "10m", "d": "45", "i": "De pie, sentado y boca abajo"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 4 – Tren Superior B: Hombros + Core + Potencia",
+      "warmup": [
+        {"e": "Bicho muerto", "s": "2", "r": "8", "d": "30"},
+        {"e": "Perro de caza", "s": "2", "r": "8", "d": "30"},
+        {"e": "Elevación de piernas", "s": "2", "r": "10", "d": "30"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Hombros y Tracción",
+          "cfg": {},
+          "exs": [
+            {"e": "Elevaciones laterales con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "Muy liviano, codos levemente flexionados"},
+            {"e": "Pull face con banda", "type": "normal", "s": "3", "r": "12", "d": "45", "i": "Banda suave, codos a la altura de hombros"},
+            {"e": "Remo en polea baja", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "Peso suave, escápulas juntas al final"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core",
+          "cfg": {},
+          "exs": [
+            {"e": "Abdominales bicicleta", "type": "normal", "s": "3", "r": "15", "d": "30", "i": "Codo al lado opuesto, sin tirar del cuello"},
+            {"e": "Twist ruso con pelota", "type": "normal", "s": "3", "r": "12", "d": "30", "i": "Pelota liviana, pies apoyados"}
+          ]
+        },
+        {
+          "type": "varios",
+          "muscle": "Potencia y Coordinación",
+          "cfg": {},
+          "exs": [
+            {"e": "Box jump al cajón bajo", "type": "normal", "s": "3", "r": "5", "d": "60", "i": "Cajón bajo, aterrizaje suave con ambos pies"},
+            {"e": "Salto con soga", "type": "normal", "s": "3", "r": "30 seg", "d": "45", "i": "Ritmo constante, pies juntos"},
+            {"e": "A-Skip", "type": "normal", "s": "3", "r": "20m", "d": "45", "i": "Rodilla bien arriba, técnica de carrera"}
+          ]
+        }
+      ]
+    }
+  ]
+}
