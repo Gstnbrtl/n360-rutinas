@@ -1361,7 +1361,10 @@ select option{background:var(--surface);color:var(--text)}
     </div>
     <div class="card-body" style="padding:.75rem 1.1rem 0">
       <div class="form-sec-title">Portal del cliente</div>
-      <div id="ecPortalStatus" style="font-size:.85rem;margin-bottom:.6rem;min-height:1.4rem;color:var(--gray)">Sin cuenta de portal</div>
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.6rem;min-height:1.4rem">
+        <div id="ecPortalStatus" style="font-size:.85rem;color:var(--gray)">Sin cuenta de portal</div>
+        <button id="ecPortalDeactivateBtn" onclick="deactivatePortal()" style="display:none;padding:.2rem .6rem;font-size:.72rem;background:rgba(255,59,48,.12);color:var(--red);border:1px solid rgba(255,59,48,.3);border-radius:8px;cursor:pointer;font-family:var(--font-cond);font-weight:700;letter-spacing:.04em">Desactivar</button>
+      </div>
       <div id="ecPortalCreateSection" style="display:flex;flex-direction:column;gap:.6rem">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
           <div>
@@ -4354,12 +4357,15 @@ function openEditClient(){
   const c2 = clients[cid]||{};
   const statusEl = document.getElementById('ecPortalStatus');
   const createSec = document.getElementById('ecPortalCreateSection');
+  const deactivateBtn = document.getElementById('ecPortalDeactivateBtn');
   if(c2.auth_user_id){
     statusEl.innerHTML = '<span style="color:var(--green)">✓ Portal activo — '+c2.portal_email+'</span>';
     createSec.style.display = 'none';
+    deactivateBtn.style.display = '';
   } else {
     statusEl.textContent = 'Sin cuenta de portal';
     createSec.style.display = 'flex';
+    deactivateBtn.style.display = 'none';
     document.getElementById('ecPortalEmail').value = '';
     document.getElementById('ecPortalPass').value = '';
   }
@@ -5487,6 +5493,24 @@ async function createClientAccount(){
   document.getElementById('ecPortalStatus').innerHTML = '<span style="color:var(--green)">✓ Portal activo — '+email+'</span>';
   document.getElementById('ecPortalCreateSection').style.display = 'none';
   showToast('✓ Cuenta de portal creada');
+}
+
+async function deactivatePortal(){
+  const cid = selectedClientId;
+  if(!cid || !clients[cid]) return;
+  const name = clients[cid].name;
+  requireAdminPass('Desactivar portal de ' + name, async function(){
+    const {error} = await supa.from('clients').update({auth_user_id:null, portal_email:null}).eq('id', cid);
+    if(error){ showToast('⚠ Error: '+error.message); return; }
+    clients[cid].auth_user_id = null;
+    clients[cid].portal_email = null;
+    document.getElementById('ecPortalStatus').textContent = 'Sin cuenta de portal';
+    document.getElementById('ecPortalDeactivateBtn').style.display = 'none';
+    document.getElementById('ecPortalCreateSection').style.display = 'flex';
+    document.getElementById('ecPortalEmail').value = '';
+    document.getElementById('ecPortalPass').value = '';
+    showToast('✓ Portal desactivado — podés crear uno nuevo');
+  });
 }
 
 var _portalClientId = null;
