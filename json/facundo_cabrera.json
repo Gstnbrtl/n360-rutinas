@@ -3,41 +3,41 @@
   "objetivo": "Rendimiento deportivo - Fútbol profesional",
   "days": [
     {
-      "title": "Día 1 – Post Partido",
+      "title": "Día 1 – Post Partido: Tren Superior",
       "warmup": [
         {"e": "Movilidad articular general", "s": "1", "r": "5 min", "d": "—"},
-        {"e": "Estiramiento dinámico miembros inferiores", "s": "1", "r": "5 min", "d": "—"},
-        {"e": "Activación glúteo con banda", "s": "2", "r": "12", "d": "30"}
+        {"e": "Estiramiento dinámico miembros superiores", "s": "1", "r": "5 min", "d": "—"},
+        {"e": "Activación manguito rotador con banda", "s": "2", "r": "15", "d": "30"}
       ],
       "blocks": [
         {
           "type": "normal",
-          "muscle": "Fuerza Regenerativa Inferior",
+          "muscle": "Empuje",
           "cfg": {},
           "exs": [
-            {"e": "Sentadilla con barra", "type": "normal", "s": "4", "r": "8", "d": "120", "i": "60–65% 1RM, técnica"},
-            {"e": "Peso muerto rumano con barra", "type": "normal", "s": "4", "r": "8", "d": "120", "i": "60% 1RM, espalda neutra"},
-            {"e": "Prensa unilateral", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "c/lado, empuje con talón"}
+            {"e": "Press de banca con barra", "type": "normal", "s": "4", "r": "8", "d": "120", "i": "75% 1RM, rango completo"},
+            {"e": "Press inclinado con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "Codos a 45°"},
+            {"e": "Press militar con barra", "type": "normal", "s": "3", "r": "8", "d": "90", "i": "De pie, core activo"}
           ]
         },
         {
           "type": "normal",
-          "muscle": "Prevención",
+          "muscle": "Tracción",
           "cfg": {},
           "exs": [
-            {"e": "Nórdico isquiotibial", "type": "normal", "s": "3", "r": "5", "d": "90", "i": "Excéntrico controlado 4 seg"},
-            {"e": "Remo danés", "type": "normal", "s": "3", "r": "8", "d": "90", "i": "c/lado, fortalecimiento aductor"},
-            {"e": "Balance unipodal en superficie inestable", "type": "normal", "s": "3", "r": "30 seg", "d": "45", "i": "c/lado"}
+            {"e": "Dominadas", "type": "normal", "s": "4", "r": "8", "d": "120", "i": "Rango completo, sin balanceo"},
+            {"e": "Remo con barra", "type": "normal", "s": "4", "r": "8", "d": "120", "i": "Torso a 45°, codo bien atrás"},
+            {"e": "Remo con mancuerna en banco", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "c/lado, escápula al final"}
           ]
         },
         {
           "type": "normal",
-          "muscle": "Core",
+          "muscle": "Core y Prevención",
           "cfg": {},
           "exs": [
-            {"e": "Plancha frontal", "type": "normal", "s": "3", "r": "40 seg", "d": "45", "i": ""},
+            {"e": "Pallof press", "type": "normal", "s": "3", "r": "10", "d": "60", "i": "c/lado"},
             {"e": "Dead bug", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "c/lado, lumbar en el piso"},
-            {"e": "Pallof press", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "c/lado"}
+            {"e": "Nórdico isquiotibial", "type": "normal", "s": "3", "r": "5", "d": "90", "i": "Excéntrico controlado 4 seg"}
           ]
         }
       ]
@@ -52,32 +52,30 @@
       "blocks": [
         {
           "type": "normal",
-          "muscle": "Fuerza Inferior",
+          "muscle": "Fuerza Máxima",
           "cfg": {},
           "exs": [
             {"e": "Sentadilla con barra", "type": "normal", "s": "5", "r": "4", "d": "180", "i": "85–90% 1RM"},
-            {"e": "Peso muerto con barra", "type": "normal", "s": "4", "r": "4", "d": "180", "i": "85% 1RM, tirón desde el piso"},
-            {"e": "Sentadilla búlgara con barra", "type": "normal", "s": "3", "r": "6", "d": "120", "i": "c/lado, carga moderada"}
+            {"e": "Peso muerto con barra", "type": "normal", "s": "4", "r": "4", "d": "180", "i": "85–90% 1RM, tirón desde el piso"},
+            {"e": "Hip thrust con barra", "type": "normal", "s": "4", "r": "5", "d": "150", "i": "85% 1RM, contracción máxima en tope"}
           ]
         },
         {
           "type": "normal",
-          "muscle": "Fuerza Superior",
+          "muscle": "Fuerza Complementaria",
           "cfg": {},
           "exs": [
-            {"e": "Press de banca con barra", "type": "normal", "s": "4", "r": "5", "d": "150", "i": "85% 1RM, rango completo"},
-            {"e": "Dominadas lastradas", "type": "normal", "s": "4", "r": "5", "d": "150", "i": "Añadir carga según nivel"},
-            {"e": "Remo con barra", "type": "normal", "s": "4", "r": "6", "d": "120", "i": "Torso a 45°, codo atrás"}
+            {"e": "Sentadilla búlgara con barra", "type": "normal", "s": "3", "r": "6", "d": "120", "i": "c/lado, carga progresiva"},
+            {"e": "Peso muerto rumano unilateral", "type": "normal", "s": "3", "r": "6", "d": "120", "i": "c/lado, equilibrio y fuerza"}
           ]
         },
         {
-          "type": "varios",
-          "muscle": "Pliometría",
+          "type": "normal",
+          "muscle": "Prevención",
           "cfg": {},
           "exs": [
-            {"e": "Drop jump", "type": "normal", "s": "4", "r": "4", "d": "120", "i": "Caída desde cajón, rebote explosivo inmediato"},
-            {"e": "CMJ con chaleco lastrado", "type": "normal", "s": "4", "r": "4", "d": "120", "i": "5–10% peso corporal, máxima altura"},
-            {"e": "Nórdico isquiotibial", "type": "normal", "s": "3", "r": "5", "d": "90", "i": "Excéntrico 3–4 seg"}
+            {"e": "Nórdico isquiotibial", "type": "normal", "s": "3", "r": "5", "d": "90", "i": "Excéntrico 3–4 seg"},
+            {"e": "Remo danés", "type": "normal", "s": "3", "r": "8", "d": "90", "i": "c/lado, fortalecimiento aductor"}
           ]
         }
       ]
@@ -105,9 +103,9 @@
           "muscle": "Pliometría de Potencia",
           "cfg": {},
           "exs": [
-            {"e": "Box jump al cajón", "type": "normal", "s": "4", "r": "4", "d": "90", "i": "Máxima explosión, aterrizaje suave"},
-            {"e": "Salto horizontal con dos pies", "type": "normal", "s": "3", "r": "4", "d": "90", "i": "Máxima distancia, caída controlada"},
-            {"e": "Salto lateral reactivo", "type": "normal", "s": "3", "r": "5", "d": "90", "i": "c/lado, rapidez de reacción"}
+            {"e": "Drop jump", "type": "normal", "s": "4", "r": "4", "d": "120", "i": "Rebote explosivo inmediato al aterrizaje"},
+            {"e": "CMJ con chaleco lastrado", "type": "normal", "s": "4", "r": "4", "d": "120", "i": "5–10% peso corporal, máxima altura"},
+            {"e": "Salto horizontal con dos pies", "type": "normal", "s": "3", "r": "4", "d": "90", "i": "Máxima distancia, caída controlada"}
           ]
         },
         {
@@ -116,7 +114,6 @@
           "cfg": {},
           "exs": [
             {"e": "Sentadilla frontal con barra", "type": "normal", "s": "3", "r": "4", "d": "120", "i": "60% 1RM, subida explosiva"},
-            {"e": "Hip thrust con barra", "type": "normal", "s": "3", "r": "6", "d": "90", "i": "70% 1RM, contracción explosiva en tope"},
             {"e": "Cargada de potencia", "type": "normal", "s": "3", "r": "4", "d": "120", "i": "Peso moderado, técnica limpia"}
           ]
         }
