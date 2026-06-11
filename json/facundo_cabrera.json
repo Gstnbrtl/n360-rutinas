@@ -3,41 +3,41 @@
   "objetivo": "Rendimiento deportivo - Fútbol profesional",
   "days": [
     {
-      "title": "Día 1 – Regeneración Post Partido",
+      "title": "Día 1 – Post Partido",
       "warmup": [
-        {"e": "Foam roller piernas completo", "s": "1", "r": "10 pasadas lentas por zona", "d": "—"},
-        {"e": "Foam roller espalda y glúteos", "s": "1", "r": "10 pasadas lentas", "d": "—"},
-        {"e": "Movilidad 90/90 cadera", "s": "1", "r": "8", "d": "—"}
+        {"e": "Movilidad articular general", "s": "1", "r": "5 min", "d": "—"},
+        {"e": "Estiramiento dinámico miembros inferiores", "s": "1", "r": "5 min", "d": "—"},
+        {"e": "Activación glúteo con banda", "s": "2", "r": "12", "d": "30"}
       ],
       "blocks": [
         {
-          "type": "varios",
-          "muscle": "Regeneración Activa",
+          "type": "normal",
+          "muscle": "Fuerza Regenerativa Inferior",
           "cfg": {},
           "exs": [
-            {"e": "Bicicleta fija suave", "type": "normal", "s": "1", "r": "12 min", "d": "—", "i": "Frecuencia cardíaca baja, sin esfuerzo"},
-            {"e": "Caminata en cinta inclinada", "type": "normal", "s": "1", "r": "8 min", "d": "—", "i": "Inclinación leve, paso tranquilo"}
+            {"e": "Sentadilla con barra", "type": "normal", "s": "4", "r": "8", "d": "120", "i": "60–65% 1RM, técnica"},
+            {"e": "Peso muerto rumano con barra", "type": "normal", "s": "4", "r": "8", "d": "120", "i": "60% 1RM, espalda neutra"},
+            {"e": "Prensa unilateral", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "c/lado, empuje con talón"}
           ]
         },
         {
-          "type": "varios",
-          "muscle": "Movilidad",
-          "cfg": {},
-          "exs": [
-            {"e": "Estiramiento psoas en estocada", "type": "normal", "s": "2", "r": "45 seg", "d": "30", "i": "c/lado, respiración profunda"},
-            {"e": "Estiramiento isquiotibial activo", "type": "normal", "s": "2", "r": "10", "d": "30", "i": "c/lado, sin rebote"},
-            {"e": "Rotación torácica en cuadrúpeda", "type": "normal", "s": "2", "r": "10", "d": "30", "i": "c/lado, amplitud máxima"},
-            {"e": "Movilidad de tobillo en pared", "type": "normal", "s": "2", "r": "10", "d": "30", "i": "c/lado"}
-          ]
-        },
-        {
-          "type": "varios",
+          "type": "normal",
           "muscle": "Prevención",
           "cfg": {},
           "exs": [
-            {"e": "Nórdico isquiotibial", "type": "normal", "s": "3", "r": "3", "d": "90", "i": "Muy controlado, solo excéntrico"},
-            {"e": "Clamshell con banda", "type": "normal", "s": "2", "r": "15", "d": "30", "i": "c/lado, activación glúteo medio"},
-            {"e": "Balance unipodal en superficie inestable", "type": "normal", "s": "2", "r": "30 seg", "d": "30", "i": "c/lado, ojos abiertos → cerrados"}
+            {"e": "Nórdico isquiotibial", "type": "normal", "s": "3", "r": "5", "d": "90", "i": "Excéntrico controlado 4 seg"},
+            {"e": "Remo danés", "type": "normal", "s": "3", "r": "8", "d": "90", "i": "c/lado, fortalecimiento aductor"},
+            {"e": "Balance unipodal en superficie inestable", "type": "normal", "s": "3", "r": "30 seg", "d": "45", "i": "c/lado"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha frontal", "type": "normal", "s": "3", "r": "40 seg", "d": "45", "i": ""},
+            {"e": "Dead bug", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "c/lado, lumbar en el piso"},
+            {"e": "Pallof press", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "c/lado"}
           ]
         }
       ]
@@ -45,9 +45,9 @@
     {
       "title": "Día 2 – Fuerza Máxima",
       "warmup": [
-        {"e": "Activación glúteo con banda", "s": "2", "r": "15", "d": "30"},
-        {"e": "Sentadilla aérea progresiva", "s": "3", "r": "8", "d": "30"},
-        {"e": "Hip thrust corporal", "s": "2", "r": "10", "d": "30"}
+        {"e": "Movilidad articular general", "s": "1", "r": "5 min", "d": "—"},
+        {"e": "Estiramiento dinámico miembros inferiores", "s": "1", "r": "5 min", "d": "—"},
+        {"e": "Sentadilla aérea progresiva", "s": "3", "r": "8", "d": "30"}
       ],
       "blocks": [
         {
@@ -55,8 +55,9 @@
           "muscle": "Fuerza Inferior",
           "cfg": {},
           "exs": [
-            {"e": "Sentadilla con barra", "type": "normal", "s": "5", "r": "4", "d": "180", "i": "85–90% 1RM, técnica impecable"},
-            {"e": "Peso muerto rumano con barra", "type": "normal", "s": "4", "r": "5", "d": "150", "i": "Carga progresiva, espalda neutra"}
+            {"e": "Sentadilla con barra", "type": "normal", "s": "5", "r": "4", "d": "180", "i": "85–90% 1RM"},
+            {"e": "Peso muerto con barra", "type": "normal", "s": "4", "r": "4", "d": "180", "i": "85% 1RM, tirón desde el piso"},
+            {"e": "Sentadilla búlgara con barra", "type": "normal", "s": "3", "r": "6", "d": "120", "i": "c/lado, carga moderada"}
           ]
         },
         {
@@ -65,25 +66,18 @@
           "cfg": {},
           "exs": [
             {"e": "Press de banca con barra", "type": "normal", "s": "4", "r": "5", "d": "150", "i": "85% 1RM, rango completo"},
-            {"e": "Dominadas lastradas", "type": "normal", "s": "4", "r": "5", "d": "150", "i": "Añadir carga según nivel"}
+            {"e": "Dominadas lastradas", "type": "normal", "s": "4", "r": "5", "d": "150", "i": "Añadir carga según nivel"},
+            {"e": "Remo con barra", "type": "normal", "s": "4", "r": "6", "d": "120", "i": "Torso a 45°, codo atrás"}
           ]
         },
         {
           "type": "varios",
-          "muscle": "Pliometría Pesada",
+          "muscle": "Pliometría",
           "cfg": {},
           "exs": [
             {"e": "Drop jump", "type": "normal", "s": "4", "r": "4", "d": "120", "i": "Caída desde cajón, rebote explosivo inmediato"},
-            {"e": "CMJ con chaleco lastrado", "type": "normal", "s": "4", "r": "4", "d": "120", "i": "5–10% peso corporal, máxima altura"}
-          ]
-        },
-        {
-          "type": "normal",
-          "muscle": "Prevención",
-          "cfg": {},
-          "exs": [
-            {"e": "Nórdico isquiotibial", "type": "normal", "s": "3", "r": "5", "d": "90", "i": "Excéntrico controlado 3–4 seg"},
-            {"e": "Remo danés", "type": "normal", "s": "3", "r": "6", "d": "90", "i": "c/lado, fortalecimiento aductor"}
+            {"e": "CMJ con chaleco lastrado", "type": "normal", "s": "4", "r": "4", "d": "120", "i": "5–10% peso corporal, máxima altura"},
+            {"e": "Nórdico isquiotibial", "type": "normal", "s": "3", "r": "5", "d": "90", "i": "Excéntrico 3–4 seg"}
           ]
         }
       ]
@@ -91,14 +85,14 @@
     {
       "title": "Día 3 – Potencia Pre Entrenamiento de Fútbol",
       "warmup": [
-        {"e": "Carrera progresiva", "s": "1", "r": "4 min", "d": "—"},
-        {"e": "Aceleraciones progresivas", "s": "4", "r": "30m", "d": "—"},
-        {"e": "A-Skip / B-Skip / Carioca", "s": "2", "r": "20m c/u", "d": "—"}
+        {"e": "Movilidad articular general", "s": "1", "r": "5 min", "d": "—"},
+        {"e": "Estiramiento dinámico miembros inferiores", "s": "1", "r": "5 min", "d": "—"},
+        {"e": "Aceleraciones progresivas", "s": "4", "r": "30m", "d": "—"}
       ],
       "blocks": [
         {
           "type": "varios",
-          "muscle": "Potencia y Velocidad",
+          "muscle": "Velocidad",
           "cfg": {},
           "exs": [
             {"e": "Sprint 10m desde quieto", "type": "normal", "s": "5", "r": "10m", "d": "120", "i": "Máxima intensidad, recuperación completa"},
@@ -108,20 +102,22 @@
         },
         {
           "type": "varios",
-          "muscle": "Pliometría Activación",
+          "muscle": "Pliometría de Potencia",
           "cfg": {},
           "exs": [
-            {"e": "Box jump al cajón", "type": "normal", "s": "4", "r": "4", "d": "90", "i": "Calidad sobre cantidad, aterrizaje suave"},
-            {"e": "Salto horizontal con dos pies", "type": "normal", "s": "3", "r": "4", "d": "90", "i": "Máxima distancia, caída controlada"}
+            {"e": "Box jump al cajón", "type": "normal", "s": "4", "r": "4", "d": "90", "i": "Máxima explosión, aterrizaje suave"},
+            {"e": "Salto horizontal con dos pies", "type": "normal", "s": "3", "r": "4", "d": "90", "i": "Máxima distancia, caída controlada"},
+            {"e": "Salto lateral reactivo", "type": "normal", "s": "3", "r": "5", "d": "90", "i": "c/lado, rapidez de reacción"}
           ]
         },
         {
           "type": "normal",
-          "muscle": "Fuerza Suave",
+          "muscle": "Fuerza Explosiva",
           "cfg": {},
           "exs": [
-            {"e": "Sentadilla frontal con barra", "type": "normal", "s": "3", "r": "4", "d": "120", "i": "60% 1RM, explosivo en subida"},
-            {"e": "Hip thrust con barra", "type": "normal", "s": "3", "r": "6", "d": "90", "i": "70% 1RM, contracción en tope"}
+            {"e": "Sentadilla frontal con barra", "type": "normal", "s": "3", "r": "4", "d": "120", "i": "60% 1RM, subida explosiva"},
+            {"e": "Hip thrust con barra", "type": "normal", "s": "3", "r": "6", "d": "90", "i": "70% 1RM, contracción explosiva en tope"},
+            {"e": "Cargada de potencia", "type": "normal", "s": "3", "r": "4", "d": "120", "i": "Peso moderado, técnica limpia"}
           ]
         }
       ]
@@ -129,38 +125,38 @@
     {
       "title": "Día 4 – Activación Viernes (Partido el Domingo)",
       "warmup": [
-        {"e": "Foam roller piernas y glúteos", "s": "1", "r": "8 pasadas lentas", "d": "—"},
-        {"e": "Movilidad cadera dinámica", "s": "1", "r": "10", "d": "—"},
-        {"e": "Estiramiento activo isquiotibial", "s": "2", "r": "8", "d": "—"}
+        {"e": "Movilidad articular general", "s": "1", "r": "5 min", "d": "—"},
+        {"e": "Estiramiento dinámico miembros inferiores", "s": "1", "r": "5 min", "d": "—"},
+        {"e": "Activación glúteo con banda", "s": "2", "r": "12", "d": "30"}
       ],
       "blocks": [
-        {
-          "type": "varios",
-          "muscle": "Activación Muscular",
-          "cfg": {},
-          "exs": [
-            {"e": "Clamshell con banda", "type": "normal", "s": "2", "r": "12", "d": "30", "i": "c/lado, activar glúteo medio"},
-            {"e": "Puente de glúteos con banda", "type": "normal", "s": "2", "r": "12", "d": "30", "i": "Pausa 2 seg arriba"},
-            {"e": "Movilidad de tobillo en pared", "type": "normal", "s": "2", "r": "10", "d": "30", "i": "c/lado"}
-          ]
-        },
         {
           "type": "varios",
           "muscle": "Activación Neuromuscular",
           "cfg": {},
           "exs": [
             {"e": "CMJ salto vertical", "type": "normal", "s": "3", "r": "3", "d": "90", "i": "Sin carga, máxima intención, no cansar"},
-            {"e": "Sprint 10m", "type": "normal", "s": "3", "r": "10m", "d": "90", "i": "Intensidad alta, recuperación total"}
+            {"e": "Sprint 10m", "type": "normal", "s": "3", "r": "10m", "d": "90", "i": "Alta intensidad, recuperación total"},
+            {"e": "Salida explosiva desde posición", "type": "normal", "s": "3", "r": "10m", "d": "90", "i": "De pie, sentado y boca abajo"}
           ]
         },
         {
-          "type": "varios",
+          "type": "normal",
           "muscle": "Prevención",
           "cfg": {},
           "exs": [
             {"e": "Nórdico isquiotibial", "type": "normal", "s": "2", "r": "4", "d": "90", "i": "Solo excéntrico, sin forzar"},
-            {"e": "Balance unipodal en superficie inestable", "type": "normal", "s": "2", "r": "30 seg", "d": "30", "i": "c/lado"},
-            {"e": "Rotación torácica en cuadrúpeda", "type": "normal", "s": "2", "r": "8", "d": "30", "i": "c/lado"}
+            {"e": "Remo danés", "type": "normal", "s": "2", "r": "8", "d": "60", "i": "c/lado"},
+            {"e": "Balance unipodal en superficie inestable", "type": "normal", "s": "2", "r": "30 seg", "d": "30", "i": "c/lado"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha frontal", "type": "normal", "s": "2", "r": "40 seg", "d": "45", "i": ""},
+            {"e": "Pallof press", "type": "normal", "s": "2", "r": "10", "d": "45", "i": "c/lado, liviano"}
           ]
         }
       ]
