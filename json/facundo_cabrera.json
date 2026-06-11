@@ -251,12 +251,12 @@
           "cfg": {},
           "exs": [
             {
-              "e": "Empuje de trineo",
+              "e": "Sentadilla con salto con barra liviana",
               "type": "normal",
               "s": "5",
-              "r": "20m",
+              "r": "4",
               "d": "120",
-              "i": "Máxima intensidad, recuperación completa"
+              "i": "Máxima explosión en subida, 30–40% 1RM"
             },
             {
               "e": "Bicicleta ergométrica intervalos",
