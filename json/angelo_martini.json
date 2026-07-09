@@ -1,0 +1,163 @@
+{
+  "alumno": "Angelo Martini",
+  "objetivo": "Fuerza y resistencia – Pádel",
+  "days": [
+    {
+      "title": "Día 1 – Fuerza Máxima (Músculos Grandes)",
+      "warmup": [
+        {"e": "Movilidad articular general", "s": "1", "r": "5 min", "d": "—"},
+        {"e": "Activación de glúteo con banda", "s": "2", "r": "12", "d": "30"},
+        {"e": "Remo TRX", "s": "2", "r": "10", "d": "30"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Pectoral",
+          "cfg": {},
+          "exs": [
+            {"e": "Press de banca con barra", "type": "normal", "s": "5", "r": "5", "d": "90", "i": "Máxima carga, excéntrico 3 seg, subida explosiva"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Remo con barra", "type": "normal", "s": "5", "r": "5", "d": "90", "i": "Torso a 45°, explosivo en el tirón, escápulas juntas al final"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Sentadilla con barra", "type": "normal", "s": "5", "r": "5", "d": "90", "i": "Descenso lento, subida explosiva, profundidad paralela"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Peso muerto con barra", "type": "normal", "s": "4", "r": "5", "d": "90", "i": "Tirón desde el piso, espalda neutra, carga máxima progresiva"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Hip thrust con barra", "type": "normal", "s": "4", "r": "6", "d": "90", "i": "Contracción máxima en tope, carga pesada"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Musculación Tren Superior + Potencia",
+      "warmup": [
+        {"e": "Plancha rotación de cadera", "s": "2", "r": "10", "d": "30"},
+        {"e": "Desplante con disco", "s": "2", "r": "6", "d": "30", "i": "por lado"},
+        {"e": "Movilidad de hombros con banda", "s": "2", "r": "10", "d": "30"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Pecho",
+          "cfg": {},
+          "exs": [
+            {"e": "Press inclinado con mancuernas", "type": "normal", "s": "4", "r": "12", "d": "75", "i": "Concéntrico explosivo"},
+            {"e": "Apertura en polea cruzada", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "Rango completo, contracción en centro"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Jalón ancho en polea", "type": "normal", "s": "4", "r": "12", "d": "75", "i": "Barra al pecho, codos bien abajo"},
+            {"e": "Remo en polea sentado", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "Escápulas juntas, espalda recta"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "Press arnold sentado", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "Rotación completa de palmas"},
+            {"e": "Elevaciones laterales con mancuernas", "type": "normal", "s": "3", "r": "15", "d": "45", "i": "Codos levemente flexionados, velocidad moderada"},
+            {"e": "Face pull con banda", "type": "normal", "s": "3", "r": "15", "d": "45", "i": "Codos a la altura de hombros, rotación externa"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Bíceps y Tríceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Curl con barra Z", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "Codos pegados al cuerpo"},
+            {"e": "Tríceps en polea con soga", "type": "normal", "s": "3", "r": "15", "d": "45", "i": "Extensión completa, rápido y controlado"}
+          ]
+        },
+        {
+          "type": "varios",
+          "muscle": "Finisher Metabólico",
+          "cfg": {},
+          "exs": [
+            {"e": "Push press con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "Explosivo en empuje, carga moderada"},
+            {"e": "Remo TRX explosivo", "type": "normal", "s": "3", "r": "12", "d": "45", "i": "Tirón rápido, retorno controlado"},
+            {"e": "Lanzamiento de medicine ball contra pared", "type": "normal", "s": "3", "r": "12", "d": "45", "i": "Rotación de tronco, máxima velocidad"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 3 – Musculación Tren Inferior + Core Rotacional",
+      "warmup": [
+        {"e": "Plancha rotación de cadera", "s": "2", "r": "10", "d": "30"},
+        {"e": "Activación de glúteo con banda", "s": "2", "r": "12", "d": "30"},
+        {"e": "Movilidad de cadera con banda", "s": "2", "r": "10", "d": "30"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Prensa", "type": "normal", "s": "4", "r": "12", "d": "75", "i": "Concéntrico explosivo, rango completo"},
+            {"e": "Sillón de cuádriceps", "type": "normal", "s": "3", "r": "15", "d": "60", "i": "Extensión completa, retorno controlado"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos e Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Hip thrust con corebag", "type": "normal", "s": "4", "r": "12", "d": "75", "i": "Contracción de glúteo arriba, velocidad moderada"},
+            {"e": "Sillón de isquios", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "Bajar lento 3 seg, subida rápida"},
+            {"e": "Peso muerto rumano con mancuernas", "type": "normal", "s": "3", "r": "12", "d": "75", "i": "Espalda recta, cadera atrás"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core Rotacional – Pádel",
+          "cfg": {},
+          "exs": [
+            {"e": "Twist ruso con disco", "type": "normal", "s": "3", "r": "20", "d": "45", "i": "Rotación completa, pies elevados"},
+            {"e": "Pallof press", "type": "normal", "s": "3", "r": "12", "d": "45", "i": "por lado, anti-rotación, core activo"},
+            {"e": "Rotación con medicine ball contra pared", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "por lado, explosivo, simula golpe de pádel"},
+            {"e": "Plancha lateral con rotación", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "por lado, cadera alineada"}
+          ]
+        },
+        {
+          "type": "varios",
+          "muscle": "Finisher Metabólico",
+          "cfg": {},
+          "exs": [
+            {"e": "Swing con pesa rusa", "type": "normal", "s": "3", "r": "15", "d": "45", "i": "Explosión de cadera, core activo"},
+            {"e": "Sentadilla con salto", "type": "normal", "s": "3", "r": "8", "d": "60", "i": "Aterrizaje suave, máxima altura"},
+            {"e": "Cangrejo con banda", "type": "normal", "s": "3", "r": "20", "d": "45", "i": "Pasos laterales rápidos, banda en rodillas"}
+          ]
+        }
+      ]
+    }
+  ]
+}

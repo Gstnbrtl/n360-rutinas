@@ -1,0 +1,235 @@
+{
+  "alumno": "Jorgelina Bigo",
+  "objetivo": "Fuerza y composición corporal",
+  "days": [
+    {
+      "title": "Entrenamiento 1 – Piernas 1 + Core",
+      "warmup": [
+        {"e": "Plancha lateral con rotación", "s": "2", "r": "8", "d": "60", "i": "por lado"},
+        {"e": "Plancha flexión con pelota", "s": "2", "r": "10", "d": "60"},
+        {"e": "Estocada con elevaciones laterales", "s": "2", "r": "10", "d": "120"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Sentadilla en Smith", "type": "normal", "s": "3", "r": "10", "d": "150", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Aductores",
+          "cfg": {},
+          "exs": [
+            {"e": "Sentadilla sumo", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Sentadilla búlgara", "type": "normal", "s": "3", "r": "8", "d": "60", "i": "por lado"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Peso muerto", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "tabata",
+          "muscle": "Core",
+          "cfg": {"work": "20", "rest": "20", "rounds": "6", "brk": ""},
+          "exs": [
+            {"e": "Thrusters con mancuernas", "type": "normal", "s": "1", "r": "20 seg", "d": "20", "i": ""},
+            {"e": "Twist ruso", "type": "normal", "s": "1", "r": "20 seg", "d": "20", "i": ""},
+            {"e": "Desplante más curl de bíceps", "type": "normal", "s": "1", "r": "20 seg", "d": "20", "i": ""},
+            {"e": "Cangrejo con banda más extensión de disco", "type": "normal", "s": "1", "r": "20 seg", "d": "20", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Cardio",
+          "cfg": {},
+          "exs": [
+            {"e": "Bicicleta o caminata en cinta", "type": "normal", "s": "1", "r": "10 min", "d": "0", "i": "Cardio leve al finalizar"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Entrenamiento 2 – Torso 1 + Core + Glúteos",
+      "warmup": [
+        {"e": "Plancha lateral con rotación", "s": "2", "r": "8", "d": "60", "i": "por lado"},
+        {"e": "Plancha flexión con pelota", "s": "2", "r": "10", "d": "60"},
+        {"e": "Estocada con elevaciones laterales", "s": "2", "r": "10", "d": "120"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Pecho",
+          "cfg": {},
+          "exs": [
+            {"e": "Press con mancuernas en fitball", "type": "normal", "s": "3", "r": "12", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "High pull con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "Mancuernas livianas"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Bíceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Curl de bíceps en polea", "type": "normal", "s": "3", "r": "12", "d": "120", "i": "Opción banco inclinado"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Hip thrust en Smith", "type": "normal", "s": "4", "r": "8", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "varios",
+          "muscle": "Full Body / Aeróbico",
+          "cfg": {},
+          "exs": [
+            {"e": "Skipping más skaters", "type": "normal", "s": "3", "r": "10", "d": "60", "i": ""},
+            {"e": "Plancha rodillas afuera", "type": "normal", "s": "3", "r": "10", "d": "60", "i": ""},
+            {"e": "Remo invertido", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""},
+            {"e": "Face pull en sentadilla isométrica", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Cardio",
+          "cfg": {},
+          "exs": [
+            {"e": "Bicicleta o caminata en cinta", "type": "normal", "s": "1", "r": "10 min", "d": "0", "i": "Cardio leve al finalizar"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Entrenamiento 3 – Piernas 2 + Core",
+      "warmup": [
+        {"e": "Plancha lateral con rotación", "s": "2", "r": "8", "d": "60", "i": "por lado"},
+        {"e": "Plancha flexión con pelota", "s": "2", "r": "10", "d": "60"},
+        {"e": "Estocada con elevaciones laterales", "s": "2", "r": "10", "d": "120"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Patada de glúteo en polea", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "por lado – probar hip thrust"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Sillón de isquios", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Abductores",
+          "cfg": {},
+          "exs": [
+            {"e": "Abducción parada con disco", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "amrap",
+          "muscle": "Core Full Body",
+          "cfg": {"time": "20 min", "rest": "—"},
+          "exs": [
+            {"e": "Sentadilla isométrica con remo de disco", "type": "normal", "s": "1", "r": "10", "d": "0", "i": ""},
+            {"e": "Puente de glúteos a una pierna", "type": "normal", "s": "1", "r": "10", "d": "0", "i": ""},
+            {"e": "Snatch con mancuerna", "type": "normal", "s": "1", "r": "10", "d": "0", "i": ""},
+            {"e": "Swing ruso", "type": "normal", "s": "1", "r": "10", "d": "0", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Cardio",
+          "cfg": {},
+          "exs": [
+            {"e": "Bicicleta o caminata en cinta", "type": "normal", "s": "1", "r": "10 min", "d": "0", "i": "Cardio leve al finalizar"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Entrenamiento 4 – Torso 2 + Core",
+      "warmup": [
+        {"e": "Plancha lateral con rotación", "s": "2", "r": "8", "d": "60", "i": "por lado"},
+        {"e": "Plancha flexión con pelota", "s": "2", "r": "10", "d": "60"},
+        {"e": "Estocada con elevaciones laterales", "s": "2", "r": "10", "d": "120"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Jalón cerrado", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Tríceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Fondos en cajón", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha toque de hombros pies elevados", "type": "normal", "s": "3", "r": "20", "d": "120", "i": ""},
+            {"e": "Plancha arrastre", "type": "normal", "s": "3", "r": "20", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "varios",
+          "muscle": "Full Body / Aeróbico",
+          "cfg": {},
+          "exs": [
+            {"e": "Elevación de piernas", "type": "normal", "s": "3", "r": "10", "d": "30", "i": ""},
+            {"e": "Jumping jacks", "type": "normal", "s": "3", "r": "20", "d": "30", "i": ""},
+            {"e": "Hollow hold", "type": "normal", "s": "3", "r": "20 seg", "d": "30", "i": ""},
+            {"e": "Lanzamiento vertical de medicine ball en puente de glúteos", "type": "normal", "s": "3", "r": "10", "d": "120", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Cardio",
+          "cfg": {},
+          "exs": [
+            {"e": "Bicicleta o caminata en cinta", "type": "normal", "s": "1", "r": "10 min", "d": "0", "i": "Cardio leve al finalizar"}
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "alumno": "Laura Cuevas",
+  "objetivo": "Acondicionamiento físico general",
+  "days": [
+    {
+      "title": "Día 1 – Tren Inferior y Glúteos",
+      "warmup": [
+        {"e": "Movilidad de cadera sentada con banda", "s": "2", "r": "10", "d": "30"},
+        {"e": "Activación de glúteo con banda en camilla", "s": "2", "r": "12", "d": "30"},
+        {"e": "Rotación de tronco con palo de pie", "s": "2", "r": "8", "d": "30"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Glúteos e Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Hip thrust leve con corebag", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "Carga mínima, contracción de glúteo arriba"},
+            {"e": "Sillón de isquios", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "Rango cómodo, bajar lento"},
+            {"e": "Patada de glúteo en polea baja", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "c/lado, pierna casi extendida, sin doblar rodilla"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps y Aductores",
+          "cfg": {},
+          "exs": [
+            {"e": "Prensa con pies altos", "type": "normal", "s": "3", "r": "10", "d": "120", "i": "Rango parcial, sin bajar más de 90°, carga progresiva"},
+            {"e": "Sillón de cuádriceps", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "Rango medio, no flexión completa"},
+            {"e": "Aductores con aro de pilates sentada", "type": "normal", "s": "3", "r": "15", "d": "60", "i": "Apretón sostenido 2 seg"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core y Estabilidad",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha con apoyo de rodillas", "type": "normal", "s": "3", "r": "20 seg", "d": "45", "i": "Cuerpo recto, glúteo activo"},
+            {"e": "Elevaciones de talones en Smith", "type": "normal", "s": "3", "r": "15", "d": "60", "i": "Movimiento controlado, sin rebote"},
+            {"e": "Rotación lateral con banda de pie", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "c/lado, core activo, sin mover cadera"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Tren Superior y Core",
+      "warmup": [
+        {"e": "Movilidad de hombros con banda", "s": "2", "r": "10", "d": "30"},
+        {"e": "Rotación de tronco con palo de pie", "s": "2", "r": "8", "d": "30"},
+        {"e": "Activación escapular con banda", "s": "2", "r": "12", "d": "30"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Jalón en dorsalera agarre ancho", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "Barra al pecho, codos abajo"},
+            {"e": "Remo en polea sentada", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "Escápulas juntas al final, espalda recta"},
+            {"e": "Face pull con banda", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "Codos a la altura de hombros, rotación externa"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Hombros y Pecho",
+          "cfg": {},
+          "exs": [
+            {"e": "Press militar con mancuernas sentada", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "Carga liviana, espalda apoyada"},
+            {"e": "Elevaciones laterales con mancuernas", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "Codos levemente flexionados, suave"},
+            {"e": "Apertura con banda en polea", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "Brazos a la altura del pecho, sin arquear espalda"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Funcional y Core",
+          "cfg": {},
+          "exs": [
+            {"e": "Granjero con mancuernas", "type": "normal", "s": "3", "r": "20m", "d": "90", "i": "Paso corto, espalda recta, sin golpear el talón"},
+            {"e": "Rotación con pelota medicinal de pie", "type": "normal", "s": "3", "r": "10", "d": "60", "i": "c/lado, contra la pared"},
+            {"e": "Plancha con apoyo de rodillas", "type": "normal", "s": "3", "r": "25 seg", "d": "45", "i": "Progresar tiempo cada semana"}
+          ]
+        }
+      ]
+    }
+  ]
+}
