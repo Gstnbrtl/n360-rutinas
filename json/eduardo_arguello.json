@@ -1,0 +1,130 @@
+{
+  "alumno": "Eduardo Arguello",
+  "objetivo": "Fuerza + hipertrofia – 54 años. Foco en corrección postural (mucho trabajo de espalda, retracción escapular, deltoides posterior), simetría (ejercicios unilaterales), protección del isquiotibial (desgarro viejo: peso muerto rumano controlado, curl femoral con énfasis excéntrico, nada explosivo ni cargas máximas en isquios) y mucho core. Sin cardio por ahora (se sumará más adelante). 3 días semanales.",
+  "days": [
+    {
+      "title": "Día 1 – Tren Inferior + Isquiotibial (protección) + Core",
+      "warmup": [
+        {"e": "Movilidad cadera dinámica", "s": "2", "r": "12", "d": "—"},
+        {"e": "Puente de glúteos activación", "s": "2", "r": "15", "d": "45 seg"},
+        {"e": "Sentadilla aérea", "s": "2", "r": "15", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Prensa", "type": "normal", "s": "4", "r": "12", "d": "120", "i": "rango completo controlado, pies al centro"},
+            {"e": "Sentadilla búlgara", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "c/lado – clave para simetría, mismo control en ambas piernas"},
+            {"e": "Step up con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "c/lado, subir sin impulso de la pierna de abajo"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Peso muerto rumano", "type": "normal", "s": "4", "r": "10", "d": "120", "i": "carga moderada, cadera atrás, bajada lenta 3 seg – nunca al fallo, cuidar el desgarro"},
+            {"e": "Sillón de isquios", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "énfasis excéntrico: bajar en 4 seg – fortalece el isquio de forma segura"},
+            {"e": "Puente de isquios", "type": "normal", "s": "3", "r": "12", "d": "75", "i": "talones cerca del glúteo, contracción sostenida"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Bicho muerto", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "c/lado, lumbar pegada al piso – estabilización, ideal para postura"},
+            {"e": "Plancha frontal", "type": "normal", "s": "3", "r": "40 seg", "d": "45", "i": "columna neutra, glúteos y abdomen firmes"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Espalda / Postura + Hombro Posterior + Core",
+      "warmup": [
+        {"e": "Movilidad torácica en cuadrúpeda", "s": "2", "r": "10", "d": "—"},
+        {"e": "Band pull-apart", "s": "3", "r": "15", "d": "45 seg"},
+        {"e": "Movilidad de hombros con banda", "s": "2", "r": "12", "d": "45 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Remo con barra", "type": "normal", "s": "4", "r": "10", "d": "120", "i": "tronco a 45°, retracción escapular al final – base de la corrección postural"},
+            {"e": "Jalón cerrado", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "pecho arriba, codos hacia caderas"},
+            {"e": "Remo con polea una mano", "type": "normal", "s": "3", "r": "12", "d": "75", "i": "c/lado – corrige asimetrías entre lados, mismo recorrido en ambos"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "Pull face", "type": "normal", "s": "3", "r": "15", "d": "75", "i": "codos altos, llevar a la frente – deltoides posterior, oro para la postura"},
+            {"e": "Vuelo posterior con banda", "type": "normal", "s": "3", "r": "15", "d": "60", "i": "brazos semi-flexionados, apretar escápulas"},
+            {"e": "Press militar con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "core firme, sin arquear lumbar"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Pallof press", "type": "normal", "s": "3", "r": "10", "d": "60", "i": "c/lado – anti-rotación, estabiliza tronco y ayuda a la postura"},
+            {"e": "Perro de caza", "type": "normal", "s": "3", "r": "10", "d": "45", "i": "c/lado, brazo y pierna opuestos, columna neutra"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 3 – Empuje + Simetría + Isquiotibial + Core",
+      "warmup": [
+        {"e": "Band pull-apart", "s": "2", "r": "15", "d": "—"},
+        {"e": "Flexiones en rodillas", "s": "2", "r": "10", "d": "60 seg"},
+        {"e": "Movilidad cadera dinámica", "s": "2", "r": "12", "d": "45 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Pecho",
+          "cfg": {},
+          "exs": [
+            {"e": "Press de banca con mancuernas", "type": "normal", "s": "4", "r": "10", "d": "120", "i": "mancuernas para trabajar cada lado por separado – simetría"},
+            {"e": "Press inclinado con barra", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "banco a 30°, escápulas retraídas"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Peso muerto una pierna", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "c/lado – simetría + isquio; mancuerna liviana, movimiento lento y controlado, cuidar el desgarro"},
+            {"e": "Puente de isquios con corebag", "type": "normal", "s": "3", "r": "12", "d": "75", "i": "contracción sostenida, sin dolor"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "Press militar alternado", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "un brazo por vez – simetría entre lados"},
+            {"e": "Elevaciones laterales", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "peso liviano, sin balanceo"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha toque de hombro", "type": "normal", "s": "3", "r": "16", "d": "60", "i": "sin rotar la cadera – anti-rotación + estabilidad de hombro"},
+            {"e": "Rotación con banda", "type": "normal", "s": "3", "r": "12", "d": "45", "i": "c/lado, control desde el core"}
+          ]
+        }
+      ]
+    }
+  ]
+}

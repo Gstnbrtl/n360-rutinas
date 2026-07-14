@@ -1,0 +1,158 @@
+{
+  "alumno": "Carla Astegiano",
+  "objetivo": "Híbrido core + cardio + hipertrofia. 3 días semanales. Cada día combina bloques de hipertrofia con un finisher metabólico de cardio (AMRAP / Tabata) y trabajo específico de core. Cargas moderadas-progresivas, técnica prioritaria.",
+  "days": [
+    {
+      "title": "Día 1 – Tren Inferior + Cardio + Core",
+      "warmup": [
+        {"e": "Sentadilla con barra liviana", "s": "2", "r": "15", "d": "60 seg"},
+        {"e": "Estocadas alternadas", "s": "2", "r": "8 c/l", "d": "60 seg"},
+        {"e": "Plancha dinamica", "s": "2", "r": "30 seg", "d": "45 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Sentadilla con barra", "type": "normal", "s": "4", "r": "10", "d": "120", "i": "descenso 3 seg, carga progresiva"},
+            {"e": "Sentadilla búlgara", "type": "normal", "s": "3", "r": "10 c/l", "d": "90", "i": ""},
+            {"e": "Prensa", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "rango completo controlado"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Hip Thrust", "type": "normal", "s": "4", "r": "12", "d": "120", "i": "máxima contracción arriba, pausa 1 seg"},
+            {"e": "Peso muerto rumano", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "foco en estiramiento de isquios, espalda neutra"},
+            {"e": "Puente de isquios", "type": "normal", "s": "3", "r": "15", "d": "60", "i": ""}
+          ]
+        },
+        {
+          "type": "amrap",
+          "muscle": "Cardio",
+          "cfg": {"time": "10", "rest": "2"},
+          "exs": [
+            {"e": "Burpees", "type": "amrap", "s": "", "r": "8", "d": "", "i": ""},
+            {"e": "Skaters laterales", "type": "amrap", "s": "", "r": "20", "d": "", "i": ""},
+            {"e": "Sentadilla + slam", "type": "amrap", "s": "", "r": "12", "d": "", "i": ""},
+            {"e": "Mountain climbers", "type": "amrap", "s": "", "r": "20", "d": "", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Plancha frontal", "type": "normal", "s": "3", "r": "45 seg", "d": "60", "i": ""},
+            {"e": "Abdominales elevación de piernas", "type": "normal", "s": "3", "r": "15", "d": "60", "i": ""},
+            {"e": "Twist ruso", "type": "normal", "s": "3", "r": "20", "d": "60", "i": "con disco"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Tren Superior + Cardio + Core",
+      "warmup": [
+        {"e": "Band pull-apart", "s": "2", "r": "15", "d": "45 seg"},
+        {"e": "Movilidad de hombros con banda", "s": "2", "r": "12", "d": "45 seg"},
+        {"e": "Jumping jacks", "s": "2", "r": "30 seg", "d": "45 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Pecho",
+          "cfg": {},
+          "exs": [
+            {"e": "Press de banca con mancuernas", "type": "normal", "s": "4", "r": "10", "d": "120", "i": "bajada controlada, escápulas retraídas"},
+            {"e": "Press inclinado con barra", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "banco a 30°"},
+            {"e": "Apertura con mancuernas", "type": "normal", "s": "3", "r": "12", "d": "75", "i": "rango cómodo, sin forzar hombro"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Jalón ancho", "type": "normal", "s": "4", "r": "10", "d": "120", "i": "pecho arriba, codos hacia caderas"},
+            {"e": "Remo con mancuernas", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "retracción escapular al final"},
+            {"e": "Vuelo posterior con banda", "type": "normal", "s": "3", "r": "15", "d": "60", "i": "deltoides posterior, postura"}
+          ]
+        },
+        {
+          "type": "tabata",
+          "muscle": "Cardio",
+          "cfg": {"work": "30", "rest": "15", "rounds": "8", "brk": "90"},
+          "exs": [
+            {"e": "Battle rope", "type": "tabata", "s": "", "r": "", "d": "", "i": "olas alternas a máxima intensidad"},
+            {"e": "Jumping jacks", "type": "tabata", "s": "", "r": "", "d": "", "i": ""},
+            {"e": "Slam con pelota", "type": "tabata", "s": "", "r": "", "d": "", "i": ""},
+            {"e": "Sprint en el lugar", "type": "tabata", "s": "", "r": "", "d": "", "i": "rodillas altas"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Ab wheel leve", "type": "normal", "s": "3", "r": "10", "d": "75", "i": "desde rodillas, sin arquear lumbar"},
+            {"e": "Abdominales cruzados", "type": "normal", "s": "3", "r": "20", "d": "60", "i": ""},
+            {"e": "Plancha toque de hombro", "type": "normal", "s": "3", "r": "16", "d": "60", "i": "sin rotar la cadera"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 3 – Full Body + Cardio Tabata + Core",
+      "warmup": [
+        {"e": "Sentadilla con salto", "s": "3", "r": "8", "d": "75 seg"},
+        {"e": "Estocadas alternadas", "s": "2", "r": "8 c/l", "d": "60 seg"},
+        {"e": "Plancha dinamica", "s": "2", "r": "30 seg", "d": "45 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "varios",
+          "muscle": "Full Body / Funcional",
+          "cfg": {},
+          "exs": [
+            {"e": "Thrusters con mancuernas", "type": "normal", "s": "4", "r": "10", "d": "90", "i": "fluido: sentadilla + press en un movimiento"},
+            {"e": "Push press", "type": "normal", "s": "3", "r": "8", "d": "90", "i": "impulso de piernas para el envión"},
+            {"e": "Caminata del granjero", "type": "normal", "s": "3", "r": "30 m", "d": "90", "i": "tronco erguido, core firme"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Hip Thrust", "type": "normal", "s": "4", "r": "12", "d": "90", "i": "pausa arriba"},
+            {"e": "Step up con mancuernas", "type": "normal", "s": "3", "r": "10 c/l", "d": "75", "i": ""}
+          ]
+        },
+        {
+          "type": "tabata",
+          "muscle": "Cardio",
+          "cfg": {"work": "20", "rest": "10", "rounds": "8", "brk": "60"},
+          "exs": [
+            {"e": "Mountain climbers", "type": "tabata", "s": "", "r": "", "d": "", "i": ""},
+            {"e": "Skaters laterales", "type": "tabata", "s": "", "r": "", "d": "", "i": ""},
+            {"e": "Burpees", "type": "tabata", "s": "", "r": "", "d": "", "i": ""},
+            {"e": "Sentadilla + slam", "type": "tabata", "s": "", "r": "", "d": "", "i": ""}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Core / Abdomen",
+          "cfg": {},
+          "exs": [
+            {"e": "Ab wheel leve", "type": "normal", "s": "4", "r": "12", "d": "75", "i": ""},
+            {"e": "Abdominales elevación de piernas", "type": "normal", "s": "4", "r": "15", "d": "60", "i": ""},
+            {"e": "Plancha frontal", "type": "normal", "s": "3", "r": "60 seg", "d": "60", "i": "finalizador"}
+          ]
+        }
+      ]
+    }
+  ]
+}

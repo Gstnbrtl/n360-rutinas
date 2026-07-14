@@ -1,0 +1,129 @@
+{
+  "alumno": "Nestor Arguello",
+  "objetivo": "Híbrido cardio + hipertrofia – 50 años, buen estado físico. 3 días semanales. Combina bloques de fuerza/hipertrofia con finishers metabólicos de cardio (intervalos). Cargas moderadas, técnica prioritaria, buena recuperación entre series pesadas.",
+  "days": [
+    {
+      "title": "Día 1 – Tren Inferior + Cardio Intervalado",
+      "warmup": [
+        {"e": "Movilidad cadera dinámica", "s": "1", "r": "12", "d": "—"},
+        {"e": "Sentadilla aérea", "s": "2", "r": "15", "d": "60 seg"},
+        {"e": "Skipping", "s": "3", "r": "20 seg", "d": "45 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Cuádriceps",
+          "cfg": {},
+          "exs": [
+            {"e": "Prensa", "type": "normal", "s": "4", "r": "10", "d": "120", "i": "pies al centro, rango completo controlado"},
+            {"e": "Sentadilla búlgara", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "c/lado, torso levemente inclinado"},
+            {"e": "Sillón cuádriceps", "type": "normal", "s": "3", "r": "12", "d": "75", "i": "contracción arriba, bajada lenta"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Isquiotibiales",
+          "cfg": {},
+          "exs": [
+            {"e": "Peso muerto rumano", "type": "normal", "s": "4", "r": "10", "d": "120", "i": "cadera atrás, espalda neutra, sentir isquios"},
+            {"e": "Hip Thrust", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "pausa 1 seg arriba, mentón al pecho"}
+          ]
+        },
+        {
+          "type": "tabata",
+          "muscle": "Cardio",
+          "cfg": {"work": "30", "rest": "20", "rounds": "8", "brk": "2 min"},
+          "exs": [
+            {"e": "Sprint en el lugar", "type": "normal", "s": "", "r": "", "d": "", "i": "rodillas altas, ritmo alto"},
+            {"e": "Skipping alto", "type": "normal", "s": "", "r": "", "d": "", "i": "alternar con el sprint por ronda"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 2 – Tren Superior + Cardio Metabólico",
+      "warmup": [
+        {"e": "Movilidad de hombros con banda", "s": "2", "r": "15", "d": "—"},
+        {"e": "Jumping jacks", "s": "3", "r": "30 seg", "d": "45 seg"},
+        {"e": "Flexiones en rodillas", "s": "2", "r": "10", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Pecho",
+          "cfg": {},
+          "exs": [
+            {"e": "Press de banca con barra", "type": "normal", "s": "4", "r": "10", "d": "120", "i": "escápulas retraídas, bajada controlada"},
+            {"e": "Press inclinado con barra", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "banco a 30°"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Espalda",
+          "cfg": {},
+          "exs": [
+            {"e": "Jalón ancho", "type": "normal", "s": "4", "r": "10", "d": "90", "i": "codos hacia caderas, pecho arriba"},
+            {"e": "Remo con mancuernas", "type": "normal", "s": "3", "r": "12", "d": "75", "i": "retracción escapular al final"}
+          ]
+        },
+        {
+          "type": "normal",
+          "muscle": "Hombros",
+          "cfg": {},
+          "exs": [
+            {"e": "Press militar con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "core firme, sin arquear lumbar"},
+            {"e": "Elevaciones laterales", "type": "normal", "s": "3", "r": "12", "d": "60", "i": "peso liviano, sin balanceo"}
+          ]
+        },
+        {
+          "type": "amrap",
+          "muscle": "Cardio",
+          "cfg": {"time": "10 min", "rest": "2 min"},
+          "exs": [
+            {"e": "Battle rope", "type": "normal", "s": "", "r": "30 seg", "d": "", "i": "olas alternas a máxima intensidad"},
+            {"e": "Burpees", "type": "normal", "s": "", "r": "8", "d": "", "i": "ritmo constante"},
+            {"e": "Slam con pelota", "type": "normal", "s": "", "r": "12", "d": "", "i": "cadera y core en cada golpe"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Día 3 – Full Body Funcional + Cardio",
+      "warmup": [
+        {"e": "Movilidad cadera dinámica", "s": "1", "r": "12", "d": "—"},
+        {"e": "Jumping jacks", "s": "3", "r": "30 seg", "d": "45 seg"},
+        {"e": "Sentadilla aérea", "s": "2", "r": "15", "d": "60 seg"}
+      ],
+      "blocks": [
+        {
+          "type": "normal",
+          "muscle": "Glúteos",
+          "cfg": {},
+          "exs": [
+            {"e": "Puente de glúteos con mancuerna", "type": "normal", "s": "3", "r": "12", "d": "90", "i": "pausa arriba, glúteo firme"},
+            {"e": "Step up con mancuernas", "type": "normal", "s": "3", "r": "10", "d": "90", "i": "c/lado, subir sin impulso del pie de abajo"}
+          ]
+        },
+        {
+          "type": "varios",
+          "muscle": "Full Body / Funcional",
+          "cfg": {},
+          "exs": [
+            {"e": "Thrusters con mancuernas", "type": "normal", "s": "4", "r": "10", "d": "90", "i": "fluido: sentadilla + press en un solo movimiento"},
+            {"e": "Caminata del granjero", "type": "normal", "s": "3", "r": "30 m", "d": "90", "i": "carga firme, tronco erguido, pasos cortos"},
+            {"e": "Push press", "type": "normal", "s": "3", "r": "8", "d": "90", "i": "impulso de piernas para el envión"}
+          ]
+        },
+        {
+          "type": "tabata",
+          "muscle": "Cardio",
+          "cfg": {"work": "20", "rest": "10", "rounds": "8", "brk": "2 min"},
+          "exs": [
+            {"e": "Sentadilla + slam", "type": "normal", "s": "", "r": "", "d": "", "i": "explosivo en cada repetición"},
+            {"e": "Skaters laterales", "type": "normal", "s": "", "r": "", "d": "", "i": "alternar con la sentadilla+slam por ronda"}
+          ]
+        }
+      ]
+    }
+  ]
+}
